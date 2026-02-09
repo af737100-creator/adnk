@@ -1,0 +1,30 @@
+# الاعتماديات
+node_modules/
+npm-debug.log*
+
+# بيئة التطوير
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# أنظمة التشغيل
+.DS_Store
+Thumbs.db
+
+# محررات الأكواد
+.vscode/
+.idea/
+
+# الملفات المترجمة
+*.css.map
+*.js.map
+
+# الملفات المؤقتة
+*.tmp
+*.temp
+
+# الملفات الحساسة
+config.js
+secrets.js
