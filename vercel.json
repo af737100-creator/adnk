@@ -1,0 +1,21 @@
+{
+  "name": "youtube-interactive-platform",
+  "version": 2,
+  "builds": [
+    {
+      "src": "**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
+  "env": {
+    "SUPABASE_URL": "https://aohehiaqfqagoqyuhrmm.supabase.co",
+    "SUPABASE_ANON_KEY": "sb_publishable_eq_PjuSiAbWvxNAD6QHThw_v_x-jVSI",
+    "YOUTUBE_API_KEY": "AIzaSyCh9scasVWUK4AktfSUE5NlCcMyvCmGs2o"
+  }
+}
