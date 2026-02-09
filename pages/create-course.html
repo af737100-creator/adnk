@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء درس جديد - تعليمي</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
+    <link rel="stylesheet" href="../styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <div class="dashboard-container">
+        <!-- الشريط الجانبي -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-graduation-cap"></i> تعليمي</h2>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <ul>
+                    <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>لوحة التحكم</a></li>
+                    <li><a href="create-course.html" class="active"><i class="fas fa-plus-circle"></i>إنشاء درس جديد</a></li>
+                    <li><a href="my-courses.html"><i class="fas fa-video"></i>دروسي</a></li>
+                    <li><a href="students.html"><i class="fas fa-users"></i>الطلاب</a></li>
+                    <li><a href="analytics.html"><i class="fas fa-chart-bar"></i>التقارير</a></li>
+                    <li><a href="classroom.html"><i class="fas fa-chalkboard-teacher"></i>الغرف التفاعلية</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i>الإعدادات</a></li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="user-avatar">م</div>
+                    <div class="user-details">
+                        <h4 id="user-name">محمد أحمد</h4>
+                        <p id="user-email">teacher@example.com</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- شريط العنوان -->
+            <header class="main-header">
+                <div>
+                    <h1>إنشاء درس تفاعلي جديد</h1>
+                    <p>أضف فيديو يوتيوب وابدأ في إضافة التفاعلات</p>
+                </div>
+                
+                <div class="header-actions">
+                    <button class="btn-secondary" onclick="window.location.href='dashboard.html'">
+                        <i class="fas fa-arrow-right"></i> رجوع
+                    </button>
+                    
+                    <button class="hamburger" id="sidebar-toggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- نموذج إنشاء الدرس -->
+            <div class="create-course-form">
+                <!-- الخطوة 1: معلومات أساسية -->
+                <section class="form-step active" id="step-1">
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <div>
+                            <h2>معلومات أساسية</h2>
+                            <p>أدخل تفاصيل الدرس والرابط الأساسي</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-content">
+                        <div class="form-group">
+                            <label for="course-title">عنوان الدرس *</label>
+                            <input type="text" id="course-title" placeholder="مثال: مقدمة في البرمجة باستخدام Python" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="course-description">وصف الدرس</label>
+                            <textarea id="course-description" rows="4" placeholder="صف محتوى الدرس والأهداف التعليمية..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="youtube-url">رابط فيديو يوتيوب *</label>
+                            <div class="url-input-group">
+                                <input type="url" id="youtube-url" placeholder="https://www.youtube.com/watch?v=..." required>
+                                <button type="button" class="btn-primary" onclick="fetchVideoInfo()">
+                                    <i class="fas fa-search"></i> تحميل الفيديو
+                                </button>
+                            </div>
+                            <small class="help-text">انسخ رابط أي فيديو تعليمي على يوتيوب</small>
+                        </div>
+                        
+                        <div id="video-preview" class="video-preview" style="display: none;">
+                            <div class="preview-header">
+                                <h3>معاينة الفيديو</h3>
+                                <div class="preview-actions">
+                                    <button class="btn-secondary" onclick="refreshPreview()">
+                                        <i class="fas fa-redo"></i> تحديث
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="preview-content">
+                                <div class="video-thumbnail">
+                                    <img id="video-thumbnail" src="" alt="صورة الفيديو">
+                                    <div class="video-duration" id="video-duration"></div>
+                                </div>
+                                
+                                <div class="video-details">
+                                    <h4 id="video-title"></h4>
+                                    <p id="video-channel"></p>
+                                    <div class="video-stats">
+                                        <span><i class="fas fa-clock"></i> <span id="video-length"></span></span>
+                                        <span><i class="fas fa-calendar"></i> <span id="video-published"></span></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button class="btn-secondary" onclick="window.location.href='dashboard.html'">إلغاء</button>
+                            <button class="btn-primary" onclick="nextStep()">التالي <i class="fas fa-arrow-left"></i></button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- الخطوة 2: إضافة التفاعلات -->
+                <section class="form-step" id="step-2">
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <div>
+                            <h2>إضافة التفاعلات</h2>
+                            <p>أضف أسئلة، اختبارات، وشروحات في نقاط محددة من الفيديو</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-content">
+                        <div class="interactions-editor">
+                            <div class="editor-header">
+                                <h3>مشغل الفيديو التفاعلي</h3>
+                                <button class="btn-primary" onclick="addInteraction()">
+                                    <i class="fas fa-plus"></i> إضافة تفاعل
+                                </button>
+                            </div>
+                            
+                            <div class="video-editor-container">
+                                <div class="video-container">
+                                    <div class="video-wrapper">
+                                        <iframe id="youtube-player" width="100%" height="100%" 
+                                                src="" frameborder="0" 
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                allowfullscreen>
+                                        </iframe>
+                                        
+                                        <div class="interaction-overlay" id="interaction-overlay">
+                                            <!-- نقاط التفاعل ستضاف هنا -->
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="video-controls">
+                                        <div class="progress-container">
+                                            <div class="progress-bar" id="progress-bar">
+                                                <div class="progress-fill"></div>
+                                                <div class="interaction-markers"></div>
+                                            </div>
+                                            <div class="time-display">
+                                                <span id="current-time">0:00</span>
+                                                <span id="total-time">0:00</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="control-buttons">
+                                            <button class="control-btn" onclick="playPauseVideo()">
+                                                <i class="fas fa-play" id="play-btn"></i>
+                                            </button>
+                                            <button class="control-btn" onclick="skipBackward()">
+                                                <i class="fas fa-backward"></i>
+                                            </button>
+                                            <button class="control-btn" onclick="skipForward()">
+                                                <i class="fas fa-forward"></i>
+                                            </button>
+                                            <input type="range" id="volume-slider" min="0" max="100" value="100" onchange="changeVolume(this.value)">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="interactions-list">
+                                    <h4>قائمة التفاعلات</h4>
+                                    <div class="list-container" id="interactions-list">
+                                        <!-- التفاعلات ستضاف هنا -->
+                                        <div class="empty-state">
+                                            <i class="fas fa-plus-circle"></i>
+                                            <p>لا توجد تفاعلات بعد</p>
+                                            <p>انقر على "إضافة تفاعل" لبدء الإضافة</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button class="btn-secondary" onclick="prevStep()">
+                                <i class="fas fa-arrow-right"></i> السابق
+                            </button>
+                            <button class="btn-primary" onclick="nextStep()">التالي <i class="fas fa-arrow-left"></i></button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- الخطوة 3: الإعدادات النهائية -->
+                <section class="form-step" id="step-3">
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <div>
+                            <h2>الإعدادات النهائية</h2>
+                            <p>اضبط إعدادات النشر والإتاحة للطلاب</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-content">
+                        <div class="settings-grid">
+                            <div class="settings-group">
+                                <h3>إعدادات النشر</h3>
+                                
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="publish-course" checked>
+                                        <span class="checkmark"></span>
+                                        نشر الدرس فور الإنشاء
+                                    </label>
+                                    <small class="help-text">سيصبح الدرس متاحًا للطلاب فور النشر</small>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" id="allow-comments">
+                                        <span class="checkmark"></span>
+                                        السماح بالتعليقات والمناقشات
+                                    </label>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="course-category">التصنيف</label>
+                                    <select id="course-category">
+                                        <option value="">اختر تصنيفًا</option>
+                                        <option value="programming">برمجة</option>
+                                        <option value="design">تصميم</option>
+                                        <option value="marketing">تسويق</option>
+                                        <option value="languages">لغات</option>
+                                        <option value="science">علوم</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-group">
+                                <h3>إعدادات الوصول</h3>
+                                
+                                <div class="form-group">
+                                    <label for="access-type">نوع الوصول</label>
+                                    <select id="access-type">
+                                        <option value="public">عام (لأي طالب)</option>
+                                        <option value="private">خاص (برابط سري)</option>
+                                        <option value="invite">بدعوة فقط</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group" id="access-code-group" style="display: none;">
+                                    <label for="access-code">كود الوصول</label>
+                                    <input type="text" id="access-code" placeholder="أدخل كود مخصص أو اتركه للإنشاء التلقائي">
+                                    <button type="button" class="btn-secondary" onclick="generateAccessCode()">إنشاء كود</button>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="completion-certificate">شهادة الإكمال</label>
+                                    <select id="completion-certificate">
+                                        <option value="none">لا توجد شهادة</option>
+                                        <option value="auto">شهادة تلقائية</option>
+                                        <option value="manual">شهادة يدوية</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="settings-group">
+                                <h3>ملخص الدرس</h3>
+                                
+                                <div class="course-summary">
+                                    <div class="summary-item">
+                                        <span>العنوان:</span>
+                                        <strong id="summary-title"></strong>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span>مدة الفيديو:</span>
+                                        <strong id="summary-duration"></strong>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span>عدد التفاعلات:</span>
+                                        <strong id="summary-interactions">0</strong>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span>حالة النشر:</span>
+                                        <strong id="summary-status">مسودة</strong>
+                                    </div>
+                                    <div class="summary-item">
+                                        <span>نوع الوصول:</span>
+                                        <strong id="summary-access">عام</strong>
+                                    </div>
+                                </div>
+                                
+                                <div class="preview-action">
+                                    <button class="btn-secondary" onclick="previewCourse()">
+                                        <i class="fas fa-eye"></i> معاينة الدرس
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button class="btn-secondary" onclick="prevStep()">
+                                <i class="fas fa-arrow-right"></i> السابق
+                            </button>
+                            <button class="btn-primary" onclick="saveCourse()">
+                                <i class="fas fa-save"></i> حفظ ونشر الدرس
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- نموذج إضافة تفاعل -->
+    <div class="modal" id="interaction-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إضافة تفاعل جديد</h3>
+                <button class="close-modal" onclick="closeInteractionModal()">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="interaction-type">نوع التفاعل *</label>
+                    <select id="interaction-type" onchange="changeInteractionType()">
+                        <option value="question">سؤال تفاعلي</option>
+                        <option value="quiz">اختبار قصير</option>
+                        <option value="explanation">شرح إضافي</option>
+                        <option value="poll">استطلاع رأي</option>
+                        <option value="note">ملاحظة</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="interaction-time">وقت التفاعل (ثانية) *</label>
+                    <input type="number" id="interaction-time" min="0" value="0">
+                    <div class="time-preview">
+                        <span>الوقت: </span>
+                        <span id="time-display">0:00</span>
+                        <button type="button" class="btn-secondary" onclick="setCurrentTime()">
+                            <i class="fas fa-clock"></i> استخدام الوقت الحالي
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="interaction-title">عنوان التفاعل *</label>
+                    <input type="text" id="interaction-title" placeholder="مثال: اختبار فهم المحتوى">
+                </div>
+                
+                <div id="interaction-content">
+                    <!-- محتوى التفاعل حسب النوع -->
+                    <div class="question-content">
+                        <div class="form-group">
+                            <label for="question-text">نص السؤال *</label>
+                            <textarea id="question-text" rows="3" placeholder="أدخل نص السؤال هنا..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>خيارات الإجابة *</label>
+                            <div id="question-options">
+                                <div class="question-option">
+                                    <input type="text" placeholder="الخيار الأول" required>
+                                    <label class="checkbox-label">
+                                        <input type="radio" name="correct-answer" value="0">
+                                        <span class="checkmark"></span>
+                                        الإجابة الصحيحة
+                                    </label>
+                                </div>
+                                <div class="question-option">
+                                    <input type="text" placeholder="الخيار الثاني" required>
+                                    <label class="checkbox-label">
+                                        <input type="radio" name="correct-answer" value="1">
+                                        <span class="checkmark"></span>
+                                        الإجابة الصحيحة
+                                    </label>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-secondary" onclick="addQuestionOption()">
+                                <i class="fas fa-plus"></i> إضافة خيار
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeInteractionModal()">إلغاء</button>
+                <button class="btn-primary" onclick="saveInteraction()">حفظ التفاعل</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/youtube-api.js"></script>
+    <script>
+        // حالة التطبيق
+        let currentStep = 1;
+        let videoInfo = null;
+        let interactions = [];
+        let currentVideoTime = 0;
+        let isPlaying = false;
+        let player = null;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            setupMobileMenu();
+            loadUserData();
+            setupStepNavigation();
+            setupVideoControls();
+            
+            // التحقق مما إذا كان في وضع التعديل
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('edit')) {
+                loadCourseForEdit(urlParams.get('edit'));
+            }
+        });
+        
+        function setupMobileMenu() {
+            const toggleBtn = document.getElementById('sidebar-toggle');
+            const sidebar = document.getElementById('sidebar');
+            
+            toggleBtn.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+                this.classList.toggle('active');
+            });
+        }
+        
+        function loadUserData() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            if (user.name) {
+                document.getElementById('user-name').textContent = user.name;
+                document.getElementById('user-email').textContent = user.email;
+                
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.getElementById('user-avatar').textContent = initials;
+            }
+        }
+        
+        function setupStepNavigation() {
+            // إخفاء جميع الخطوات وإظهار الأولى فقط
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById('step-1').classList.add('active');
+        }
+        
+        function nextStep() {
+            // التحقق من صحة البيانات في الخطوة الحالية
+            if (!validateStep(currentStep)) {
+                return;
+            }
+            
+            // الانتقال للخطوة التالية
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            currentStep++;
+            document.getElementById(`step-${currentStep}`).classList.add('active');
+            
+            // إعداد الخطوة الجديدة
+            if (currentStep === 2) {
+                setupVideoEditor();
+            } else if (currentStep === 3) {
+                updateCourseSummary();
+            }
+        }
+        
+        function prevStep() {
+            document.getElementById(`step-${currentStep}`).classList.remove('active');
+            currentStep--;
+            document.getElementById(`step-${currentStep}`).classList.add('active');
+        }
+        
+        function validateStep(step) {
+            switch (step) {
+                case 1:
+                    const title = document.getElementById('course-title').value.trim();
+                    const youtubeUrl = document.getElementById('youtube-url').value.trim();
+                    
+                    if (!title) {
+                        alert('الرجاء إدخال عنوان للدرس');
+                        return false;
+                    }
+                    
+                    if (!youtubeUrl) {
+                        alert('الرجاء إدخال رابط فيديو يوتيوب');
+                        return false;
+                    }
+                    
+                    if (!videoInfo) {
+                        alert('الرجاء تحميل معلومات الفيديو أولاً');
+                        return false;
+                    }
+                    
+                    return true;
+                    
+                case 2:
+                    // لا يوجد تحقق إلزامي في الخطوة 2
+                    return true;
+                    
+                case 3:
+                    return true;
+            }
+        }
+        
+        async function fetchVideoInfo() {
+            const youtubeUrl = document.getElementById('youtube-url').value.trim();
+            
+            if (!youtubeUrl) {
+                alert('الرجاء إدخال رابط فيديو يوتيوب');
+                return;
+            }
+            
+            const result = YouTubeAPI.handleYouTubeUrlInput(youtubeUrl);
+            
+            if (!result.success) {
+                alert(result.message);
+                return;
+            }
+            
+            // عرض مؤشر التحميل
+            const fetchBtn = document.querySelector('#youtube-url + .btn-primary');
+            const originalText = fetchBtn.innerHTML;
+            fetchBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحميل...';
+            fetchBtn.disabled = true;
+            
+            try {
+                videoInfo = await YouTubeAPI.getVideoInfo(result.videoId);
+                
+                if (!videoInfo) {
+                    alert('لم نتمكن من جلب معلومات الفيديو. الرجاء التأكد من الرابط.');
+                    return;
+                }
+                
+                // تحديث الواجهة
+                document.getElementById('video-thumbnail').src = videoInfo.thumbnail.url;
+                document.getElementById('video-title').textContent = videoInfo.title;
+                document.getElementById('video-channel').textContent = videoInfo.channelTitle;
+                document.getElementById('video-length').textContent = YouTubeAPI.formatDuration(videoInfo.duration);
+                document.getElementById('video-published').textContent = new Date(videoInfo.publishedAt).toLocaleDateString('ar-SA');
+                document.getElementById('video-duration').textContent = YouTubeAPI.formatDuration(videoInfo.duration);
+                
+                // إظهار المعاينة
+                document.getElementById('video-preview').style.display = 'block';
+                
+                // تحديث مشغل الفيديو في الخطوة 2
+                if (player) {
+                    player.src = result.embedUrl;
+                }
+                
+            } catch (error) {
+                alert('حدث خطأ أثناء جلب معلومات الفيديو: ' + error.message);
+            } finally {
+                fetchBtn.innerHTML = originalText;
+                fetchBtn.disabled = false;
+            }
+        }
+        
+        function refreshPreview() {
+            fetchVideoInfo();
+        }
+        
+        function setupVideoEditor() {
+            if (!videoInfo) return;
+            
+            // إنشاء مشغل YouTube
+            const videoId = YouTubeAPI.extractYouTubeVideoId(document.getElementById('youtube-url').value);
+            const embedUrl = `https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${window.location.origin}&controls=1&modestbranding=1&rel=0`;
+            
+            player = document.getElementById('youtube-player');
+            player.src = embedUrl;
+            
+            // تحديث وقت الفيديو الكلي
+            document.getElementById('total-time').textContent = YouTubeAPI.formatDuration(videoInfo.duration);
+            
+            // إعداد مستمعي الأحداث
+            setupYouTubeAPI();
+        }
+        
+        function setupYouTubeAPI() {
+            // هذا سيعمل إذا تم تحميل YouTube IFrame API
+            if (window.YT && window.YT.Player) {
+                new YT.Player('youtube-player', {
+                    events: {
+                        'onStateChange': onPlayerStateChange,
+                        'onReady': onPlayerReady
+                    }
+                });
+            }
+        }
+        
+        function onPlayerReady(event) {
+            // يمكن التحكم بالمشغل الآن
+            console.log('المشغل جاهز');
+        }
+        
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                isPlaying = true;
+                document.getElementById('play-btn').className = 'fas fa-pause';
+                startTimeUpdate();
+            } else if (event.data === YT.PlayerState.PAUSED) {
+                isPlaying = false;
+                document.getElementById('play-btn').className = 'fas fa-play';
+            } else if (event.data === YT.PlayerState.ENDED) {
+                isPlaying = false;
+                document.getElementById('play-btn').className = 'fas fa-play';
+            }
+        }
+        
+        function startTimeUpdate() {
+            if (!isPlaying) return;
+            
+            currentVideoTime += 1;
+            updateTimeDisplay();
+            
+            setTimeout(startTimeUpdate, 1000);
+        }
+        
+        function updateTimeDisplay() {
+            const currentTimeDisplay = document.getElementById('current-time');
+            const progressFill = document.querySelector('.progress-fill');
+            
+            if (currentTimeDisplay) {
+                currentTimeDisplay.textContent = YouTubeAPI.formatDuration(currentVideoTime);
+            }
+            
+            if (progressFill && videoInfo) {
+                const progressPercent = (currentVideoTime / videoInfo.duration) * 100;
+                progressFill.style.width = `${progressPercent}%`;
+            }
+        }
+        
+        function setupVideoControls() {
+            // إعداد عناصر التحكم
+        }
+        
+        function playPauseVideo() {
+            if (!player) return;
+            
+            if (isPlaying) {
+                player.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+                isPlaying = false;
+                document.getElementById('play-btn').className = 'fas fa-play';
+            } else {
+                player.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+                isPlaying = true;
+                document.getElementById('play-btn').className = 'fas fa-pause';
+                startTimeUpdate();
+            }
+        }
+        
+        function skipBackward() {
+            if (!player) return;
+            
+            currentVideoTime = Math.max(0, currentVideoTime - 10);
+            player.contentWindow.postMessage(`{"event":"command","func":"seekTo","args":[${currentVideoTime}, true]}`, '*');
+            updateTimeDisplay();
+        }
+        
+        function skipForward() {
+            if (!player || !videoInfo) return;
+            
+            currentVideoTime = Math.min(videoInfo.duration, currentVideoTime + 10);
+            player.contentWindow.postMessage(`{"event":"command","func":"seekTo","args":[${currentVideoTime}, true]}`, '*');
+            updateTimeDisplay();
+        }
+        
+        function changeVolume(value) {
+            if (!player) return;
+            
+            player.contentWindow.postMessage(`{"event":"command","func":"setVolume","args":[${value}]}`, '*');
+        }
+        
+        function addInteraction() {
+            // إظهار نافذة إضافة التفاعل
+            document.getElementById('interaction-modal').style.display = 'flex';
+            updateTimeDisplay();
+        }
+        
+        function closeInteractionModal() {
+            document.getElementById('interaction-modal').style.display = 'none';
+        }
+        
+        function setCurrentTime() {
+            document.getElementById('interaction-time').value = currentVideoTime;
+            updateTimeDisplay();
+        }
+        
+        function changeInteractionType() {
+            const type = document.getElementById('interaction-type').value;
+            const contentDiv = document.getElementById('interaction-content');
+            
+            let html = '';
+            
+            switch (type) {
+                case 'question':
+                    html = `
+                        <div class="question-content">
+                            <div class="form-group">
+                                <label for="question-text">نص السؤال *</label>
+                                <textarea id="question-text" rows="3" placeholder="أدخل نص السؤال هنا..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>خيارات الإجابة *</label>
+                                <div id="question-options">
+                                    <div class="question-option">
+                                        <input type="text" placeholder="الخيار الأول" required>
+                                        <label class="checkbox-label">
+                                            <input type="radio" name="correct-answer" value="0">
+                                            <span class="checkmark"></span>
+                                            الإجابة الصحيحة
+                                        </label>
+                                    </div>
+                                    <div class="question-option">
+                                        <input type="text" placeholder="الخيار الثاني" required>
+                                        <label class="checkbox-label">
+                                            <input type="radio" name="correct-answer" value="1">
+                                            <span class="checkmark"></span>
+                                            الإجابة الصحيحة
+                                        </label>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-secondary" onclick="addQuestionOption()">
+                                    <i class="fas fa-plus"></i> إضافة خيار
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'quiz':
+                    html = `
+                        <div class="quiz-content">
+                            <div class="form-group">
+                                <label for="quiz-title">عنوان الاختبار *</label>
+                                <input type="text" id="quiz-title" placeholder="مثال: اختبار فهم الدرس الأول">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="quiz-description">وصف الاختبار</label>
+                                <textarea id="quiz-description" rows="2" placeholder="وصف مختصر للاختبار..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>عدد الأسئلة</label>
+                                <input type="number" id="quiz-question-count" min="1" max="10" value="3">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>وقت الاختبار (دقيقة)</label>
+                                <input type="number" id="quiz-time-limit" min="1" max="60" value="10">
+                                <small class="help-text">0 يعني لا يوجد وقت محدد</small>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'explanation':
+                    html = `
+                        <div class="explanation-content">
+                            <div class="form-group">
+                                <label for="explanation-text">نص الشرح *</label>
+                                <textarea id="explanation-text" rows="4" placeholder="أدخل الشرح الإضافي هنا..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>إضافة موارد</label>
+                                <div id="explanation-resources">
+                                    <div class="resource-item">
+                                        <input type="text" placeholder="عنوان المورد">
+                                        <input type="url" placeholder="رابط المورد">
+                                        <button type="button" class="btn-secondary" onclick="removeResource(this)">حذف</button>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-secondary" onclick="addResource()">
+                                    <i class="fas fa-plus"></i> إضافة مورد
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'poll':
+                    html = `
+                        <div class="poll-content">
+                            <div class="form-group">
+                                <label for="poll-question">سؤال الاستطلاع *</label>
+                                <textarea id="poll-question" rows="2" placeholder="ما رأيك في هذا الجزء من الدرس؟"></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>خيارات الاستطلاع</label>
+                                <div id="poll-options">
+                                    <div class="poll-option">
+                                        <input type="text" placeholder="الخيار الأول" required>
+                                    </div>
+                                    <div class="poll-option">
+                                        <input type="text" placeholder="الخيار الثاني" required>
+                                    </div>
+                                    <div class="poll-option">
+                                        <input type="text" placeholder="الخيار الثالث">
+                                    </div>
+                                </div>
+                                <button type="button" class="btn-secondary" onclick="addPollOption()">
+                                    <i class="fas fa-plus"></i> إضافة خيار
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    break;
+                    
+                case 'note':
+                    html = `
+                        <div class="note-content">
+                            <div class="form-group">
+                                <label for="note-text">نص الملاحظة *</label>
+                                <textarea id="note-text" rows="3" placeholder="أدخل نص الملاحظة هنا..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>لون الملاحظة</label>
+                                <div class="color-picker">
+                                    <div class="color-option" style="background-color: #ffeb3b;" onclick="selectNoteColor('#ffeb3b')"></div>
+                                    <div class="color-option" style="background-color: #4caf50;" onclick="selectNoteColor('#4caf50')"></div>
+                                    <div class="color-option" style="background-color: #2196f3;" onclick="selectNoteColor('#2196f3')"></div>
+                                    <div class="color-option" style="background-color: #ff9800;" onclick="selectNoteColor('#ff9800')"></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    break;
+            }
+            
+            contentDiv.innerHTML = html;
+        }
+        
+        function addQuestionOption() {
+            const optionsContainer = document.getElementById('question-options');
+            const optionCount = optionsContainer.children.length;
+            
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'question-option';
+            optionDiv.innerHTML = `
+                <input type="text" placeholder="الخيار ${optionCount + 1}" required>
+                <label class="checkbox-label">
+                    <input type="radio" name="correct-answer" value="${optionCount}">
+                    <span class="checkmark"></span>
+                    الإجابة الصحيحة
+                </label>
+            `;
+            
+            optionsContainer.appendChild(optionDiv);
+        }
+        
+        function addResource() {
+            const resourcesContainer = document.getElementById('explanation-resources');
+            
+            const resourceDiv = document.createElement('div');
+            resourceDiv.className = 'resource-item';
+            resourceDiv.innerHTML = `
+                <input type="text" placeholder="عنوان المورد">
+                <input type="url" placeholder="رابط المورد">
+                <button type="button" class="btn-secondary" onclick="removeResource(this)">حذف</button>
+            `;
+            
+            resourcesContainer.appendChild(resourceDiv);
+        }
+        
+        function removeResource(button) {
+            button.parentElement.remove();
+        }
+        
+        function addPollOption() {
+            const optionsContainer = document.getElementById('poll-options');
+            const optionCount = optionsContainer.children.length;
+            
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'poll-option';
+            optionDiv.innerHTML = `
+                <input type="text" placeholder="الخيار ${optionCount + 1}">
+            `;
+            
+            optionsContainer.appendChild(optionDiv);
+        }
+        
+        function selectNoteColor(color) {
+            // في التطبيق الحقيقي، حفظ اللون المختار
+            console.log('تم اختيار اللون:', color);
+        }
+        
+        function saveInteraction() {
+            const type = document.getElementById('interaction-type').value;
+            const time = parseInt(document.getElementById('interaction-time').value);
+            const title = document.getElementById('interaction-title').value.trim();
+            
+            if (!title) {
+                alert('الرجاء إدخال عنوان للتفاعل');
+                return;
+            }
+            
+            if (isNaN(time) || time < 0) {
+                alert('الرجاء إدخال وقت صحيح للتفاعل');
+                return;
+            }
+            
+            // جمع بيانات التفاعل حسب النوع
+            const interaction = {
+                id: Date.now(), // معرف مؤقت
+                type: type,
+                time: time,
+                title: title,
+                createdAt: new Date().toISOString()
+            };
+            
+            switch (type) {
+                case 'question':
+                    const questionText = document.getElementById('question-text').value.trim();
+                    const options = Array.from(document.querySelectorAll('#question-options input[type="text"]')).map(input => input.value.trim());
+                    const correctAnswer = document.querySelector('input[name="correct-answer"]:checked')?.value;
+                    
+                    if (!questionText) {
+                        alert('الرجاء إدخال نص السؤال');
+                        return;
+                    }
+                    
+                    if (options.some(opt => !opt)) {
+                        alert('الرجاء ملء جميع خيارات الإجابة');
+                        return;
+                    }
+                    
+                    if (!correctAnswer) {
+                        alert('الرجاء تحديد الإجابة الصحيحة');
+                        return;
+                    }
+                    
+                    interaction.content = questionText;
+                    interaction.options = options;
+                    interaction.correctAnswer = parseInt(correctAnswer);
+                    break;
+                    
+                case 'quiz':
+                    const quizTitle = document.getElementById('quiz-title').value.trim();
+                    const quizDescription = document.getElementById('quiz-description').value.trim();
+                    
+                    if (!quizTitle) {
+                        alert('الرجاء إدخال عنوان للاختبار');
+                        return;
+                    }
+                    
+                    interaction.quizTitle = quizTitle;
+                    interaction.quizDescription = quizDescription;
+                    interaction.questionCount = parseInt(document.getElementById('quiz-question-count').value);
+                    interaction.timeLimit = parseInt(document.getElementById('quiz-time-limit').value);
+                    break;
+                    
+                case 'explanation':
+                    const explanationText = document.getElementById('explanation-text').value.trim();
+                    
+                    if (!explanationText) {
+                        alert('الرجاء إدخال نص الشرح');
+                        return;
+                    }
+                    
+                    interaction.content = explanationText;
+                    
+                    // جمع الموارد
+                    const resources = [];
+                    document.querySelectorAll('#explanation-resources .resource-item').forEach(item => {
+                        const titleInput = item.querySelector('input[type="text"]');
+                        const urlInput = item.querySelector('input[type="url"]');
+                        
+                        if (titleInput.value.trim() && urlInput.value.trim()) {
+                            resources.push({
+                                title: titleInput.value.trim(),
+                                url: urlInput.value.trim()
+                            });
+                        }
+                    });
+                    
+                    if (resources.length > 0) {
+                        interaction.resources = resources;
+                    }
+                    break;
+                    
+                case 'poll':
+                    const pollQuestion = document.getElementById('poll-question').value.trim();
+                    const pollOptions = Array.from(document.querySelectorAll('#poll-options input[type="text"]')).map(input => input.value.trim()).filter(opt => opt);
+                    
+                    if (!pollQuestion) {
+                        alert('الرجاء إدخال سؤال الاستطلاع');
+                        return;
+                    }
+                    
+                    if (pollOptions.length < 2) {
+                        alert('الرجاء إدخال خيارين على الأقل للاستطلاع');
+                        return;
+                    }
+                    
+                    interaction.question = pollQuestion;
+                    interaction.options = pollOptions;
+                    break;
+                    
+                case 'note':
+                    const noteText = document.getElementById('note-text').value.trim();
+                    
+                    if (!noteText) {
+                        alert('الرجاء إدخال نص الملاحظة');
+                        return;
+                    }
+                    
+                    interaction.content = noteText;
+                    break;
+            }
+            
+            // إضافة التفاعل للقائمة
+            interactions.push(interaction);
+            
+            // تحديث الواجهة
+            updateInteractionsList();
+            updateInteractionMarkers();
+            
+            // إغلاق النافذة
+            closeInteractionModal();
+            
+            // إعادة تعيين النموذج
+            document.getElementById('interaction-modal').querySelectorAll('input, textarea, select').forEach(element => {
+                if (element.type !== 'radio' && element.type !== 'checkbox') {
+                    element.value = '';
+                }
+            });
+        }
+        
+        function updateInteractionsList() {
+            const listContainer = document.getElementById('interactions-list');
+            
+            if (interactions.length === 0) {
+                listContainer.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-plus-circle"></i>
+                        <p>لا توجد تفاعلات بعد</p>
+                        <p>انقر على "إضافة تفاعل" لبدء الإضافة</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            
+            interactions.sort((a, b) => a.time - b.time).forEach((interaction, index) => {
+                let icon = 'fa-question-circle';
+                let typeText = 'سؤال';
+                
+                switch (interaction.type) {
+                    case 'quiz': icon = 'fa-clipboard-check'; typeText = 'اختبار'; break;
+                    case 'explanation': icon = 'fa-lightbulb'; typeText = 'شرح'; break;
+                    case 'poll': icon = 'fa-chart-bar'; typeText = 'استطلاع'; break;
+                    case 'note': icon = 'fa-sticky-note'; typeText = 'ملاحظة'; break;
+                }
+                
+                html += `
+                    <div class="interaction-item" data-id="${interaction.id}">
+                        <div class="interaction-icon">
+                            <i class="fas ${icon}"></i>
+                        </div>
+                        <div class="interaction-info">
+                            <h4>${interaction.title}</h4>
+                            <p>${typeText} - ${YouTubeAPI.formatDuration(interaction.time)}</p>
+                        </div>
+                        <div class="interaction-actions">
+                            <button class="action-btn edit" onclick="editInteraction(${interaction.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete" onclick="deleteInteraction(${interaction.id})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            listContainer.innerHTML = html;
+        }
+        
+        function updateInteractionMarkers() {
+            const markersContainer = document.querySelector('.interaction-markers');
+            const overlay = document.getElementById('interaction-overlay');
+            
+            markersContainer.innerHTML = '';
+            overlay.innerHTML = '';
+            
+            interactions.forEach(interaction => {
+                if (!videoInfo || !videoInfo.duration) return;
+                
+                const positionPercent = (interaction.time / videoInfo.duration) * 100;
+                
+                // إضافة علامة على شريط التقدم
+                const marker = document.createElement('div');
+                marker.className = 'interaction-marker';
+                marker.style.right = `${positionPercent}%`;
+                marker.dataset.id = interaction.id;
+                marker.addEventListener('click', () => seekToInteraction(interaction));
+                markersContainer.appendChild(marker);
+                
+                // إضافة نقطة على الفيديو
+                const point = document.createElement('div');
+                point.className = 'interaction-point';
+                point.style.top = '50%';
+                point.style.right = `${positionPercent}%`;
+                point.dataset.id = interaction.id;
+                
+                let icon = 'fa-question-circle';
+                switch (interaction.type) {
+                    case 'quiz': icon = 'fa-clipboard-check'; break;
+                    case 'explanation': icon = 'fa-lightbulb'; break;
+                    case 'poll': icon = 'fa-chart-bar'; break;
+                    case 'note': icon = 'fa-sticky-note'; break;
+                }
+                
+                point.innerHTML = `<i class="fas ${icon}"></i>`;
+                point.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    seekToInteraction(interaction);
+                });
+                
+                overlay.appendChild(point);
+            });
+        }
+        
+        function seekToInteraction(interaction) {
+            if (!player) return;
+            
+            currentVideoTime = interaction.time;
+            player.contentWindow.postMessage(`{"event":"command","func":"seekTo","args":[${interaction.time}, true]}`, '*');
+            updateTimeDisplay();
+            
+            // إيقاف التشغيل مؤقتًا
+            if (isPlaying) {
+                playPauseVideo();
+            }
+            
+            // إظهار تفاصيل التفاعل
+            showInteractionDetails(interaction);
+        }
+        
+        function showInteractionDetails(interaction) {
+            // في التطبيق الحقيقي، عرض تفاصيل التفاعل
+            alert(`التفاعل: ${interaction.title}\nالوقت: ${YouTubeAPI.formatDuration(interaction.time)}`);
+        }
+        
+        function editInteraction(id) {
+            const interaction = interactions.find(i => i.id === id);
+            if (!interaction) return;
+            
+            // ملء النموذب بالقيم الحالية
+            document.getElementById('interaction-type').value = interaction.type;
+            changeInteractionType();
+            
+            document.getElementById('interaction-time').value = interaction.time;
+            document.getElementById('interaction-title').value = interaction.title;
+            
+            // ملء البيانات حسب النوع
+            switch (interaction.type) {
+                case 'question':
+                    document.getElementById('question-text').value = interaction.content || '';
+                    // ملء الخيارات...
+                    break;
+                // ... أنواع أخرى
+            }
+            
+            // حذف التفاعل القديم
+            interactions = interactions.filter(i => i.id !== id);
+            
+            // فتح النافذة للتعديل
+            document.getElementById('interaction-modal').style.display = 'flex';
+        }
+        
+        function deleteInteraction(id) {
+            if (confirm('هل أنت متأكد من حذف هذا التفاعل؟')) {
+                interactions = interactions.filter(i => i.id !== id);
+                updateInteractionsList();
+                updateInteractionMarkers();
+                updateCourseSummary();
+            }
+        }
+        
+        function updateCourseSummary() {
+            document.getElementById('summary-title').textContent = document.getElementById('course-title').value || 'غير محدد';
+            document.getElementById('summary-duration').textContent = videoInfo ? YouTubeAPI.formatDuration(videoInfo.duration) : 'غير محدد';
+            document.getElementById('summary-interactions').textContent = interactions.length;
+            
+            const isPublished = document.getElementById('publish-course').checked;
+            document.getElementById('summary-status').textContent = isPublished ? 'منشور' : 'مسودة';
+            
+            const accessType = document.getElementById('access-type').value;
+            let accessText = 'عام';
+            if (accessType === 'private') accessText = 'خاص';
+            if (accessType === 'invite') accessText = 'بدعوة';
+            document.getElementById('summary-access').textContent = accessText;
+        }
+        
+        function generateAccessCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = '';
+            
+            for (let i = 0; i < 8; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            
+            document.getElementById('access-code').value = code;
+        }
+        
+        function previewCourse() {
+            // في التطبيق الحقيقي، فتح معاينة الدرس في نافذة جديدة
+            alert('سيتم فتح معاينة الدرس في نافذة جديدة');
+            // window.open('viewer.html?preview=true', '_blank');
+        }
+        
+        async function saveCourse() {
+            // التحقق من البيانات
+            if (!validateStep(3)) {
+                return;
+            }
+            
+            // جمع بيانات الدرس
+            const courseData = {
+                title: document.getElementById('course-title').value.trim(),
+                description: document.getElementById('course-description').value.trim(),
+                youtubeUrl: document.getElementById('youtube-url').value.trim(),
+                youtubeVideoId: YouTubeAPI.extractYouTubeVideoId(document.getElementById('youtube-url').value.trim()),
+                category: document.getElementById('course-category').value,
+                isPublished: document.getElementById('publish-course').checked,
+                accessType: document.getElementById('access-type').value,
+                accessCode: document.getElementById('access-code').value || null,
+                allowComments: document.getElementById('allow-comments').checked,
+                completionCertificate: document.getElementById('completion-certificate').value,
+                interactions: interactions,
+                videoInfo: videoInfo,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            
+            // عرض مؤشر التحميل
+            const saveBtn = document.querySelector('#step-3 .btn-primary');
+            const originalText = saveBtn.innerHTML;
+            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الحفظ...';
+            saveBtn.disabled = true;
+            
+            try {
+                // في التطبيق الحقيقي، حفظ في Supabase
+                console.log('حفظ بيانات الدرس:', courseData);
+                
+                // محاكاة الحفظ
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // حفظ في localStorage للتجربة
+                const courses = JSON.parse(localStorage.getItem('courses') || '[]');
+                courseData.id = Date.now();
+                courses.push(courseData);
+                localStorage.setItem('courses', JSON.stringify(courses));
+                
+                alert('تم حفظ الدرس بنجاح!');
+                window.location.href = 'dashboard.html';
+                
+            } catch (error) {
+                alert('حدث خطأ أثناء حفظ الدرس: ' + error.message);
+            } finally {
+                saveBtn.innerHTML = originalText;
+                saveBtn.disabled = false;
+            }
+        }
+        
+        function loadCourseForEdit(courseId) {
+            // في التطبيق الحقيقي، جلب البيانات من Supabase
+            const courses = JSON.parse(localStorage.getItem('courses') || '[]');
+            const course = courses.find(c => c.id == courseId);
+            
+            if (!course) {
+                alert('لم يتم العثور على الدرس');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+            
+            // ملء النموذج بالبيانات
+            document.getElementById('course-title').value = course.title;
+            document.getElementById('course-description').value = course.description || '';
+            document.getElementById('youtube-url').value = course.youtubeUrl;
+            
+            // تحميل معلومات الفيديو
+            videoInfo = course.videoInfo;
+            interactions = course.interactions || [];
+            
+            // تحديث الواجهة
+            if (videoInfo) {
+                document.getElementById('video-thumbnail').src = videoInfo.thumbnail.url;
+                document.getElementById('video-title').textContent = videoInfo.title;
+                document.getElementById('video-channel').textContent = videoInfo.channelTitle;
+                document.getElementById('video-length').textContent = YouTubeAPI.formatDuration(videoInfo.duration);
+                document.getElementById('video-published').textContent = new Date(videoInfo.publishedAt).toLocaleDateString('ar-SA');
+                document.getElementById('video-duration').textContent = YouTubeAPI.formatDuration(videoInfo.duration);
+                document.getElementById('video-preview').style.display = 'block';
+            }
+            
+            // تحديث إعدادات النشر
+            if (course.isPublished) {
+                document.getElementById('publish-course').checked = true;
+            }
+            
+            if (course.allowComments) {
+                document.getElementById('allow-comments').checked = true;
+            }
+            
+            if (course.category) {
+                document.getElementById('course-category').value = course.category;
+            }
+            
+            if (course.accessType) {
+                document.getElementById('access-type').value = course.accessType;
+                if (course.accessType === 'private' && course.accessCode) {
+                    document.getElementById('access-code-group').style.display = 'block';
+                    document.getElementById('access-code').value = course.accessCode;
+                }
+            }
+            
+            if (course.completionCertificate) {
+                document.getElementById('completion-certificate').value = course.completionCertificate;
+            }
+            
+            // تحديث عنوان الصفحة
+            document.title = `تعديل: ${course.title} - تعليمي`;
+            document.querySelector('h1').textContent = `تعديل درس: ${course.title}`;
+            
+            // تحديث زر الحفظ
+            const saveBtn = document.querySelector('#step-3 .btn-primary');
+            saveBtn.innerHTML = '<i class="fas fa-save"></i> حفظ التعديلات';
+            saveBtn.onclick = function() {
+                updateCourse(courseId);
+            };
+        }
+        
+        async function updateCourse(courseId) {
+            // جمع البيانات المعدلة وحفظها
+            await saveCourse();
+        }
+        
+        // تحديث عرض الوقت
+        function updateTimeDisplay() {
+            const time = parseInt(document.getElementById('interaction-time').value) || 0;
+            document.getElementById('time-display').textContent = YouTubeAPI.formatDuration(time);
+        }
+        
+        document.getElementById('interaction-time').addEventListener('input', updateTimeDisplay);
+        
+        // عرض/إخفاء حقل كود الوصول حسب النوع
+        document.getElementById('access-type').addEventListener('change', function() {
+            const codeGroup = document.getElementById('access-code-group');
+            codeGroup.style.display = this.value === 'private' ? 'block' : 'none';
+            updateCourseSummary();
+        });
+        
+        // تحديث الملخص عند تغيير الإعدادات
+        document.getElementById('publish-course').addEventListener('change', updateCourseSummary);
+        document.getElementById('completion-certificate').addEventListener('change', updateCourseSummary);
+        
+        // تحديث الملخص عند تغيير التفاعلات
+        setInterval(updateCourseSummary, 5000);
+    </script>
+</body>
+</html>
