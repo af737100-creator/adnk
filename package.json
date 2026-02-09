@@ -1,0 +1,22 @@
+{
+  "name": "youtube-interactive-platform",
+  "version": "1.0.0",
+  "description": "منصة تحويل فيديوهات يوتيوب إلى دروس تفاعلية",
+  "main": "index.html",
+  "scripts": {
+    "dev": "live-server --port=3000",
+    "build": "echo 'No build step required for static site'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "education",
+    "interactive",
+    "youtube",
+    "elearning"
+  ],
+  "author": "تعليمي",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
