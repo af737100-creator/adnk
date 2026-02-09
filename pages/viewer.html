@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشاهدة الدرس - تعليمي</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
+    <link rel="stylesheet" href="../styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="viewer-page">
+    <!-- شريط التنقل العلوي -->
+    <nav class="viewer-navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="../index.html">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>تعليمي</span>
+                </a>
+            </div>
+            
+            <div class="viewer-info">
+                <h1 id="course-title">مقدمة في البرمجة</h1>
+                <p id="course-instructor">مع الأستاذ محمد أحمد</p>
+            </div>
+            
+            <div class="nav-actions">
+                <button class="action-btn" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <button class="action-btn" onclick="toggleFullscreen()">
+                    <i class="fas fa-expand"></i>
+                </button>
+                <button class="btn-primary" onclick="completeCourse()">
+                    <i class="fas fa-check"></i> إكمال الدرس
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="viewer-container">
+        <!-- الشريط الجانبي -->
+        <aside class="viewer-sidebar" id="viewer-sidebar">
+            <div class="sidebar-header">
+                <h3>محتوى الدرس</h3>
+                <button class="close-sidebar" onclick="toggleSidebar()">&times;</button>
+            </div>
+            
+            <div class="sidebar-content">
+                <!-- معلومات الدرس -->
+                <div class="lesson-info">
+                    <div class="lesson-stats">
+                        <div class="stat">
+                            <i class="fas fa-clock"></i>
+                            <span id="lesson-duration">45:00</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-question-circle"></i>
+                            <span id="interaction-count">8 تفاعلات</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-users"></i>
+                            <span id="student-count">245 طالب</span>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-tracker">
+                        <div class="progress-header">
+                            <h4>تقدمك في الدرس</h4>
+                            <span id="progress-percent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- قائمة التفاعلات -->
+                <div class="interactions-list">
+                    <h4>التفاعلات</h4>
+                    <div class="list-container" id="sidebar-interactions">
+                        <!-- سيتم ملؤها بواسطة JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- الموارد الإضافية -->
+                <div class="resources-section">
+                    <h4>الموارد الإضافية</h4>
+                    <div class="resources-list">
+                        <a href="#" class="resource-item">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>ملخص الدرس PDF</span>
+                        </a>
+                        <a href="#" class="resource-item">
+                            <i class="fas fa-link"></i>
+                            <span>روابط مفيدة</span>
+                        </a>
+                        <a href="#" class="resource-item">
+                            <i class="fas fa-download"></i>
+                            <span>تحميل التمارين</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- مناقشة الدرس -->
+                <div class="discussion-section">
+                    <h4>مناقشة الدرس</h4>
+                    <div class="discussion-preview">
+                        <div class="message">
+                            <div class="message-sender">أحمد:</div>
+                            <div class="message-text">شكرًا على الشرح الواضح</div>
+                        </div>
+                        <button class="btn-secondary" onclick="openDiscussion()">
+                            <i class="fas fa-comments"></i> المشاركة في النقاش
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="viewer-main">
+            <!-- مشغل الفيديو التفاعلي -->
+            <section class="video-section">
+                <div class="video-container" id="video-container">
+                    <!-- سيتم إضافة مشغل YouTube هنا -->
+                </div>
+                
+                <!-- معلومات الدرس أسفل الفيديو -->
+                <div class="video-meta">
+                    <div class="meta-item">
+                        <i class="fas fa-eye"></i>
+                        <span>245 مشاهدات</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-calendar"></i>
+                        <span>منذ 5 أيام</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-star"></i>
+                        <span>4.8 (120 تقييم)</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- محتوى إضافي -->
+            <section class="content-section">
+                <!-- التبويبات -->
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="description">الوصف</button>
+                    <button class="tab-btn" data-tab="interactions">التفاعلات</button>
+                    <button class="tab-btn" data-tab="resources">الموارد</button>
+                    <button class="tab-btn" data-tab="discussion">النقاش</button>
+                </div>
+                
+                <!-- محتوى التبويبات -->
+                <div class="tab-content active" id="description-tab">
+                    <h3>عن هذا الدرس</h3>
+                    <p id="course-description">هذا الدرس يتناول أساسيات البرمجة باستخدام لغة Python. سوف تتعلم المفاهيم الأساسية والتركيبات اللغوية الأولية.</p>
+                    
+                    <div class="learning-objectives">
+                        <h4>الأهداف التعليمية</h4>
+                        <ul>
+                            <li>فهم أساسيات البرمجة</li>
+                            <li>تعلم كتابة أول برنامج بلغة Python</li>
+                            <li>فهم هياكل البيانات الأساسية</li>
+                            <li>القدرة على حل المشكلات البسيطة</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="interactions-tab">
+                    <h3>التفاعلات المكتملة</h3>
+                    <div class="interactions-grid" id="interactions-grid">
+                        <!-- سيتم ملؤها بواسطة JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="resources-tab">
+                    <h3>الموارد التعليمية</h3>
+                    <div class="resources-grid">
+                        <div class="resource-card">
+                            <div class="resource-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <h4>ملخص الدرس</h4>
+                            <p>ملخص شامل لمفاهيم الدرس</p>
+                            <a href="#" class="btn-secondary">تحميل</a>
+                        </div>
+                        <div class="resource-card">
+                            <div class="resource-icon">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h4>أمثلة برمجية</h4>
+                            <p>مجموعة من الأمثلة والتطبيقات</p>
+                            <a href="#" class="btn-secondary">عرض</a>
+                        </div>
+                        <div class="resource-card">
+                            <div class="resource-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <h4>فيديوهات إضافية</h4>
+                            <p>فيديوهات متعلقة بالمحتوى</p>
+                            <a href="#" class="btn-secondary">مشاهدة</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="discussion-tab">
+                    <h3>نقاش الدرس</h3>
+                    <div class="discussion-container">
+                        <div class="discussion-input">
+                            <textarea placeholder="اكتب سؤالك أو تعليقك هنا..."></textarea>
+                            <button class="btn-primary">
+                                <i class="fas fa-paper-plane"></i> إرسال
+                            </button>
+                        </div>
+                        
+                        <div class="discussion-thread">
+                            <div class="discussion-message">
+                                <div class="message-header">
+                                    <div class="message-sender">
+                                        <div class="sender-avatar">أ</div>
+                                        <div class="sender-info">
+                                            <strong>أحمد محمد</strong>
+                                            <small>منذ 5 ساعات</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="message-body">
+                                    <p>شكرًا على الشرح الواضح، هل يمكن توضيح الفرق بين القوائم والمصفوفات؟</p>
+                                </div>
+                                <div class="message-actions">
+                                    <button class="action-btn"><i class="fas fa-thumbs-up"></i> 5</button>
+                                    <button class="action-btn"><i class="fas fa-reply"></i> رد</button>
+                                </div>
+                            </div>
+                            
+                            <div class="discussion-message">
+                                <div class="message-header">
+                                    <div class="message-sender">
+                                        <div class="sender-avatar">م</div>
+                                        <div class="sender-info">
+                                            <strong>المعلم</strong>
+                                            <small>منذ 3 ساعات</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="message-body">
+                                    <p>القوائم في Python قابلة للتغيير ويمكنها تخزين أنواع مختلفة من البيانات، بينما المصفوفات في NumPy ثابتة الحجم وتخزن بيانات من نوع واحد.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- الدرس التالي -->
+            <section class="next-lesson">
+                <h3>الدرس التالي</h3>
+                <div class="next-lesson-card">
+                    <div class="lesson-preview">
+                        <div class="lesson-thumbnail">
+                            <img src="https://img.youtube.com/vi/next-video/0.jpg" alt="الدرس التالي">
+                        </div>
+                        <div class="lesson-info">
+                            <h4>البرمجة الكائنية في Python</h4>
+                            <p>تتعمق في مفاهيم الكائنات والكلاسات</p>
+                            <div class="lesson-meta">
+                                <span><i class="fas fa-clock"></i> 60 دقيقة</span>
+                                <span><i class="fas fa-question-circle"></i> 10 تفاعلات</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-primary" disabled>متاح بعد إكمال هذا الدرس</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- نافذة التفاعل -->
+    <div class="interaction-modal" id="interaction-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="interaction-title">سؤال تفاعلي</h3>
+                <button class="close-modal" onclick="closeInteraction()">&times;</button>
+            </div>
+            
+            <div class="modal-body" id="interaction-body">
+                <!-- محتوى التفاعل -->
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="skipInteraction()">تخطي</button>
+                <button class="btn-primary" onclick="submitInteraction()">إرسال</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- شاشة الإكمال -->
+    <div class="completion-screen" id="completion-screen">
+        <div class="completion-content">
+            <div class="completion-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            
+            <h2>🎉 مبروك! أكملت الدرس بنجاح</h2>
+            
+            <div class="completion-stats">
+                <div class="stat">
+                    <div class="stat-value" id="completion-time">45:00</div>
+                    <div class="stat-label">الوقت المستغرق</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="completion-interactions">8/8</div>
+                    <div class="stat-label">التفاعلات المكتملة</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="completion-score">92%</div>
+                    <div class="stat-label">نتيجة الاختبار</div>
+                </div>
+            </div>
+            
+            <div class="certificate-section">
+                <h4>شهادة إكمال</h4>
+                <p>لقد أكملت متطلبات الدرس بنجاح، يمكنك تحميل شهادتك الآن</p>
+                <button class="btn-primary" onclick="downloadCertificate()">
+                    <i class="fas fa-download"></i> تحميل الشهادة
+                </button>
+            </div>
+            
+            <div class="completion-actions">
+                <button class="btn-secondary" onclick="restartLesson()">
+                    <i class="fas fa-redo"></i> إعادة المشاهدة
+                </button>
+                <button class="btn-primary" onclick="nextLesson()">
+                    <i class="fas fa-arrow-left"></i> المتابعة للدرس التالي
+                </button>
+                <button class="btn-secondary" onclick="goToDashboard()">
+                    <i class="fas fa-home"></i> العودة للرئيسية
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مكتبة Font Awesome للرموز -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/youtube-api.js"></script>
+    <script src="../scripts/interactive-player.js"></script>
+    <script>
+        // حالة التطبيق
+        let currentCourse = null;
+        let interactions = [];
+        let completedInteractions = [];
+        let player = null;
+        let currentInteraction = null;
+        let startTime = null;
+        let totalWatchedTime = 0;
+        let isCompleted = false;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // جلب بيانات الدرس من URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const courseId = urlParams.get('course') || urlParams.get('id') || '1';
+            
+            loadCourse(courseId);
+            setupEventListeners();
+            updateProgress();
+        });
+        
+        async function loadCourse(courseId) {
+            try {
+                // في التطبيق الحقيقي، جلب البيانات من Supabase
+                const courses = JSON.parse(localStorage.getItem('courses') || '[]');
+                currentCourse = courses.find(c => c.id == courseId) || getSampleCourse();
+                
+                if (!currentCourse) {
+                    showError('لم يتم العثور على الدرس');
+                    return;
+                }
+                
+                // تحديث واجهة المستخدم
+                updateUI();
+                
+                // إنشاء مشغل YouTube
+                createVideoPlayer();
+                
+                // تحميل التفاعلات
+                interactions = currentCourse.interactions || [];
+                loadInteractions();
+                
+                // بدء تتبع الوقت
+                startTime = new Date();
+                startTimeTracker();
+                
+            } catch (error) {
+                console.error('خطأ في تحميل الدرس:', error);
+                showError('حدث خطأ أثناء تحميل الدرس');
+            }
+        }
+        
+        function getSampleCourse() {
+            return {
+                id: 1,
+                title: 'مقدمة في البرمجة باستخدام Python',
+                description: 'هذا الدرس يتناول أساسيات البرمجة باستخدام لغة Python. سوف تتعلم المفاهيم الأساسية والتركيبات اللغوية الأولية.',
+                youtubeUrl: 'https://www.youtube.com/watch?v=abcdefg',
+                youtubeVideoId: 'abcdefg',
+                instructor: 'محمد أحمد',
+                duration: 2700, // 45 دقيقة بالثواني
+                interactions: [
+                    {
+                        id: 1,
+                        type: 'question',
+                        time: 60,
+                        title: 'اختبار فهم المفاهيم',
+                        content: 'ما هي لغة البرمجة التي ندرسها؟',
+                        options: ['Java', 'Python', 'C++', 'JavaScript'],
+                        correctAnswer: 1
+                    },
+                    {
+                        id: 2,
+                        type: 'explanation',
+                        time: 300,
+                        title: 'معلومة إضافية',
+                        content: 'Python هي لغة برمجة عالية المستوى، سهلة التعلم وتستخدم في مجالات متعددة.'
+                    },
+                    {
+                        id: 3,
+                        type: 'quiz',
+                        time: 900,
+                        title: 'اختبار قصير',
+                        questions: [
+                            {
+                                question: 'ما هي ميزة Python؟',
+                                options: ['سرعة التنفيذ', 'سهولة القراءة', 'التعقيد', 'الصعوبة'],
+                                correctAnswer: 1
+                            },
+                            {
+                                question: 'كيف نعرف متغير في Python؟',
+                                options: ['var x', 'int x', 'x = 5', 'let x'],
+                                correctAnswer: 2
+                            }
+                        ]
+                    }
+                ],
+                stats: {
+                    views: 245,
+                    rating: 4.8,
+                    students: 245,
+                    publishedDate: '2023-10-10'
+                }
+            };
+        }
+        
+        function updateUI() {
+            document.getElementById('course-title').textContent = currentCourse.title;
+            document.getElementById('course-instructor').textContent = `مع ${currentCourse.instructor || 'المعلم'}`;
+            document.getElementById('course-description').textContent = currentCourse.description;
+            document.getElementById('lesson-duration').textContent = formatTime(currentCourse.duration);
+            document.getElementById('interaction-count').textContent = `${interactions.length} تفاعلات`;
+            document.getElementById('student-count').textContent = `${currentCourse.stats?.students || 0} طالب`;
+            
+            // تحديث معلومات الدرس
+            if (currentCourse.stats) {
+                document.querySelector('.video-meta').innerHTML = `
+                    <div class="meta-item">
+                        <i class="fas fa-eye"></i>
+                        <span>${currentCourse.stats.views} مشاهدات</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-calendar"></i>
+                        <span>منذ ${formatDate(currentCourse.stats.publishedDate)}</span>
+                    </div>
+                    <div class="meta-item">
+                        <i class="fas fa-star"></i>
+                        <span>${currentCourse.stats.rating} (${Math.floor(currentCourse.stats.views * 0.5)} تقييم)</span>
+                    </div>
+                `;
+            }
+        }
+        
+        function createVideoPlayer() {
+            const videoContainer = document.getElementById('video-container');
+            videoContainer.innerHTML = '';
+            
+            if (!currentCourse.youtubeVideoId) {
+                videoContainer.innerHTML = '<p class="error">رابط الفيديو غير متاح</p>';
+                return;
+            }
+            
+            // إنشاء مشغل YouTube
+            const iframe = YouTubeAPI.createYouTubePlayer(currentCourse.youtubeVideoId, {
+                width: '100%',
+                height: '100%',
+                enablejsapi: 1,
+                origin: window.location.origin,
+                autoplay: 0,
+                controls: 1,
+                modestbranding: 1
+            });
+            
+            iframe.id = 'youtube-player';
+            videoContainer.appendChild(iframe);
+            
+            // إعداد مستمعي الأحداث
+            setupPlayerEvents();
+        }
+        
+        function setupPlayerEvents() {
+            // هذا يعمل مع YouTube IFrame API
+            window.onYouTubeIframeAPIReady = function() {
+                player = new YT.Player('youtube-player', {
+                    events: {
+                        'onStateChange': onPlayerStateChange,
+                        'onReady': onPlayerReady
+                    }
+                });
+            };
+        }
+        
+        function onPlayerReady(event) {
+            console.log('المشغل جاهز');
+            
+            // بدء تتبع التفاعلات
+            startInteractionTracker();
+        }
+        
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.PLAYING) {
+                // بدء تتبع الوقت
+                startTimeTracker();
+            } else if (event.data === YT.PlayerState.PAUSED) {
+                // إيقاف تتبع الوقت مؤقتًا
+                stopTimeTracker();
+            } else if (event.data === YT.PlayerState.ENDED) {
+                stopTimeTracker();
+                checkCourseCompletion();
+            }
+        }
+        
+        function startTimeTracker() {
+            if (window.timeTrackerInterval) {
+                clearInterval(window.timeTrackerInterval);
+            }
+            
+            window.timeTrackerInterval = setInterval(() => {
+                if (player && player.getCurrentTime) {
+                    const currentTime = player.getCurrentTime();
+                    totalWatchedTime += 1;
+                    
+                    // تحديث شريط التقدم
+                    updateProgress();
+                    
+                    // التحقق من التفاعلات
+                    checkInteractions(currentTime);
+                }
+            }, 1000);
+        }
+        
+        function stopTimeTracker() {
+            if (window.timeTrackerInterval) {
+                clearInterval(window.timeTrackerInterval);
+                window.timeTrackerInterval = null;
+            }
+        }
+        
+        function checkInteractions(currentTime) {
+            // البحث عن تفاعلات في الوقت الحالي
+            const upcomingInteractions = interactions.filter(interaction => {
+                const timeDiff = Math.abs(interaction.time - currentTime);
+                return !completedInteractions.includes(interaction.id) && timeDiff <= 2;
+            });
+            
+            if (upcomingInteractions.length > 0 && !currentInteraction) {
+                // إيقاف الفيديو وعرض التفاعل
+                player.pauseVideo();
+                showInteraction(upcomingInteractions[0]);
+            }
+        }
+        
+        function showInteraction(interaction) {
+            currentInteraction = interaction;
+            
+            // تحديث عنوان النافذة
+            document.getElementById('interaction-title').textContent = interaction.title;
+            
+            let content = '';
+            
+            switch (interaction.type) {
+                case 'question':
+                    content = createQuestionContent(interaction);
+                    break;
+                    
+                case 'quiz':
+                    content = createQuizContent(interaction);
+                    break;
+                    
+                case 'explanation':
+                    content = createExplanationContent(interaction);
+                    break;
+                    
+                case 'poll':
+                    content = createPollContent(interaction);
+                    break;
+            }
+            
+            document.getElementById('interaction-body').innerHTML = content;
+            document.getElementById('interaction-modal').style.display = 'flex';
+        }
+        
+        function createQuestionContent(interaction) {
+            let optionsHtml = '';
+            
+            if (interaction.options && interaction.options.length > 0) {
+                optionsHtml = interaction.options.map((option, index) => `
+                    <label class="option-label">
+                        <input type="radio" name="answer" value="${index}">
+                        <span class="option-text">${option}</span>
+                    </label>
+                `).join('');
+            }
+            
+            return `
+                <div class="question-content">
+                    <p>${interaction.content || 'أجب على السؤال التالي:'}</p>
+                    <div class="question-options">
+                        ${optionsHtml}
+                    </div>
+                </div>
+            `;
+        }
+        
+        function createQuizContent(interaction) {
+            let questionsHtml = '';
+            
+            if (interaction.questions && interaction.questions.length > 0) {
+                questionsHtml = interaction.questions.map((question, qIndex) => `
+                    <div class="quiz-question">
+                        <h4>${qIndex + 1}. ${question.question}</h4>
+                        <div class="question-options">
+                            ${question.options.map((option, oIndex) => `
+                                <label class="option-label">
+                                    <input type="radio" name="quiz-${qIndex}" value="${oIndex}">
+                                    <span class="option-text">${option}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            return `
+                <div class="quiz-content">
+                    <p>${interaction.title || 'اختبار قصير'}</p>
+                    <div class="quiz-questions">
+                        ${questionsHtml}
+                    </div>
+                </div>
+            `;
+        }
+        
+        function createExplanationContent(interaction) {
+            return `
+                <div class="explanation-content">
+                    <div class="explanation-text">
+                        ${interaction.content || 'شرح إضافي'}
+                    </div>
+                    ${interaction.resources ? `
+                        <div class="explanation-resources">
+                            <h4>موارد إضافية:</h4>
+                            <ul>
+                                ${interaction.resources.map(resource => `
+                                    <li><a href="${resource.url}" target="_blank">${resource.title}</a></li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+        
+        function createPollContent(interaction) {
+            let optionsHtml = '';
+            
+            if (interaction.options && interaction.options.length > 0) {
+                optionsHtml = interaction.options.map((option, index) => `
+                    <label class="option-label">
+                        <input type="radio" name="poll" value="${index}">
+                        <span class="option-text">${option}</span>
+                    </label>
+                `).join('');
+            }
+            
+            return `
+                <div class="poll-content">
+                    <h4>${interaction.question || 'استطلاع رأي'}</h4>
+                    <div class="poll-options">
+                        ${optionsHtml}
+                    </div>
+                </div>
+            `;
+        }
+        
+        function closeInteraction() {
+            document.getElementById('interaction-modal').style.display = 'none';
+            player.playVideo();
+            currentInteraction = null;
+        }
+        
+        function skipInteraction() {
+            completedInteractions.push(currentInteraction.id);
+            closeInteraction();
+            updateProgress();
+            saveProgress();
+        }
+        
+        function submitInteraction() {
+            if (!currentInteraction) return;
+            
+            let isCorrect = false;
+            
+            switch (currentInteraction.type) {
+                case 'question':
+                    const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+                    if (selectedAnswer) {
+                        isCorrect = parseInt(selectedAnswer.value) === currentInteraction.correctAnswer;
+                    }
+                    break;
+                    
+                case 'quiz':
+                    // التحقق من جميع إجابات الاختبار
+                    let correctCount = 0;
+                    currentInteraction.questions.forEach((question, qIndex) => {
+                        const answer = document.querySelector(`input[name="quiz-${qIndex}"]:checked`);
+                        if (answer && parseInt(answer.value) === question.correctAnswer) {
+                            correctCount++;
+                        }
+                    });
+                    isCorrect = correctCount === currentInteraction.questions.length;
+                    break;
+                    
+                case 'explanation':
+                case 'poll':
+                    // هذه التفاعلات ليس لها إجابة صحيحة/خاطئة
+                    isCorrect = true;
+                    break;
+            }
+            
+            // عرض التغذية الراجعة
+            showFeedback(isCorrect);
+            
+            // حفظ التفاعل كمكتمل
+            completedInteractions.push(currentInteraction.id);
+            
+            // تحديث التقدم
+            updateProgress();
+            saveProgress();
+            
+            // إغلاق النافذة بعد تأخير
+            setTimeout(() => {
+                closeInteraction();
+                checkCourseCompletion();
+            }, 3000);
+        }
+        
+        function showFeedback(isCorrect) {
+            const modalBody = document.getElementById('interaction-body');
+            
+            let feedbackHtml = '';
+            
+            if (isCorrect) {
+                feedbackHtml = `
+                    <div class="feedback correct">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>إجابة صحيحة! أحسنت</h4>
+                        ${currentInteraction.feedback ? `<p>${currentInteraction.feedback}</p>` : ''}
+                    </div>
+                `;
+            } else {
+                feedbackHtml = `
+                    <div class="feedback incorrect">
+                        <i class="fas fa-times-circle"></i>
+                        <h4>إجابة خاطئة</h4>
+                        <p>الرجاء مراجعة المادة مرة أخرى</p>
+                    </div>
+                `;
+            }
+            
+            modalBody.innerHTML = feedbackHtml;
+            
+            // إخفاء أزرار الإجراءات
+            document.querySelector('.modal-footer').style.display = 'none';
+        }
+        
+        function loadInteractions() {
+            // تحديث القائمة الجانبية
+            const sidebarList = document.getElementById('sidebar-interactions');
+            const gridList = document.getElementById('interactions-grid');
+            
+            sidebarList.innerHTML = '';
+            gridList.innerHTML = '';
+            
+            interactions.sort((a, b) => a.time - b.time).forEach((interaction, index) => {
+                const isCompleted = completedInteractions.includes(interaction.id);
+                
+                let icon = 'fa-question-circle';
+                let typeText = 'سؤال';
+                
+                switch (interaction.type) {
+                    case 'quiz': icon = 'fa-clipboard-check'; typeText = 'اختبار'; break;
+                    case 'explanation': icon = 'fa-lightbulb'; typeText = 'شرح'; break;
+                    case 'poll': icon = 'fa-chart-bar'; typeText = 'استطلاع'; break;
+                }
+                
+                // للقائمة الجانبية
+                const sidebarItem = document.createElement('div');
+                sidebarItem.className = `interaction-sidebar-item ${isCompleted ? 'completed' : ''}`;
+                sidebarItem.innerHTML = `
+                    <div class="interaction-icon">
+                        <i class="fas ${icon}"></i>
+                    </div>
+                    <div class="interaction-info">
+                        <h5>${interaction.title}</h5>
+                        <p>${typeText} - ${formatTime(interaction.time)}</p>
+                    </div>
+                    ${isCompleted ? '<i class="fas fa-check completed-icon"></i>' : ''}
+                `;
+                sidebarItem.addEventListener('click', () => seekToInteraction(interaction));
+                sidebarList.appendChild(sidebarItem);
+                
+                // للشبكة الرئيسية
+                const gridItem = document.createElement('div');
+                gridItem.className = 'interaction-grid-item';
+                gridItem.innerHTML = `
+                    <div class="interaction-header">
+                        <div class="interaction-type">
+                            <i class="fas ${icon}"></i>
+                            <span>${typeText}</span>
+                        </div>
+                        <div class="interaction-time">${formatTime(interaction.time)}</div>
+                    </div>
+                    <h4>${interaction.title}</h4>
+                    ${interaction.content ? `<p>${interaction.content.substring(0, 100)}...</p>` : ''}
+                    <div class="interaction-status ${isCompleted ? 'completed' : 'pending'}">
+                        ${isCompleted ? '<i class="fas fa-check"></i> مكتمل' : 'لم يكتمل بعد'}
+                    </div>
+                `;
+                gridItem.addEventListener('click', () => seekToInteraction(interaction));
+                gridList.appendChild(gridItem);
+            });
+            
+            if (interactions.length === 0) {
+                sidebarList.innerHTML = '<p class="empty">لا توجد تفاعلات في هذا الدرس</p>';
+                gridList.innerHTML = '<p class="empty">لا توجد تفاعلات في هذا الدرس</p>';
+            }
+        }
+        
+        function seekToInteraction(interaction) {
+            if (player && player.seekTo) {
+                player.seekTo(interaction.time, true);
+                
+                // إيقاف التشغيل مؤقتًا إذا كان يعمل
+                if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+                    player.pauseVideo();
+                }
+            }
+        }
+        
+        function updateProgress() {
+            const totalInteractions = interactions.length;
+            const completedCount = completedInteractions.length;
+            const progressPercent = totalInteractions > 0 ? (completedCount / totalInteractions) * 100 : 0;
+            
+            // تحديث شريط التقدم
+            document.getElementById('progress-percent').textContent = `${Math.round(progressPercent)}%`;
+            document.getElementById('progress-fill').style.width = `${progressPercent}%`;
+            
+            // التحقق مما إذا تم إكمال الدرس
+            if (progressPercent >= 100 && !isCompleted) {
+                completeCourse();
+            }
+        }
+        
+        function saveProgress() {
+            // في التطبيق الحقيقي، حفظ في Supabase
+            const progressData = {
+                courseId: currentCourse.id,
+                userId: getCurrentUserId(),
+                completedInteractions: completedInteractions,
+                totalWatchedTime: totalWatchedTime,
+                lastUpdated: new Date().toISOString()
+            };
+            
+            localStorage.setItem(`progress_${currentCourse.id}`, JSON.stringify(progressData));
+        }
+        
+        function loadProgress() {
+            const progressData = JSON.parse(localStorage.getItem(`progress_${currentCourse.id}`) || '{}');
+            
+            if (progressData.completedInteractions) {
+                completedInteractions = progressData.completedInteractions;
+            }
+            
+            if (progressData.totalWatchedTime) {
+                totalWatchedTime = progressData.totalWatchedTime;
+            }
+            
+            updateProgress();
+        }
+        
+        function checkCourseCompletion() {
+            if (completedInteractions.length >= interactions.length && !isCompleted) {
+                // التحقق من وقت المشاهدة (على الأقل 80% من مدة الفيديو)
+                const watchedPercent = (totalWatchedTime / currentCourse.duration) * 100;
+                
+                if (watchedPercent >= 80) {
+                    completeCourse();
+                }
+            }
+        }
+        
+        function completeCourse() {
+            isCompleted = true;
+            
+            // إيقاف تتبع الوقت
+            stopTimeTracker();
+            
+            // تحديث بيانات الإكمال
+            const endTime = new Date();
+            const totalTime = Math.floor((endTime - startTime) / 1000);
+            
+            document.getElementById('completion-time').textContent = formatTime(totalTime);
+            document.getElementById('completion-interactions').textContent = `${completedInteractions.length}/${interactions.length}`;
+            
+            // حساب النتيجة
+            const score = interactions.length > 0 ? 
+                Math.round((completedInteractions.length / interactions.length) * 100) : 100;
+            document.getElementById('completion-score').textContent = `${score}%`;
+            
+            // عرض شاشة الإكمال
+            document.getElementById('completion-screen').style.display = 'flex';
+            
+            // حفظ حالة الإكمال
+            saveCompletion();
+        }
+        
+        function saveCompletion() {
+            // في التطبيق الحقيقي، حفظ في Supabase
+            const completionData = {
+                courseId: currentCourse.id,
+                userId: getCurrentUserId(),
+                completedAt: new Date().toISOString(),
+                totalTime: totalWatchedTime,
+                score: Math.round((completedInteractions.length / interactions.length) * 100),
+                interactionsCompleted: completedInteractions.length,
+                totalInteractions: interactions.length
+            };
+            
+            localStorage.setItem(`completion_${currentCourse.id}`, JSON.stringify(completionData));
+        }
+        
+        function downloadCertificate() {
+            // في التطبيق الحقيقي، إنشاء وتحميل شهادة
+            alert('سيتم إنشاء شهادة الإكمال وتحميلها');
+            
+            // محاكاة التحميل
+            const link = document.createElement('a');
+            link.href = '#';
+            link.download = `شهادة_${currentCourse.title}.pdf`;
+            link.click();
+        }
+        
+        function restartLesson() {
+            if (confirm('هل تريد إعادة مشاهدة الدرس من البداية؟')) {
+                // إعادة تعيين التقدم
+                completedInteractions = [];
+                totalWatchedTime = 0;
+                isCompleted = false;
+                
+                // إعادة تعيين الفيديو
+                if (player && player.seekTo) {
+                    player.seekTo(0, true);
+                    player.playVideo();
+                }
+                
+                // إخفاء شاشة الإكمال
+                document.getElementById('completion-screen').style.display = 'none';
+                
+                // تحديث الواجهة
+                updateProgress();
+                loadInteractions();
+                
+                // إعادة بدء التتبع
+                startTime = new Date();
+                startTimeTracker();
+            }
+        }
+        
+        function nextLesson() {
+            // في التطبيق الحقيقي، التوجيه للدرس التالي
+            alert('سيتم توجيهك للدرس التالي');
+            window.location.href = 'dashboard.html';
+        }
+        
+        function goToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+        
+        function toggleSidebar() {
+            const sidebar = document.getElementById('viewer-sidebar');
+            sidebar.classList.toggle('active');
+        }
+        
+        function toggleFullscreen() {
+            const elem = document.documentElement;
+            
+            if (!document.fullscreenElement) {
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.webkitRequestFullscreen) {
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) {
+                    elem.msRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+            }
+        }
+        
+        function openDiscussion() {
+            // التبديل إلى تبويب النقاش
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            document.querySelector('[data-tab="discussion"]').classList.add('active');
+            document.getElementById('discussion-tab').classList.add('active');
+        }
+        
+        function setupEventListeners() {
+            // أحداث التبويبات
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.dataset.tab;
+                    
+                    // إزالة النشاط من جميع التبويبات
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    // إضافة النشاط للتبويب المحدد
+                    this.classList.add('active');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                });
+            });
+            
+            // تحميل التقدم المحفوظ
+            loadProgress();
+        }
+        
+        function formatTime(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            
+            if (hours > 0) {
+                return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }
+            
+            return `${minutes}:${secs.toString().padStart(2, '0')}`;
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffTime = Math.abs(now - date);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays === 1) return 'يوم';
+            if (diffDays <= 7) return `${diffDays} أيام`;
+            if (diffDays <= 30) return `${Math.floor(diffDays / 7)} أسابيع`;
+            
+            return `${Math.floor(diffDays / 30)} أشهر`;
+        }
+        
+        function getCurrentUserId() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            return user.id || 'anonymous';
+        }
+        
+        function showError(message) {
+            const mainContent = document.querySelector('.viewer-main');
+            mainContent.innerHTML = `
+                <div class="error-container">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h2>حدث خطأ</h2>
+                    <p>${message}</p>
+                    <button class="btn-primary" onclick="window.location.href='dashboard.html'">
+                        العودة للرئيسية
+                    </button>
+                </div>
+            `;
+        }
+        
+        // بدء تتبع التفاعلات
+        function startInteractionTracker() {
+            setInterval(() => {
+                if (player && player.getCurrentTime) {
+                    const currentTime = player.getCurrentTime();
+                    checkInteractions(currentTime);
+                }
+            }, 1000);
+        }
+        
+        // دعم مفاتيح الاختصار
+        document.addEventListener('keydown', function(event) {
+            if (!player) return;
+            
+            switch (event.key) {
+                case ' ':
+                case 'k':
+                    event.preventDefault();
+                    if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+                        player.pauseVideo();
+                    } else {
+                        player.playVideo();
+                    }
+                    break;
+                    
+                case 'f':
+                    event.preventDefault();
+                    toggleFullscreen();
+                    break;
+                    
+                case 'm':
+                    event.preventDefault();
+                    player.isMuted() ? player.unMute() : player.mute();
+                    break;
+                    
+                case 'ArrowLeft':
+                    event.preventDefault();
+                    const currentTime = player.getCurrentTime();
+                    player.seekTo(currentTime - 5, true);
+                    break;
+                    
+                case 'ArrowRight':
+                    event.preventDefault();
+                    const currentTime2 = player.getCurrentTime();
+                    player.seekTo(currentTime2 + 5, true);
+                    break;
+            }
+        });
+    </script>
+</body>
+</html>
