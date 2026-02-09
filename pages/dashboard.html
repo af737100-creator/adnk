@@ -1,1 +1,549 @@
 
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - تعليمي</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
+    <link rel="stylesheet" href="../styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <div class="dashboard-container">
+        <!-- الشريط الجانبي -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-graduation-cap"></i> تعليمي</h2>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <ul>
+                    <li><a href="dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>لوحة التحكم</a></li>
+                    <li><a href="create-course.html"><i class="fas fa-plus-circle"></i>إنشاء درس جديد</a></li>
+                    <li><a href="my-courses.html"><i class="fas fa-video"></i>دروسي</a></li>
+                    <li><a href="students.html"><i class="fas fa-users"></i>الطلاب</a></li>
+                    <li><a href="analytics.html"><i class="fas fa-chart-bar"></i>التقارير</a></li>
+                    <li><a href="classroom.html"><i class="fas fa-chalkboard-teacher"></i>الغرف التفاعلية</a></li>
+                    <li><a href="whiteboard.html"><i class="fas fa-paint-brush"></i>السبورة</a></li>
+                    <li><a href="settings.html"><i class="fas fa-cog"></i>الإعدادات</a></li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="user-avatar">م</div>
+                    <div class="user-details">
+                        <h4 id="user-name">محمد أحمد</h4>
+                        <p id="user-email">teacher@example.com</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- شريط العنوان -->
+            <header class="main-header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="ابحث عن دروس، طلاب، أو تقارير...">
+                </div>
+                
+                <div class="header-actions">
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count">3</span>
+                    </button>
+                    
+                    <button class="create-btn" onclick="window.location.href='create-course.html'">
+                        <i class="fas fa-plus"></i>
+                        درس جديد
+                    </button>
+                    
+                    <button class="hamburger" id="sidebar-toggle">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- بطاقات الإحصائيات -->
+            <section class="stats-cards">
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>إجمالي الدروس</h3>
+                        <p id="courses-count">12</p>
+                    </div>
+                    <div class="stat-icon courses">
+                        <i class="fas fa-video"></i>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>الطلاب النشطين</h3>
+                        <p id="students-count">245</p>
+                    </div>
+                    <div class="stat-icon students">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>معدل الإكمال</h3>
+                        <p id="completion-rate">78%</p>
+                    </div>
+                    <div class="stat-icon completion">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-info">
+                        <h3>معدل التفاعل</h3>
+                        <p id="engagement-rate">92%</p>
+                    </div>
+                    <div class="stat-icon engagement">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                </div>
+            </section>
+
+            <!-- الدورات الحديثة -->
+            <section class="dashboard-section">
+                <div class="section-header">
+                    <h2>الدروس الأخيرة</h2>
+                    <a href="my-courses.html" class="view-all">عرض الكل <i class="fas fa-arrow-left"></i></a>
+                </div>
+                
+                <table class="courses-table">
+                    <thead>
+                        <tr>
+                            <th>عنوان الدرس</th>
+                            <th>عدد الطلاب</th>
+                            <th>آخر تحديث</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recent-courses">
+                        <!-- سيتم ملؤها بواسطة JavaScript -->
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- الطلاب النشطين -->
+            <section class="dashboard-section">
+                <div class="section-header">
+                    <h2>الطلاب النشطين</h2>
+                    <a href="students.html" class="view-all">عرض الكل <i class="fas fa-arrow-left"></i></a>
+                </div>
+                
+                <div class="students-grid" id="active-students">
+                    <!-- سيتم ملؤها بواسطة JavaScript -->
+                </div>
+            </section>
+
+            <!-- رسوم بيانية -->
+            <section class="dashboard-section">
+                <div class="section-header">
+                    <h2>إحصائيات التفاعل</h2>
+                    <div class="time-filter">
+                        <select id="time-filter">
+                            <option value="week">آخر أسبوع</option>
+                            <option value="month">آخر شهر</option>
+                            <option value="year">آخر سنة</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="charts-container">
+                    <div class="chart">
+                        <h3>تفاعلات الطلاب</h3>
+                        <canvas id="interactions-chart"></canvas>
+                    </div>
+                    <div class="chart">
+                        <h3>معدلات الإكمال</h3>
+                        <canvas id="completion-chart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- الإشعارات -->
+            <section class="dashboard-section">
+                <div class="section-header">
+                    <h2>الإشعارات</h2>
+                    <button class="mark-all-read" onclick="markAllAsRead()">تحديد الكل كمقروء</button>
+                </div>
+                
+                <div class="notifications-list" id="notifications-list">
+                    <!-- سيتم ملؤها بواسطة JavaScript -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- نافذة الإشعارات -->
+    <div class="notifications-modal" id="notifications-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>الإشعارات</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body" id="notifications-modal-body">
+                <!-- محتوى الإشعارات -->
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/supabase-client.js"></script>
+    <script>
+        // تهيئة لوحة التحكم
+        document.addEventListener('DOMContentLoaded', function() {
+            // تحميل بيانات المستخدم
+            loadUserData();
+            
+            // تحميل الدورات الحديثة
+            loadRecentCourses();
+            
+            // تحميل الطلاب النشطين
+            loadActiveStudents();
+            
+            // تحميل الإشعارات
+            loadNotifications();
+            
+            // تهيئة الرسوم البيانية
+            initCharts();
+            
+            // أحداث القائمة الجانبية للهواتف
+            setupMobileMenu();
+            
+            // أحداث الإشعارات
+            setupNotifications();
+        });
+        
+        function loadUserData() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            
+            if (user.name) {
+                document.getElementById('user-name').textContent = user.name;
+                document.getElementById('user-email').textContent = user.email;
+                
+                // إنشاء الأحرف الأولى للصورة الرمزية
+                const initials = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+                document.getElementById('user-avatar').textContent = initials;
+            }
+        }
+        
+        function loadRecentCourses() {
+            // محاكاة البيانات (في التطبيق الحقيقي، من Supabase)
+            const courses = [
+                {
+                    id: 1,
+                    title: 'مقدمة في البرمجة',
+                    thumbnail: 'https://img.youtube.com/vi/abc123/0.jpg',
+                    students: 45,
+                    interactions: 12,
+                    status: 'published',
+                    lastUpdated: '2023-10-15'
+                },
+                {
+                    id: 2,
+                    title: 'تعلم JavaScript من الصفر',
+                    thumbnail: 'https://img.youtube.com/vi/def456/0.jpg',
+                    students: 78,
+                    interactions: 18,
+                    status: 'published',
+                    lastUpdated: '2023-10-10'
+                },
+                {
+                    id: 3,
+                    title: 'أساسيات تصميم الويب',
+                    thumbnail: 'https://img.youtube.com/vi/ghi789/0.jpg',
+                    students: 32,
+                    interactions: 8,
+                    status: 'draft',
+                    lastUpdated: '2023-10-05'
+                },
+                {
+                    id: 4,
+                    title: 'قواعد البيانات MySQL',
+                    thumbnail: 'https://img.youtube.com/vi/jkl012/0.jpg',
+                    students: 56,
+                    interactions: 15,
+                    status: 'published',
+                    lastUpdated: '2023-10-01'
+                }
+            ];
+            
+            const tbody = document.getElementById('recent-courses');
+            tbody.innerHTML = '';
+            
+            courses.forEach(course => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>
+                        <div class="course-title">
+                            <div class="course-thumbnail">
+                                <img src="${course.thumbnail}" alt="${course.title}" onerror="this.src='../assets/images/default-thumbnail.jpg'">
+                            </div>
+                            <div>
+                                <h4>${course.title}</h4>
+                                <small>${course.interactions} تفاعل</small>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${course.students}</td>
+                    <td>${course.lastUpdated}</td>
+                    <td><span class="status-badge ${course.status}">${course.status === 'published' ? 'منشور' : 'مسودة'}</span></td>
+                    <td>
+                        <button class="action-btn edit" onclick="editCourse(${course.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn view" onclick="viewCourse(${course.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="action-btn delete" onclick="deleteCourse(${course.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+        
+        function loadActiveStudents() {
+            // محاكاة البيانات
+            const students = [
+                { id: 1, name: 'أحمد محمد', email: 'ahmed@example.com', progress: 85, lastActive: 'منذ ساعتين' },
+                { id: 2, name: 'فاطمة علي', email: 'fatima@example.com', progress: 92, lastActive: 'منذ 30 دقيقة' },
+                { id: 3, name: 'خالد سعيد', email: 'khaled@example.com', progress: 67, lastActive: 'منذ يوم' },
+                { id: 4, name: 'سارة عبدالله', email: 'sara@example.com', progress: 78, lastActive: 'منذ 5 ساعات' },
+                { id: 5, name: 'محمد حسن', email: 'mohamed@example.com', progress: 95, lastActive: 'منذ ساعة' }
+            ];
+            
+            const container = document.getElementById('active-students');
+            container.innerHTML = '';
+            
+            students.forEach(student => {
+                const studentCard = document.createElement('div');
+                studentCard.className = 'student-card';
+                
+                studentCard.innerHTML = `
+                    <div class="student-avatar">
+                        ${student.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+                    </div>
+                    <div class="student-info">
+                        <h4>${student.name}</h4>
+                        <p>${student.email}</p>
+                        <div class="student-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${student.progress}%"></div>
+                            </div>
+                            <span>${student.progress}%</span>
+                        </div>
+                        <div class="student-meta">
+                            <span><i class="fas fa-clock"></i> ${student.lastActive}</span>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(studentCard);
+            });
+        }
+        
+        function loadNotifications() {
+            const notifications = [
+                { id: 1, title: 'طالب جديد', message: 'انضم أحمد محمد إلى دورة البرمجة', time: 'منذ 5 دقائق', read: false },
+                { id: 2, title: 'إكمال الدورة', message: 'أكملت فاطمة علي دورة JavaScript بنسبة 100%', time: 'منذ ساعة', read: false },
+                { id: 3, title: 'سؤال جديد', message: 'لديك سؤال غير مجاب في دورة قواعد البيانات', time: 'منذ 3 ساعات', read: true },
+                { id: 4, title: 'تذكير', message: 'دورة تصميم الويب تحتاج تحديث التفاعلات', time: 'منذ يوم', read: true }
+            ];
+            
+            const list = document.getElementById('notifications-list');
+            const modalBody = document.getElementById('notifications-modal-body');
+            
+            list.innerHTML = '';
+            modalBody.innerHTML = '';
+            
+            notifications.forEach(notification => {
+                // للقائمة الرئيسية
+                const item = document.createElement('div');
+                item.className = `notification-item ${notification.read ? 'read' : 'unread'}`;
+                item.innerHTML = `
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="notification-content">
+                        <h4>${notification.title}</h4>
+                        <p>${notification.message}</p>
+                        <span class="notification-time">${notification.time}</span>
+                    </div>
+                `;
+                list.appendChild(item);
+                
+                // للنافذة المنبثقة
+                const modalItem = item.cloneNode(true);
+                modalBody.appendChild(modalItem);
+            });
+            
+            // تحديث عداد الإشعارات غير المقروءة
+            const unreadCount = notifications.filter(n => !n.read).length;
+            document.querySelector('.notification-count').textContent = unreadCount;
+        }
+        
+        function initCharts() {
+            // رسم بياني للتفاعلات
+            const interactionsCtx = document.getElementById('interactions-chart').getContext('2d');
+            new Chart(interactionsCtx, {
+                type: 'line',
+                data: {
+                    labels: ['السبت', 'الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'],
+                    datasets: [{
+                        label: 'تفاعلات الطلاب',
+                        data: [65, 78, 90, 81, 56, 55, 40],
+                        borderColor: '#4361ee',
+                        backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // رسم بياني للإكمال
+            const completionCtx = document.getElementById('completion-chart').getContext('2d');
+            new Chart(completionCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['مكتمل', 'قيد التقدم', 'لم يبدأ'],
+                    datasets: [{
+                        data: [65, 25, 10],
+                        backgroundColor: [
+                            '#4ade80',
+                            '#f59e0b',
+                            '#ef4444'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+        
+        function setupMobileMenu() {
+            const toggleBtn = document.getElementById('sidebar-toggle');
+            const sidebar = document.getElementById('sidebar');
+            
+            toggleBtn.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+                this.classList.toggle('active');
+            });
+            
+            // إغلاق القائمة عند النقر خارجها
+            document.addEventListener('click', function(event) {
+                if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
+                    sidebar.classList.remove('active');
+                    toggleBtn.classList.remove('active');
+                }
+            });
+        }
+        
+        function setupNotifications() {
+            const notificationBtn = document.querySelector('.notification-btn');
+            const notificationModal = document.getElementById('notifications-modal');
+            const closeModalBtn = document.querySelector('.close-modal');
+            
+            notificationBtn.addEventListener('click', function() {
+                notificationModal.style.display = 'flex';
+            });
+            
+            closeModalBtn.addEventListener('click', function() {
+                notificationModal.style.display = 'none';
+            });
+            
+            notificationModal.addEventListener('click', function(event) {
+                if (event.target === notificationModal) {
+                    notificationModal.style.display = 'none';
+                }
+            });
+        }
+        
+        function markAllAsRead() {
+            // في التطبيق الحقيقي، تحديث في قاعدة البيانات
+            document.querySelectorAll('.notification-item').forEach(item => {
+                item.classList.add('read');
+            });
+            
+            document.querySelector('.notification-count').textContent = '0';
+        }
+        
+        function editCourse(courseId) {
+            window.location.href = `create-course.html?edit=${courseId}`;
+        }
+        
+        function viewCourse(courseId) {
+            window.location.href = `viewer.html?course=${courseId}`;
+        }
+        
+        function deleteCourse(courseId) {
+            if (confirm('هل أنت متأكد من حذف هذا الدرس؟')) {
+                // في التطبيق الحقيقي، حذف من قاعدة البيانات
+                console.log('حذف الدرس:', courseId);
+                loadRecentCourses(); // إعادة تحميل القائمة
+            }
+        }
+        
+        // تحديث الإحصائيات في الوقت الفعلي
+        function updateStats() {
+            // محاكاة تحديث الإحصائيات
+            const coursesCount = Math.floor(Math.random() * 5) + 10;
+            const studentsCount = Math.floor(Math.random() * 50) + 200;
+            const completionRate = Math.floor(Math.random() * 10) + 75;
+            const engagementRate = Math.floor(Math.random() * 10) + 85;
+            
+            document.getElementById('courses-count').textContent = coursesCount;
+            document.getElementById('students-count').textContent = studentsCount;
+            document.getElementById('completion-rate').textContent = completionRate + '%';
+            document.getElementById('engagement-rate').textContent = engagementRate + '%';
+        }
+        
+        // تحديث كل 30 ثانية
+        setInterval(updateStats, 30000);
+    </script>
+</body>
+</html>
