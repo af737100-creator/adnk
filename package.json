@@ -1,22 +1,44 @@
 {
-  "name": "youtube-interactive-platform",
+  "name": "ta3lemi-platform",
   "version": "1.0.0",
-  "description": "منصة تحويل فيديوهات يوتيوب إلى دروس تفاعلية",
+  "description": "منصة تحويل فيديوهات يوتيوب إلى دروس تفاعلية - تعليمي",
   "main": "index.html",
   "scripts": {
-    "dev": "live-server --port=3000",
+    "start": "serve .",
+    "dev": "live-server --port=3000 --no-browser",
     "build": "echo 'No build step required for static site'",
-    "deploy": "vercel --prod"
+    "deploy:vercel": "vercel --prod",
+    "deploy:netlify": "netlify deploy --prod",
+    "lint": "eslint scripts/**/*.js",
+    "format": "prettier --write \"**/*.{js,html,css,json,md}\"",
+    "test": "echo 'No tests specified'"
   },
   "keywords": [
     "education",
     "interactive",
     "youtube",
-    "elearning"
+    "elearning",
+    "supabase",
+    "pwa"
   ],
-  "author": "تعليمي",
+  "author": "Ta3lemi Platform Team",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ta3lemi/youtube-interactive-platform.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ta3lemi/youtube-interactive-platform/issues"
+  },
+  "homepage": "https://ta3lemi.com",
   "devDependencies": {
-    "live-server": "^1.2.2"
+    "eslint": "^8.56.0",
+    "eslint-config-google": "^0.14.0",
+    "live-server": "^1.2.2",
+    "prettier": "^3.1.1",
+    "serve": "^14.2.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }
