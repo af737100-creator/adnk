@@ -1,0 +1,15 @@
+# robots.txt - تعليمي منصة التعلم التفاعلي
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /database/
+Disallow: /scripts/
+Disallow: /assets/docs/
+Disallow: /pages/dashboard*
+Disallow: /pages/create-course*
+Disallow: /pages/settings*
+Disallow: /pages/classroom*
+
+Sitemap: https://ta3lemi.com/sitemap.xml
+Host: https://ta3lemi.com
