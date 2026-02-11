@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الصفحة غير موجودة - تعليمي</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .error-container {
+            background: white;
+            border-radius: 20px;
+            padding: 60px 40px;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: bold;
+            color: #667eea;
+            line-height: 1;
+            margin-bottom: 20px;
+            text-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .error-title {
+            font-size: 2rem;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+        
+        .error-message {
+            color: #718096;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .error-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        
+        .btn-secondary:hover {
+            background: #cbd5e0;
+            transform: translateY(-2px);
+        }
+        
+        .error-illustration {
+            margin-bottom: 30px;
+        }
+        
+        .error-illustration i {
+            font-size: 6rem;
+            color: #a0aec0;
+        }
+        
+        @media (max-width: 768px) {
+            .error-container { padding: 40px 20px; }
+            .error-code { font-size: 6rem; }
+            .error-title { font-size: 1.5rem; }
+            .error-actions { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-illustration">
+            <i class="fas fa-compass"></i>
+        </div>
+        
+        <div class="error-code">404</div>
+        <h1 class="error-title">الصفحة غير موجودة!</h1>
+        <p class="error-message">
+            عذراً، الصفحة التي تبحث عنها ربما تم نقلها أو حذفها أو أنها غير موجودة أصلاً.
+            يمكنك العودة للصفحة الرئيسية أو تصفح الدروس المتاحة.
+        </p>
+        
+        <div class="error-actions">
+            <a href="index.html" class="btn btn-primary">
+                <i class="fas fa-home"></i>
+                الصفحة الرئيسية
+            </a>
+            <a href="pages/dashboard.html" class="btn btn-primary" style="background: #48bb78;">
+                <i class="fas fa-tachometer-alt"></i>
+                لوحة التحكم
+            </a>
+            <a href="pages/my-courses.html" class="btn btn-secondary">
+                <i class="fas fa-video"></i>
+                الدروس المتاحة
+            </a>
+        </div>
+        
+        <div style="margin-top: 30px; padding-top: 30px; border-top: 1px solid #e2e8f0;">
+            <a href="index.html" style="color: #667eea; text-decoration: none;">
+                <i class="fas fa-arrow-right"></i>
+                العودة إلى تعليمي
+            </a>
+        </div>
+    </div>
+</body>
+</html>
