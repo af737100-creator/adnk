@@ -1,0 +1,177 @@
+/* تنسيقات الطباعة - Print Styles */
+
+@media print {
+    /* إخفاء العناصر غير الضرورية */
+    .navbar,
+    .sidebar,
+    .footer,
+    .hero-buttons,
+    .cta,
+    .demo,
+    .testimonials,
+    .cookie-consent,
+    .control-buttons,
+    .chat-input,
+    .whiteboard-tools,
+    .interaction-point,
+    .interaction-marker,
+    .video-controls,
+    .viewer-navbar,
+    .header-actions,
+    .btn,
+    .action-btn,
+    .create-btn,
+    .notification-btn,
+    .hamburger,
+    .sidebar-toggle,
+    .video-overlay,
+    .interactive-overlay {
+        display: none !important;
+    }
+    
+    /* تنسيق الصفحة للطباعة */
+    body {
+        background: white !important;
+        color: black !important;
+        font-size: 12pt;
+        line-height: 1.5;
+        font-family: 'Times New Roman', serif;
+    }
+    
+    /* إظهار المحتوى الرئيسي */
+    .main-content,
+    .container,
+    .viewer-main,
+    .dashboard-container,
+    .course-content {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+    }
+    
+    /* تنسيق العناوين */
+    h1, h2, h3, h4, h5, h6 {
+        color: black !important;
+        page-break-after: avoid;
+        page-break-inside: avoid;
+    }
+    
+    h1 {
+        font-size: 24pt;
+        margin-bottom: 20pt;
+    }
+    
+    h2 {
+        font-size: 20pt;
+        margin-bottom: 15pt;
+    }
+    
+    /* تنسيق الفقرات */
+    p {
+        orphans: 3;
+        widows: 3;
+    }
+    
+    /* تنسيق الروابط */
+    a {
+        color: black !important;
+        text-decoration: underline;
+    }
+    
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: 10pt;
+        font-style: italic;
+    }
+    
+    /* تنسيق الجداول */
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        page-break-inside: avoid;
+    }
+    
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8pt;
+        text-align: right;
+    }
+    
+    th {
+        background-color: #f5f5f5 !important;
+        font-weight: bold;
+    }
+    
+    /* تنسيق الصور */
+    img {
+        max-width: 100% !important;
+        page-break-inside: avoid;
+    }
+    
+    /* تنسيق قوائم التفاعلات */
+    .interaction-item,
+    .question-option {
+        border: 1px solid #ccc;
+        margin-bottom: 10pt;
+        padding: 10pt;
+        page-break-inside: avoid;
+    }
+    
+    /* تنسيق شهادة الإكمال */
+    .certificate {
+        border: 2pt solid #000;
+        padding: 20pt;
+        margin: 20pt 0;
+        text-align: center;
+        page-break-inside: avoid;
+    }
+    
+    /* تنسيق رأس الصفحة وتذييلها */
+    @page {
+        size: A4;
+        margin: 2cm;
+        
+        @top-center {
+            content: "تعليمي - منصة التعلم التفاعلي";
+            font-size: 10pt;
+            color: #666;
+        }
+        
+        @bottom-center {
+            content: "الصفحة " counter(page) " من " counter(pages);
+            font-size: 10pt;
+            color: #666;
+        }
+    }
+    
+    /* تنسيق فاصل الصفحات */
+    .page-break {
+        page-break-before: always;
+    }
+    
+    /* إزالة الخلفيات والتأثيرات */
+    * {
+        background: transparent !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+    
+    /* تنسيق الكود */
+    pre, code {
+        font-family: 'Courier New', monospace;
+        border: 1px solid #ddd;
+        padding: 5pt;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+    
+    /* تنسيق الاقتباسات */
+    blockquote {
+        border-right: 3pt solid #ccc;
+        margin: 10pt 0;
+        padding: 10pt 20pt;
+        font-style: italic;
+    }
+}
