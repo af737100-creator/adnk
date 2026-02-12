@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المساعدة والدعم - تعليمي</title>
+    <meta name="description" content="مركز المساعدة والدعم الفني لمنصة تعليمي">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
+    <link rel="stylesheet" href="../styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="help-header">
+        <div class="container">
+            <nav class="help-nav">
+                <div class="nav-brand">
+                    <a href="../index.html">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>تعليمي</span>
+                    </a>
+                </div>
+                
+                <div class="nav-links">
+                    <a href="../index.html">الرئيسية</a>
+                    <a href="about.html">من نحن</a>
+                    <a href="help.html" class="active">المساعدة</a>
+                    <a href="dashboard.html" class="btn-login">تسجيل الدخول</a>
+                </div>
+            </nav>
+            
+            <div class="help-hero">
+                <h1>كيف يمكننا مساعدتك؟</h1>
+                <p>ابحث في مقالات المساعدة أو تواصل مع فريق الدعم</p>
+                
+                <div class="help-search">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="help-search" placeholder="ابحث عن إجابة...">
+                        <button class="btn-primary" onclick="searchHelp()">بحث</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Help Content -->
+    <div class="help-container">
+        <div class="container">
+            <!-- Quick Categories -->
+            <div class="help-categories">
+                <h2>تصفح حسب الفئة</h2>
+                
+                <div class="categories-grid">
+                    <a href="#getting-started" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3>بداية الاستخدام</h3>
+                        <p>تعرف على أساسيات المنصة وكيفية البدء</p>
+                    </a>
+                    
+                    <a href="#courses" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3>الدروس التفاعلية</h3>
+                        <p>كيفية إنشاء وإدارة الدروس التفاعلية</p>
+                    </a>
+                    
+                    <a href="#classroom" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h3>الفصول التفاعلية</h3>
+                        <p>إدارة الجلسات المباشرة والسبورة التفاعلية</p>
+                    </a>
+                    
+                    <a href="#students" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>إدارة الطلاب</h3>
+                        <p>متابعة تقدم الطلاب وإحصائياتهم</p>
+                    </a>
+                    
+                    <a href="#account" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-user-cog"></i>
+                        </div>
+                        <h3>الحساب والإعدادات</h3>
+                        <p>إدارة حسابك وإعدادات الخصوصية</p>
+                    </a>
+                    
+                    <a href="#billing" class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <h3>الفواتير والاشتراكات</h3>
+                        <p>خطط الأسعار وطرق الدفع</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- FAQ Section -->
+            <div class="faq-section">
+                <h2>الأسئلة الشائعة</h2>
+                
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>كيف يمكنني إنشاء درس تفاعلي؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>لإنشاء درس تفاعلي:</p>
+                            <ol>
+                                <li>سجل الدخول إلى حسابك</li>
+                                <li>اضغط على "إنشاء درس جديد" في لوحة التحكم</li>
+                                <li>أدخل رابط فيديو يوتيوب</li>
+                                <li>أضف التفاعلات في النقاط الزمنية المناسبة</li>
+                                <li>انشر الدرس وشاركه مع طلابك</li>
+                            </ol>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>ما أنواع التفاعلات التي يمكن إضافتها؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>تدعم المنصة عدة أنواع من التفاعلات:</p>
+                            <ul>
+                                <li>أسئلة متعددة الخيارات</li>
+                                <li>اختبارات قصيرة</li>
+                                <li>شروحات إضافية مع موارد</li>
+                                <li>استطلاعات رأي</li>
+                                <li>ملاحظات وتذكيرات</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>هل يمكنني استخدام فيديوهات يوتيوب موجودة؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>نعم، المنصة مصممة خصيصاً لاستخدام فيديوهات يوتيوب الحالية. يمكنك استخدام أي فيديو تعليمي موجود وإضافة التفاعلات عليه دون الحاجة لإعادة التسجيل.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>كيف يمكنني متابعة تقدم الطلاب؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>يمكنك متابعة تقدم الطلاب من خلال:</p>
+                            <ul>
+                                <li>لوحة التحكم الرئيسية - عرض إحصائيات عامة</li>
+                                <li>صفحة التقارير - تحليلات مفصلة لكل دورة</li>
+                                <li>صفحة الطلاب - متابعة فردية لكل طالب</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>هل المنصة مجانية بالكامل؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>توفر المنصة خطة مجانية تتيح لك إنشاء 3 دروس تفاعلية و 10 طلاب لكل درس. للاستخدام غير المحدود، يمكنك الاشتراك في الخطة الاحترافية أو خطط المؤسسات.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            <span>كيف يمكنني التواصل مع الدعم الفني؟</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>يمكنك التواصل مع فريق الدعم عبر:</p>
+                            <ul>
+                                <li>البريد الإلكتروني: support@ta3lemi.com</li>
+                                <li>نموذج الاتصال المباشر أدناه</li>
+                                <li>الدردشة المباشرة (للمشتركين في الخطة الاحترافية)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Tutorials -->
+            <div class="tutorials-section">
+                <h2>دروس فيديو تعليمية</h2>
+                
+                <div class="tutorials-grid">
+                    <div class="tutorial-card">
+                        <div class="tutorial-thumbnail">
+                            <img src="https://img.youtube.com/vi/example1/0.jpg" alt="البدء السريع">
+                            <span class="tutorial-duration">5:30</span>
+                        </div>
+                        <h3>البدء السريع مع تعليمي</h3>
+                        <p>تعرف على أساسيات المنصة في 5 دقائق</p>
+                        <a href="#" class="btn-text">مشاهدة الدرس <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                    
+                    <div class="tutorial-card">
+                        <div class="tutorial-thumbnail">
+                            <img src="https://img.youtube.com/vi/example2/0.jpg" alt="إنشاء درس تفاعلي">
+                            <span class="tutorial-duration">8:45</span>
+                        </div>
+                        <h3>كيفية إنشاء درس تفاعلي</h3>
+                        <p>شرح تفصيلي لإضافة التفاعلات</p>
+                        <a href="#" class="btn-text">مشاهدة الدرس <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                    
+                    <div class="tutorial-card">
+                        <div class="tutorial-thumbnail">
+                            <img src="https://img.youtube.com/vi/example3/0.jpg" alt="الفصول التفاعلية">
+                            <span class="tutorial-duration">6:20</span>
+                        </div>
+                        <h3>إدارة الفصول التفاعلية</h3>
+                        <p>استخدام السبورة والدردشة في الجلسات المباشرة</p>
+                        <a href="#" class="btn-text">مشاهدة الدرس <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+                
+                <div class="tutorials-more">
+                    <a href="#" class="btn-secondary">عرض جميع الدروس</a>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-section">
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h2>لم تجد إجابتك؟</h2>
+                        <p>فريق الدعم الفني جاهز لمساعدتك. تواصل معنا وسنرد عليك في أقرب وقت.</p>
+                        
+                        <div class="contact-methods">
+                            <div class="contact-method">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h4>البريد الإلكتروني</h4>
+                                    <p>support@ta3lemi.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-method">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <h4>رقم الدعم</h4>
+                                    <p>+966 123 456 789</p>
+                                    <small>من الأحد إلى الخميس، 9 صباحاً - 5 مساءً</small>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-method">
+                                <i class="fas fa-comments"></i>
+                                <div>
+                                    <h4>الدردشة المباشرة</h4>
+                                    <p>متاحة للمشتركين في الخطة الاحترافية</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form">
+                        <h3>أرسل لنا رسالة</h3>
+                        
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="contact-name">الاسم</label>
+                                <input type="text" id="contact-name" placeholder="أدخل اسمك" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact-email">البريد الإلكتروني</label>
+                                <input type="email" id="contact-email" placeholder="أدخل بريدك الإلكتروني" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact-subject">الموضوع</label>
+                                <select id="contact-subject" required>
+                                    <option value="">اختر موضوع المساعدة</option>
+                                    <option value="technical">مشكلة تقنية</option>
+                                    <option value="billing">استفسار فوترة</option>
+                                    <option value="account">مشكلة في الحساب</option>
+                                    <option value="feature">اقتراح ميزة</option>
+                                    <option value="other">أخرى</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="contact-message">الرسالة</label>
+                                <textarea id="contact-message" rows="5" placeholder="اكتب رسالتك هنا..." required></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="contact-terms" required>
+                                    <span class="checkmark"></span>
+                                    أوافق على <a href="#" target="_blank">سياسة الخصوصية</a> وأقرأ <a href="#" target="_blank">شروط الاستخدام</a>
+                                </label>
+                            </div>
+                            
+                            <button type="submit" class="btn-primary btn-block">
+                                <i class="fas fa-paper-plane"></i>
+                                إرسال الرسالة
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Help Articles -->
+            <div class="articles-section">
+                <h2>مقالات وحلول</h2>
+                
+                <div class="articles-grid">
+                    <div class="article-card">
+                        <span class="article-category">دليل المعلم</span>
+                        <h3>دليل إنشاء أول درس تفاعلي</h3>
+                        <p>خطوة بخطوة لتحويل فيديو يوتيوب إلى درس تفاعلي شامل</p>
+                        <a href="#" class="btn-text">اقرأ المزيد <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                    
+                    <div class="article-card">
+                        <span class="article-category">استكشاف الأخطاء</span>
+                        <h3>حلول المشكلات الشائعة</h3>
+                        <p>مشاكل تسجيل الدخول، تحميل الفيديو، حفظ التفاعلات</p>
+                        <a href="#" class="btn-text">اقرأ المزيد <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                    
+                    <div class="article-card">
+                        <span class="article-category">دليل الطالب</span>
+                        <h3>كيفية الانضمام إلى درس تفاعلي</h3>
+                        <p>شرح مبسط للطلاب للاستفادة من الدروس التفاعلية</p>
+                        <a href="#" class="btn-text">اقرأ المزيد <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                    
+                    <div class="article-card">
+                        <span class="article-category">ميزات</span>
+                        <h3>السبورة التفاعلية: دليل كامل</h3>
+                        <p>كل ما تحتاج معرفته عن السبورة وأدواتها</p>
+                        <a href="#" class="btn-text">اقرأ المزيد <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                    
+                    <div class="article-card">
+                        <span class="article-category">تحليلات</span>
+                        <h3>قراءة التقارير والإحصائيات</h3>
+                        <p>كيف تفهم بيانات أداء طلابك وتحسن دوراتك</p>
+                        <a href="#" class="btn-text">اقرأ المزيد <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                    
+                    <div class="article-card">
+                        <span class="article-category">تكاملات</span>
+                        <h3>ربط تعليمي مع Google Classroom</h3>
+                        <p>خطوات ربط المنصة مع أنظمة إدارة التعلم</p>
+                        <a href="#" class="btn-text">اقرأ المزيد <i class="fas fa-arrow-left"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community -->
+            <div class="community-section">
+                <div class="community-content">
+                    <h2>انضم إلى مجتمع تعليمي</h2>
+                    <p>تواصل مع معلمين آخرين، شارك خبراتك، واحصل على إجابات من المجتمع</p>
+                    
+                    <div class="community-buttons">
+                        <a href="#" class="btn-primary">
+                            <i class="fab fa-discord"></i>
+                            انضم إلى Discord
+                        </a>
+                        <a href="#" class="btn-secondary">
+                            <i class="fab fa-telegram"></i>
+                            مجموعة Telegram
+                        </a>
+                        <a href="#" class="btn-secondary">
+                            <i class="fab fa-twitter"></i>
+                            تابعنا على تويتر
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>تعليمي</span>
+                    </div>
+                    <p>منصة التعلم التفاعلي الأولى التي تحول مقاطع اليوتيوب إلى تجارب تعليمية تفاعلية.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="../index.html">الرئيسية</a></li>
+                        <li><a href="about.html">من نحن</a></li>
+                        <li><a href="help.html">المساعدة</a></li>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                        <li><a href="#">شروط الاستخدام</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>تواصل معنا</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-envelope"></i> support@ta3lemi.com</li>
+                        <li><i class="fas fa-phone"></i> +966 123 456 789</li>
+                        <li><i class="fas fa-map-marker-alt"></i> الرياض، المملكة العربية السعودية</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 تعليمي. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        /**
+         * تهيئة صفحة المساعدة
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            setupFAQ();
+            setupContactForm();
+        });
+
+        /**
+         * إعداد الأسئلة الشائعة
+         */
+        function setupFAQ() {
+            document.querySelectorAll('.faq-question').forEach(button => {
+                button.addEventListener('click', () => {
+                    const faqItem = button.closest('.faq-item');
+                    const isActive = faqItem.classList.contains('active');
+                    
+                    // إغلاق جميع الفقرات المفتوحة
+                    document.querySelectorAll('.faq-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // فتح الفقرة الحالية إذا لم تكن مفتوحة
+                    if (!isActive) {
+                        faqItem.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        /**
+         * إعداد نموذج الاتصال
+         */
+        function setupContactForm() {
+            const form = document.getElementById('contact-form');
+            
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('contact-name').value;
+                const email = document.getElementById('contact-email').value;
+                const subject = document.getElementById('contact-subject').value;
+                const message = document.getElementById('contact-message').value;
+                
+                if (!name || !email || !subject || !message) {
+                    alert('الرجاء ملء جميع الحقول المطلوبة');
+                    return;
+                }
+                
+                if (!Utils.validateEmail(email)) {
+                    alert('البريد الإلكتروني غير صالح');
+                    return;
+                }
+                
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+                submitBtn.disabled = true;
+                
+                // محاكاة إرسال الرسالة
+                setTimeout(() => {
+                    alert('تم إرسال رسالتك بنجاح. سنتواصل معك قريباً.');
+                    form.reset();
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }, 1500);
+            });
+        }
+
+        /**
+         * البحث في المساعدة
+         */
+        function searchHelp() {
+            const query = document.getElementById('help-search').value;
+            
+            if (!query.trim()) {
+                alert('الرجاء إدخال كلمات البحث');
+                return;
+            }
+            
+            // محاكاة البحث
+            alert(`جاري البحث عن: ${query}\nهذه الميزة قيد التطوير.`);
+        }
+
+        /**
+         * تصدير الدوال للاستخدام العام
+         */
+        window.searchHelp = searchHelp;
+    </script>
+</body>
+</html>
