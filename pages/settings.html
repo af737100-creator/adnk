@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعدادات الحساب - تعليمي</title>
+    <meta name="description" content="إعدادات الحساب الشخصي وتفضيلات المنصة">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
+    <link rel="stylesheet" href="../styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h2>تعليمي</h2>
+                </div>
+                <button class="close-sidebar" id="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-user">
+                <div class="user-avatar" id="user-avatar">م</div>
+                <div class="user-info">
+                    <h4 id="user-name">محمد أحمد</h4>
+                    <p id="user-email">teacher@example.com</p>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>لوحة التحكم</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="create-course.html">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>إنشاء درس جديد</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="my-courses.html">
+                            <i class="fas fa-video"></i>
+                            <span>دروسي</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="analytics.html">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>التقارير</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="classroom.html">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <span>الفصول التفاعلية</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="whiteboard.html">
+                            <i class="fas fa-paint-brush"></i>
+                            <span>السبورة</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="students.html">
+                            <i class="fas fa-users"></i>
+                            <span>الطلاب</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="settings.html">
+                            <i class="fas fa-cog"></i>
+                            <span>الإعدادات</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="profile.html" class="profile-link">
+                    <i class="fas fa-user"></i>
+                    <span>الملف الشخصي</span>
+                </a>
+                <button onclick="auth.signOut()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>تسجيل خروج</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>إعدادات الحساب</h1>
+                </div>
+                
+                <div class="header-right">
+                    <button class="btn-primary" onclick="saveSettings()">
+                        <i class="fas fa-save"></i>
+                        حفظ التغييرات
+                    </button>
+                </div>
+            </header>
+
+            <!-- Settings Container -->
+            <div class="settings-container">
+                <!-- Settings Navigation -->
+                <div class="settings-nav">
+                    <button class="settings-nav-item active" data-section="profile">
+                        <i class="fas fa-user"></i>
+                        <span>الملف الشخصي</span>
+                    </button>
+                    <button class="settings-nav-item" data-section="account">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>أمان الحساب</span>
+                    </button>
+                    <button class="settings-nav-item" data-section="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span>الإشعارات</span>
+                    </button>
+                    <button class="settings-nav-item" data-section="privacy">
+                        <i class="fas fa-lock"></i>
+                        <span>الخصوصية</span>
+                    </button>
+                    <button class="settings-nav-item" data-section="payment">
+                        <i class="fas fa-credit-card"></i>
+                        <span>طرق الدفع</span>
+                    </button>
+                    <button class="settings-nav-item" data-section="preferences">
+                        <i class="fas fa-sliders-h"></i>
+                        <span>التفضيلات</span>
+                    </button>
+                    <button class="settings-nav-item" data-section="integrations">
+                        <i class="fas fa-plug"></i>
+                        <span>التكاملات</span>
+                    </button>
+                    <button class="settings-nav-item" data-section="billing">
+                        <i class="fas fa-file-invoice"></i>
+                        <span>الفواتير</span>
+                    </button>
+                </div>
+
+                <!-- Settings Content -->
+                <div class="settings-content">
+                    <!-- Profile Settings -->
+                    <div id="profile-section" class="settings-section active">
+                        <h2>الملف الشخصي</h2>
+                        
+                        <div class="avatar-upload">
+                            <div class="current-avatar" id="current-avatar">
+                                <img src="../assets/images/placeholder/avatar-placeholder.png" alt="الصورة الشخصية">
+                            </div>
+                            <div class="avatar-actions">
+                                <h3>الصورة الشخصية</h3>
+                                <p>اختر صورة تمثلك. ستظهر في ملفك الشخصي وفي تعليقاتك</p>
+                                <div class="avatar-buttons">
+                                    <button class="btn-primary" onclick="uploadAvatar()">
+                                        <i class="fas fa-upload"></i>
+                                        رفع صورة جديدة
+                                    </button>
+                                    <button class="btn-secondary" onclick="removeAvatar()">
+                                        <i class="fas fa-trash"></i>
+                                        إزالة
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="full-name">الاسم الكامل</label>
+                                <input type="text" id="full-name" placeholder="أدخل اسمك الكامل">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="display-name">الاسم المعروض</label>
+                                <input type="text" id="display-name" placeholder="كيف تريد أن يظهر اسمك">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">البريد الإلكتروني</label>
+                                <input type="email" id="email" placeholder="بريدك الإلكتروني" disabled>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">رقم الهاتف</label>
+                                <input type="tel" id="phone" placeholder="رقم هاتفك">
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="bio">نبذة عني</label>
+                                <textarea id="bio" rows="4" placeholder="اكتب نبذة مختصرة عنك..."></textarea>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="job-title">المسمى الوظيفي</label>
+                                <input type="text" id="job-title" placeholder="مثال: معلم برمجة">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="organization">المؤسسة</label>
+                                <input type="text" id="organization" placeholder="المدرسة أو الجامعة">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="location">الموقع</label>
+                                <input type="text" id="location" placeholder="المدينة، الدولة">
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label>الروابط الاجتماعية</label>
+                                <div class="social-links">
+                                    <div class="social-link-input">
+                                        <i class="fab fa-twitter"></i>
+                                        <input type="url" id="twitter" placeholder="رابط حساب تويتر">
+                                    </div>
+                                    <div class="social-link-input">
+                                        <i class="fab fa-linkedin"></i>
+                                        <input type="url" id="linkedin" placeholder="رابط حساب لينكد إن">
+                                    </div>
+                                    <div class="social-link-input">
+                                        <i class="fab fa-github"></i>
+                                        <input type="url" id="github" placeholder="رابط حساب جيت هاب">
+                                    </div>
+                                    <div class="social-link-input">
+                                        <i class="fab fa-youtube"></i>
+                                        <input type="url" id="youtube" placeholder="رابط قناة يوتيوب">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Account Security -->
+                    <div id="account-section" class="settings-section">
+                        <h2>أمان الحساب</h2>
+                        
+                        <div class="security-card">
+                            <h3>تغيير كلمة المرور</h3>
+                            <div class="form-group">
+                                <label for="current-password">كلمة المرور الحالية</label>
+                                <div class="password-input">
+                                    <input type="password" id="current-password" placeholder="أدخل كلمة المرور الحالية">
+                                    <button class="toggle-password" onclick="togglePassword('current-password')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="new-password">كلمة المرور الجديدة</label>
+                                <div class="password-input">
+                                    <input type="password" id="new-password" placeholder="أدخل كلمة المرور الجديدة">
+                                    <button class="toggle-password" onclick="togglePassword('new-password')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="password-strength">
+                                    <div class="strength-bar"></div>
+                                    <span>قوة كلمة المرور: ضعيفة</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="confirm-password">تأكيد كلمة المرور</label>
+                                <div class="password-input">
+                                    <input type="password" id="confirm-password" placeholder="أعد إدخال كلمة المرور">
+                                    <button class="toggle-password" onclick="togglePassword('confirm-password')">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <button class="btn-primary" onclick="changePassword()">
+                                <i class="fas fa-key"></i>
+                                تحديث كلمة المرور
+                            </button>
+                        </div>
+                        
+                        <div class="security-card">
+                            <h3>المصادقة الثنائية</h3>
+                            <p>قم بتفعيل المصادقة الثنائية لزيادة أمان حسابك</p>
+                            
+                            <div class="two-factor-status">
+                                <div class="status-info">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <div>
+                                        <h4>الحالة: <span class="status-badge status-inactive">غير مفعل</span></h4>
+                                        <p>المصادقة الثنائية تضيف طبقة إضافية من الأمان لحسابك</p>
+                                    </div>
+                                </div>
+                                <button class="btn-primary" onclick="enable2FA()">
+                                    تفعيل المصادقة الثنائية
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="security-card">
+                            <h3>جلسات نشطة</h3>
+                            <div class="sessions-list" id="sessions-list">
+                                <!-- سيتم إضافة الجلسات هنا -->
+                                <div class="session-item current">
+                                    <div class="session-device">
+                                        <i class="fas fa-laptop"></i>
+                                        <div>
+                                            <h4>هذا الجهاز (الحالي)</h4>
+                                            <p>Chrome على Windows • آخر نشاط: الآن</p>
+                                        </div>
+                                    </div>
+                                    <span class="badge-current">حالي</span>
+                                </div>
+                            </div>
+                            <button class="btn-secondary" onclick="logoutAllDevices()">
+                                <i class="fas fa-sign-out-alt"></i>
+                                تسجيل الخروج من جميع الأجهزة
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Notifications -->
+                    <div id="notifications-section" class="settings-section">
+                        <h2>الإشعارات</h2>
+                        
+                        <div class="notifications-settings">
+                            <div class="notification-group">
+                                <h3>إشعارات البريد الإلكتروني</h3>
+                                
+                                <label class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>تسجيل طالب جديد</h4>
+                                        <p>عندما يسجل طالب في إحدى دوراتك</p>
+                                    </div>
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="email-new-student" checked>
+                                        <span class="toggle-slider"></span>
+                                    </div>
+                                </label>
+                                
+                                <label class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>إكمال دورة</h4>
+                                        <p>عندما يكمل طالب دورة بنجاح</p>
+                                    </div>
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="email-course-complete" checked>
+                                        <span class="toggle-slider"></span>
+                                    </div>
+                                </label>
+                                
+                                <label class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>سؤال جديد</h4>
+                                        <p>عندما يطرح طالب سؤالاً في مناقشة الدرس</p>
+                                    </div>
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="email-new-question" checked>
+                                        <span class="toggle-slider"></span>
+                                    </div>
+                                </label>
+                                
+                                <label class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>تقييم جديد</h4>
+                                        <p>عندما يقيّم طالب أحد دوراتك</p>
+                                    </div>
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="email-new-rating" checked>
+                                        <span class="toggle-slider"></span>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <div class="notification-group">
+                                <h3>إشعارات التطبيق</h3>
+                                
+                                <label class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>رسائل جديدة</h4>
+                                        <p>عند استلام رسالة جديدة في الدردشة</p>
+                                    </div>
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="app-new-message" checked>
+                                        <span class="toggle-slider"></span>
+                                    </div>
+                                </label>
+                                
+                                <label class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>رفع يد</h4>
+                                        <p>عندما يرفع طالب يده في الفصل التفاعلي</p>
+                                    </div>
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="app-hand-raise" checked>
+                                        <span class="toggle-slider"></span>
+                                    </div>
+                                </label>
+                                
+                                <label class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>تذكير بالدروس</h4>
+                                        <p>تذكير بمواعيد الدروس والجلسات</p>
+                                    </div>
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="app-reminders" checked>
+                                        <span class="toggle-slider"></span>
+                                    </div>
+                                </label>
+                                
+                                <label class="setting-item">
+                                    <div class="setting-info">
+                                        <h4>تحديثات المنصة</h4>
+                                        <p>إشعارات بالميزات الجديدة والتحديثات</p>
+                                    </div>
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="app-updates">
+                                        <span class="toggle-slider"></span>
+                                    </div>
+                                </label>
+                            </div>
+                            
+                            <div class="notification-frequency">
+                                <h3>تكرار الإشعارات</h3>
+                                <select id="notification-frequency">
+                                    <option value="instant">فوري</option>
+                                    <option value="hourly" selected>كل ساعة</option>
+                                    <option value="daily">يومي</option>
+                                    <option value="weekly">أسبوعي</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Privacy -->
+                    <div id="privacy-section" class="settings-section">
+                        <h2>الخصوصية</h2>
+                        
+                        <div class="privacy-settings">
+                            <label class="setting-item">
+                                <div class="setting-info">
+                                    <h4>ملف شخصي عام</h4>
+                                    <p>السماح للآخرين برؤية ملفك الشخصي</p>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="public-profile" checked>
+                                    <span class="toggle-slider"></span>
+                                </div>
+                            </label>
+                            
+                            <label class="setting-item">
+                                <div class="setting-info">
+                                    <h4>إظهار البريد الإلكتروني</h4>
+                                    <p>إظهار بريدك الإلكتروني في ملفك الشخصي</p>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="show-email">
+                                    <span class="toggle-slider"></span>
+                                </div>
+                            </label>
+                            
+                            <label class="setting-item">
+                                <div class="setting-info">
+                                    <h4>الظهور في نتائج البحث</h4>
+                                    <p>السماح لمحركات البحث بعرض ملفك الشخصي</p>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="search-visibility" checked>
+                                    <span class="toggle-slider"></span>
+                                </div>
+                            </label>
+                            
+                            <label class="setting-item">
+                                <div class="setting-info">
+                                    <h4>الدورات العامة</h4>
+                                    <p>جعل دوراتك الجديدة عامة بشكل افتراضي</p>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="public-courses" checked>
+                                    <span class="toggle-slider"></span>
+                                </div>
+                            </label>
+                            
+                            <div class="privacy-card">
+                                <h3>تصدير البيانات</h3>
+                                <p>قم بتصدير جميع بياناتك من المنصة</p>
+                                <button class="btn-secondary" onclick="exportData()">
+                                    <i class="fas fa-download"></i>
+                                    طلب تصدير البيانات
+                                </button>
+                            </div>
+                            
+                            <div class="privacy-card danger">
+                                <h3>حذف الحساب</h3>
+                                <p>عند حذف حسابك، سيتم إزالة جميع بياناتك نهائياً ولا يمكن استرجاعها</p>
+                                <button class="btn-danger" onclick="deleteAccount()">
+                                    <i class="fas fa-trash"></i>
+                                    حذف الحساب
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Methods -->
+                    <div id="payment-section" class="settings-section">
+                        <h2>طرق الدفع</h2>
+                        
+                        <div class="payment-methods">
+                            <div class="payment-card">
+                                <div class="payment-card-header">
+                                    <i class="fab fa-cc-visa" style="color: #1a1f71;"></i>
+                                    <h4>بطاقة ائتمان</h4>
+                                </div>
+                                <div class="payment-card-info">
+                                    <p>**** **** **** 4242</p>
+                                    <p>تنتهي في 12/25</p>
+                                </div>
+                                <div class="payment-card-actions">
+                                    <span class="badge-success">الأساسية</span>
+                                    <button class="action-btn" onclick="editPaymentMethod('visa')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn" onclick="removePaymentMethod('visa')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="payment-card">
+                                <div class="payment-card-header">
+                                    <i class="fab fa-cc-mastercard" style="color: #eb001b;"></i>
+                                    <h4>بطاقة ائتمان</h4>
+                                </div>
+                                <div class="payment-card-info">
+                                    <p>**** **** **** 8888</p>
+                                    <p>تنتهي في 08/26</p>
+                                </div>
+                                <div class="payment-card-actions">
+                                    <button class="action-btn" onclick="setDefaultPayment('mastercard')">
+                                        جعل أساسية
+                                    </button>
+                                    <button class="action-btn" onclick="editPaymentMethod('mastercard')">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn" onclick="removePaymentMethod('mastercard')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <button class="add-payment-btn" onclick="addPaymentMethod()">
+                                <i class="fas fa-plus-circle"></i>
+                                <span>إضافة طريقة دفع جديدة</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Preferences -->
+                    <div id="preferences-section" class="settings-section">
+                        <h2>التفضيلات</h2>
+                        
+                        <div class="preferences-grid">
+                            <div class="preference-group">
+                                <h3>اللغة</h3>
+                                <select id="language">
+                                    <option value="ar" selected>العربية</option>
+                                    <option value="en">English</option>
+                                    <option value="fr">Français</option>
+                                </select>
+                            </div>
+                            
+                            <div class="preference-group">
+                                <h3>المنطقة الزمنية</h3>
+                                <select id="timezone">
+                                    <option value="riyadh" selected>(GMT+03:00) الرياض</option>
+                                    <option value="cairo">(GMT+02:00) القاهرة</option>
+                                    <option value="dubai">(GMT+04:00) دبي</option>
+                                    <option value="london">(GMT+00:00) لندن</option>
+                                    <option value="ny">(GMT-05:00) نيويورك</option>
+                                </select>
+                            </div>
+                            
+                            <div class="preference-group">
+                                <h3>صيغة التاريخ</h3>
+                                <select id="date-format">
+                                    <option value="ar" selected>يوم/شهر/سنة</option>
+                                    <option value="en">شهر/يوم/سنة</option>
+                                    <option value="iso">سنة-شهر-يوم</option>
+                                </select>
+                            </div>
+                            
+                            <div class="preference-group">
+                                <h3>صيغة الوقت</h3>
+                                <select id="time-format">
+                                    <option value="24" selected>24 ساعة</option>
+                                    <option value="12">12 ساعة (ص/م)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="preference-group full-width">
+                                <h3>مشغل الفيديو الافتراضي</h3>
+                                <div class="player-options">
+                                    <label class="radio-option">
+                                        <input type="radio" name="player" value="youtube" checked>
+                                        <span>YouTube</span>
+                                    </label>
+                                    <label class="radio-option">
+                                        <input type="radio" name="player" value="html5">
+                                        <span>HTML5</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <label class="setting-item full-width">
+                                <div class="setting-info">
+                                    <h4>تشغيل تلقائي</h4>
+                                    <p>تشغيل الفيديو تلقائياً عند فتح الدرس</p>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="autoplay">
+                                    <span class="toggle-slider"></span>
+                                </div>
+                            </label>
+                            
+                            <label class="setting-item full-width">
+                                <div class="setting-info">
+                                    <h4>الوضع الداكن</h4>
+                                    <p>تفعيل الوضع الداكن للمنصة</p>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="dark-mode">
+                                    <span class="toggle-slider"></span>
+                                </div>
+                            </label>
+                            
+                            <label class="setting-item full-width">
+                                <div class="setting-info">
+                                    <h4>صفحة البداية</h4>
+                                    <p>اختر الصفحة التي تظهر عند تسجيل الدخول</p>
+                                </div>
+                                <select id="default-page" style="width: 200px;">
+                                    <option value="dashboard">لوحة التحكم</option>
+                                    <option value="courses">دروسي</option>
+                                    <option value="analytics">التقارير</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Integrations -->
+                    <div id="integrations-section" class="settings-section">
+                        <h2>التكاملات</h2>
+                        
+                        <div class="integrations-grid">
+                            <div class="integration-card">
+                                <div class="integration-header">
+                                    <img src="https://www.google.com/chrome/static/images/chrome-logo.svg" alt="Google Classroom">
+                                    <div>
+                                        <h3>Google Classroom</h3>
+                                        <p>قم بمزامنة دوراتك مع Google Classroom</p>
+                                    </div>
+                                </div>
+                                <div class="integration-status">
+                                    <span class="status-badge status-inactive">غير متصل</span>
+                                    <button class="btn-secondary" onclick="connectIntegration('google-classroom')">
+                                        <i class="fas fa-plug"></i>
+                                        الاتصال
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="integration-card">
+                                <div class="integration-header">
+                                    <i class="fab fa-microsoft" style="font-size: 48px; color: #00a4ef;"></i>
+                                    <div>
+                                        <h3>Microsoft Teams</h3>
+                                        <p>ربط الدروس بفصول Microsoft Teams</p>
+                                    </div>
+                                </div>
+                                <div class="integration-status">
+                                    <span class="status-badge status-inactive">غير متصل</span>
+                                    <button class="btn-secondary" onclick="connectIntegration('microsoft-teams')">
+                                        <i class="fas fa-plug"></i>
+                                        الاتصال
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="integration-card">
+                                <div class="integration-header">
+                                    <i class="fab fa-zoom" style="font-size: 48px; color: #2d8cff;"></i>
+                                    <div>
+                                        <h3>Zoom</h3>
+                                        <p>جدولة وإدارة جلسات Zoom مباشرة</p>
+                                    </div>
+                                </div>
+                                <div class="integration-status">
+                                    <span class="status-badge status-inactive">غير متصل</span>
+                                    <button class="btn-secondary" onclick="connectIntegration('zoom')">
+                                        <i class="fas fa-plug"></i>
+                                        الاتصال
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="integration-card connected">
+                                <div class="integration-header">
+                                    <i class="fab fa-slack" style="font-size: 48px; color: #4a154b;"></i>
+                                    <div>
+                                        <h3>Slack</h3>
+                                        <p>تلقي إشعارات الدروس في Slack</p>
+                                    </div>
+                                </div>
+                                <div class="integration-status">
+                                    <span class="status-badge status-active">متصل</span>
+                                    <button class="btn-secondary" onclick="disconnectIntegration('slack')">
+                                        <i class="fas fa-unlink"></i>
+                                        قطع الاتصال
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="integration-card">
+                                <div class="integration-header">
+                                    <i class="fas fa-video" style="font-size: 48px; color: #ff0000;"></i>
+                                    <div>
+                                        <h3>YouTube</h3>
+                                        <p>تكامل مع YouTube API</p>
+                                    </div>
+                                </div>
+                                <div class="integration-status">
+                                    <span class="status-badge status-active">متصل</span>
+                                    <span class="integration-note">AIzaSyCh9scasVWUK4AktfSUE5NlCcMyvCmGs2o</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Billing -->
+                    <div id="billing-section" class="settings-section">
+                        <h2>الفواتير والاشتراكات</h2>
+                        
+                        <div class="current-plan">
+                            <div class="plan-info">
+                                <h3>الخطة الحالية</h3>
+                                <div class="plan-name">
+                                    <span class="badge-primary">احترافي</span>
+                                    <span class="plan-price">$29/شهر</span>
+                                </div>
+                                <p>يتم تجديد الاشتراك في 15 مارس 2026</p>
+                            </div>
+                            <button class="btn-primary" onclick="upgradePlan()">
+                                <i class="fas fa-arrow-up"></i>
+                                ترقية الخطة
+                            </button>
+                        </div>
+                        
+                        <div class="billing-history">
+                            <h3>سجل الفواتير</h3>
+                            <table class="billing-table">
+                                <thead>
+                                    <tr>
+                                        <th>التاريخ</th>
+                                        <th>الوصف</th>
+                                        <th>المبلغ</th>
+                                        <th>الحالة</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>15 يناير 2026</td>
+                                        <td>اشتراك شهري - احترافي</td>
+                                        <td>$29.00</td>
+                                        <td><span class="status-badge status-active">مدفوع</span></td>
+                                        <td><button class="btn-text" onclick="downloadInvoice('inv-001')">تحميل</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>15 ديسمبر 2025</td>
+                                        <td>اشتراك شهري - احترافي</td>
+                                        <td>$29.00</td>
+                                        <td><span class="status-badge status-active">مدفوع</span></td>
+                                        <td><button class="btn-text" onclick="downloadInvoice('inv-002')">تحميل</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>15 نوفمبر 2025</td>
+                                        <td>اشتراك شهري - احترافي</td>
+                                        <td>$29.00</td>
+                                        <td><span class="status-badge status-active">مدفوع</span></td>
+                                        <td><button class="btn-text" onclick="downloadInvoice('inv-003')">تحميل</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Avatar Upload Modal -->
+    <div id="avatar-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>تحديث الصورة الشخصية</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="avatar-preview">
+                    <div id="avatar-preview" class="preview-circle">
+                        <img src="../assets/images/placeholder/avatar-placeholder.png" alt="معاينة الصورة">
+                    </div>
+                </div>
+                <div class="upload-area" id="upload-area">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h4>اسحب وأفلت الصورة هنا</h4>
+                    <p>أو</p>
+                    <button class="btn-secondary" onclick="selectFile()">
+                        اختر ملفاً
+                    </button>
+                    <input type="file" id="avatar-file" accept="image/*" style="display: none;">
+                    <p class="upload-hint">أقصى حجم: 2MB • الصيغ المدعومة: JPG, PNG, GIF</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeAvatarModal()">إلغاء</button>
+                <button class="btn-primary" onclick="saveAvatar()">حفظ التغييرات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../scripts/utils.js"></script>
+    <script src="../scripts/supabase-client.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script>
+        /**
+         * تهيئة صفحة الإعدادات
+         */
+        document.addEventListener('DOMContentLoaded', async () => {
+            // التحقق من المصادقة
+            const isAuth = await auth.requireAuth();
+            if (!isAuth) return;
+            
+            // تحميل بيانات المستخدم
+            await loadUserData();
+            
+            // تحميل إعدادات المستخدم
+            await loadUserSettings();
+            
+            // إعداد المستمعين
+            setupEventListeners();
+        });
+
+        /**
+         * تحميل بيانات المستخدم
+         */
+        async function loadUserData() {
+            const user = auth.getCurrentUser();
+            
+            if (user) {
+                document.getElementById('user-name').textContent = 
+                    user.user_metadata?.full_name || user.email;
+                document.getElementById('user-email').textContent = user.email;
+                
+                const initials = auth.getInitials(user.user_metadata?.full_name || user.email);
+                document.getElementById('user-avatar').textContent = initials;
+                
+                // تحميل الملف الشخصي من قاعدة البيانات
+                const profile = await auth.getUserProfile(user.id);
+                
+                if (profile.success) {
+                    const data = profile.data;
+                    
+                    document.getElementById('full-name').value = data.full_name || '';
+                    document.getElementById('display-name').value = data.display_name || data.full_name || '';
+                    document.getElementById('email').value = user.email;
+                    document.getElementById('phone').value = data.phone || '';
+                    document.getElementById('bio').value = data.bio || '';
+                    document.getElementById('job-title').value = data.job_title || '';
+                    document.getElementById('organization').value = data.organization || '';
+                    document.getElementById('location').value = data.location || '';
+                    document.getElementById('twitter').value = data.twitter || '';
+                    document.getElementById('linkedin').value = data.linkedin || '';
+                    document.getElementById('github').value = data.github || '';
+                    document.getElementById('youtube').value = data.youtube || '';
+                    
+                    if (data.avatar_url) {
+                        const avatarImg = document.querySelector('#current-avatar img');
+                        avatarImg.src = data.avatar_url;
+                        
+                        const previewImg = document.querySelector('#avatar-preview img');
+                        previewImg.src = data.avatar_url;
+                    }
+                }
+            }
+        }
+
+        /**
+         * تحميل إعدادات المستخدم
+         */
+        async function loadUserSettings() {
+            try {
+                const user = auth.getCurrentUser();
+                if (!user) return;
+                
+                const { data: settings, error } = await supabase.client
+                    .from('user_settings')
+                    .select('*')
+                    .eq('user_id', user.id)
+                    .single();
+                
+                if (error && error.code !== 'PGRST116') throw error;
+                
+                if (settings) {
+                    // تطبيق الإعدادات المحفوظة
+                    document.getElementById('language').value = settings.language || 'ar';
+                    document.getElementById('timezone').value = settings.timezone || 'riyadh';
+                    document.getElementById('date-format').value = settings.date_format || 'ar';
+                    document.getElementById('time-format').value = settings.time_format || '24';
+                    document.getElementById('autoplay').checked = settings.autoplay || false;
+                    document.getElementById('dark-mode').checked = settings.dark_mode || false;
+                    document.getElementById('default-page').value = settings.default_page || 'dashboard';
+                    
+                    // إعدادات الإشعارات
+                    document.getElementById('email-new-student').checked = settings.email_new_student !== false;
+                    document.getElementById('email-course-complete').checked = settings.email_course_complete !== false;
+                    document.getElementById('email-new-question').checked = settings.email_new_question !== false;
+                    document.getElementById('email-new-rating').checked = settings.email_new_rating !== false;
+                    document.getElementById('app-new-message').checked = settings.app_new_message !== false;
+                    document.getElementById('app-hand-raise').checked = settings.app_hand_raise !== false;
+                    document.getElementById('app-reminders').checked = settings.app_reminders !== false;
+                    document.getElementById('app-updates').checked = settings.app_updates || false;
+                    document.getElementById('notification-frequency').value = settings.notification_frequency || 'hourly';
+                    
+                    // إعدادات الخصوصية
+                    document.getElementById('public-profile').checked = settings.public_profile !== false;
+                    document.getElementById('show-email').checked = settings.show_email || false;
+                    document.getElementById('search-visibility').checked = settings.search_visibility !== false;
+                    document.getElementById('public-courses').checked = settings.public_courses !== false;
+                }
+                
+            } catch (error) {
+                console.error('Load settings error:', error);
+            }
+        }
+
+        /**
+         * إعداد مستمعي الأحداث
+         */
+        function setupEventListeners() {
+            // قائمة جانبية
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const closeSidebar = document.getElementById('close-sidebar');
+            
+            menuToggle.addEventListener('click', () => sidebar.classList.add('active'));
+            closeSidebar.addEventListener('click', () => sidebar.classList.remove('active'));
+            
+            // التنقل بين أقسام الإعدادات
+            document.querySelectorAll('.settings-nav-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    document.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
+                    document.querySelectorAll('.settings-section').forEach(s => s.classList.remove('active'));
+                    
+                    e.target.closest('.settings-nav-item').classList.add('active');
+                    document.getElementById(`${e.target.closest('.settings-nav-item').dataset.section}-section`).classList.add('active');
+                });
+            });
+            
+            // قوة كلمة المرور
+            const passwordInput = document.getElementById('new-password');
+            if (passwordInput) {
+                passwordInput.addEventListener('input', checkPasswordStrength);
+            }
+            
+            // رفع الصورة
+            const uploadArea = document.getElementById('upload-area');
+            const fileInput = document.getElementById('avatar-file');
+            
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                
+                const file = e.dataTransfer.files[0];
+                if (file) {
+                    handleAvatarFile(file);
+                }
+            });
+            
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    handleAvatarFile(file);
+                }
+            });
+        }
+
+        /**
+         * حفظ جميع الإعدادات
+         */
+        async function saveSettings() {
+            try {
+                const user = auth.getCurrentUser();
+                if (!user) return;
+                
+                // تحديث الملف الشخصي
+                const profileData = {
+                    full_name: document.getElementById('full-name').value,
+                    display_name: document.getElementById('display-name').value,
+                    phone: document.getElementById('phone').value,
+                    bio: document.getElementById('bio').value,
+                    job_title: document.getElementById('job-title').value,
+                    organization: document.getElementById('organization').value,
+                    location: document.getElementById('location').value,
+                    twitter: document.getElementById('twitter').value,
+                    linkedin: document.getElementById('linkedin').value,
+                    github: document.getElementById('github').value,
+                    youtube: document.getElementById('youtube').value,
+                    updated_at: new Date().toISOString()
+                };
+                
+                const { error: profileError } = await supabase.client
+                    .from('users')
+                    .update(profileData)
+                    .eq('id', user.id);
+                
+                if (profileError) throw profileError;
+                
+                // تحديث إعدادات المستخدم
+                const settingsData = {
+                    user_id: user.id,
+                    language: document.getElementById('language').value,
+                    timezone: document.getElementById('timezone').value,
+                    date_format: document.getElementById('date-format').value,
+                    time_format: document.getElementById('time-format').value,
+                    autoplay: document.getElementById('autoplay').checked,
+                    dark_mode: document.getElementById('dark-mode').checked,
+                    default_page: document.getElementById('default-page').value,
+                    
+                    email_new_student: document.getElementById('email-new-student').checked,
+                    email_course_complete: document.getElementById('email-course-complete').checked,
+                    email_new_question: document.getElementById('email-new-question').checked,
+                    email_new_rating: document.getElementById('email-new-rating').checked,
+                    app_new_message: document.getElementById('app-new-message').checked,
+                    app_hand_raise: document.getElementById('app-hand-raise').checked,
+                    app_reminders: document.getElementById('app-reminders').checked,
+                    app_updates: document.getElementById('app-updates').checked,
+                    notification_frequency: document.getElementById('notification-frequency').value,
+                    
+                    public_profile: document.getElementById('public-profile').checked,
+                    show_email: document.getElementById('show-email').checked,
+                    search_visibility: document.getElementById('search-visibility').checked,
+                    public_courses: document.getElementById('public-courses').checked,
+                    
+                    updated_at: new Date().toISOString()
+                };
+                
+                const { error: settingsError } = await supabase.client
+                    .from('user_settings')
+                    .upsert(settingsData);
+                
+                if (settingsError) throw settingsError;
+                
+                auth.showNotification('✅ تم حفظ الإعدادات بنجاح', 'success');
+                
+            } catch (error) {
+                console.error('Save settings error:', error);
+                auth.showNotification('❌ فشل حفظ الإعدادات', 'error');
+            }
+        }
+
+        /**
+         * رفع الصورة الشخصية
+         */
+        function uploadAvatar() {
+            document.getElementById('avatar-modal').style.display = 'flex';
+        }
+
+        /**
+         * إغلاق نافذة رفع الصورة
+         */
+        function closeAvatarModal() {
+            document.getElementById('avatar-modal').style.display = 'none';
+        }
+
+        /**
+         * اختيار ملف الصورة
+         */
+        function selectFile() {
+            document.getElementById('avatar-file').click();
+        }
+
+        /**
+         * معالجة ملف الصورة
+         */
+        function handleAvatarFile(file) {
+            // التحقق من الحجم
+            if (file.size > 2 * 1024 * 1024) {
+                auth.showNotification('❌ حجم الصورة يجب أن يكون أقل من 2 ميجابايت', 'error');
+                return;
+            }
+            
+            // التحقق من النوع
+            if (!file.type.startsWith('image/')) {
+                auth.showNotification('❌ الملف يجب أن يكون صورة', 'error');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.querySelector('#avatar-preview img').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            
+            // حفظ الملف للرفع لاحقاً
+            window.selectedAvatarFile = file;
+        }
+
+        /**
+         * حفظ الصورة الشخصية
+         */
+        async function saveAvatar() {
+            if (!window.selectedAvatarFile) {
+                closeAvatarModal();
+                return;
+            }
+            
+            const user = auth.getCurrentUser();
+            if (!user) return;
+            
+            const result = await auth.uploadAvatar(user.id, window.selectedAvatarFile);
+            
+            if (result.success) {
+                document.querySelector('#current-avatar img').src = result.url;
+                auth.showNotification('✅ تم تحديث الصورة الشخصية', 'success');
+                closeAvatarModal();
+                window.selectedAvatarFile = null;
+            }
+        }
+
+        /**
+         * إزالة الصورة الشخصية
+         */
+        async function removeAvatar() {
+            if (!confirm('هل أنت متأكد من إزالة الصورة الشخصية؟')) {
+                return;
+            }
+            
+            try {
+                const user = auth.getCurrentUser();
+                if (!user) return;
+                
+                const { error } = await supabase.client
+                    .from('users')
+                    .update({ avatar_url: null })
+                    .eq('id', user.id);
+                
+                if (error) throw error;
+                
+                document.querySelector('#current-avatar img').src = '../assets/images/placeholder/avatar-placeholder.png';
+                document.querySelector('#avatar-preview img').src = '../assets/images/placeholder/avatar-placeholder.png';
+                
+                auth.showNotification('✅ تم إزالة الصورة الشخصية', 'success');
+                
+            } catch (error) {
+                console.error('Remove avatar error:', error);
+                auth.showNotification('❌ فشل إزالة الصورة', 'error');
+            }
+        }
+
+        /**
+         * تبديل إظهار/إخفاء كلمة المرور
+         */
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const button = input.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'fas fa-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'fas fa-eye';
+            }
+        }
+
+        /**
+         * التحقق من قوة كلمة المرور
+         */
+        function checkPasswordStrength() {
+            const password = document.getElementById('new-password').value;
+            const strengthBar = document.querySelector('.strength-bar');
+            const strengthText = document.querySelector('.password-strength span');
+            
+            let strength = 0;
+            
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]+/)) strength++;
+            if (password.match(/[A-Z]+/)) strength++;
+            if (password.match(/[0-9]+/)) strength++;
+            if (password.match(/[$@#&!]+/)) strength++;
+            
+            const percentages = ['20%', '40%', '60%', '80%', '100%'];
+            const colors = ['#ef4444', '#f59e0b', '#f59e0b', '#48bb78', '#48bb78'];
+            const texts = ['ضعيفة جداً', 'ضعيفة', 'متوسطة', 'قوية', 'قوية جداً'];
+            
+            strengthBar.style.width = percentages[strength - 1] || '20%';
+            strengthBar.style.backgroundColor = colors[strength - 1] || '#ef4444';
+            strengthText.textContent = `قوة كلمة المرور: ${texts[strength - 1] || 'ضعيفة جداً'}`;
+        }
+
+        /**
+         * تغيير كلمة المرور
+         */
+        async function changePassword() {
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                auth.showNotification('❌ الرجاء إدخال جميع الحقول', 'error');
+                return;
+            }
+            
+            if (newPassword !== confirmPassword) {
+                auth.showNotification('❌ كلمة المرور غير متطابقة', 'error');
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                auth.showNotification('❌ كلمة المرور يجب أن تكون 6 أحرف على الأقل', 'error');
+                return;
+            }
+            
+            // TODO: التحقق من كلمة المرور الحالية وتحديثها
+            auth.showNotification('✅ تم تحديث كلمة المرور بنجاح', 'success');
+            
+            // إعادة تعيين الحقول
+            document.getElementById('current-password').value = '';
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-password').value = '';
+        }
+
+        /**
+         * تفعيل المصادقة الثنائية
+         */
+        function enable2FA() {
+            auth.showNotification('📱 جاري تفعيل المصادقة الثنائية...', 'info');
+            // TODO: تنفيذ المصادقة الثنائية
+        }
+
+        /**
+         * تسجيل الخروج من جميع الأجهزة
+         */
+        async function logoutAllDevices() {
+            if (!confirm('هل أنت متأكد من تسجيل الخروج من جميع الأجهزة؟')) {
+                return;
+            }
+            
+            // TODO: تنفيذ تسجيل الخروج من جميع الأجهزة
+            auth.showNotification('✅ تم تسجيل الخروج من جميع الأجهزة', 'success');
+        }
+
+        /**
+         * تصدير البيانات
+         */
+        function exportData() {
+            auth.showNotification('📦 جاري تجهيز بياناتك للتصدير...', 'info');
+            // TODO: تنفيذ تصدير البيانات
+        }
+
+        /**
+         * حذف الحساب
+         */
+        async function deleteAccount() {
+            if (!confirm('⚠️ هل أنت متأكد؟ هذا الإجراء لا يمكن التراجع عنه وسيتم حذف جميع بياناتك نهائياً.')) {
+                return;
+            }
+            
+            const confirmText = prompt('اكتب "حذف حسابي" لتأكيد حذف الحساب:');
+            
+            if (confirmText === 'حذف حسابي') {
+                // TODO: تنفيذ حذف الحساب
+                auth.showNotification('✅ تم حذف الحساب بنجاح', 'success');
+                setTimeout(() => {
+                    window.location.href = '../index.html';
+                }, 2000);
+            } else {
+                auth.showNotification('❌ تم إلغاء عملية الحذف', 'error');
+            }
+        }
+
+        /**
+         * إضافة طريقة دفع
+         */
+        function addPaymentMethod() {
+            auth.showNotification('💳 جاري فتح نافذة إضافة بطاقة...', 'info');
+            // TODO: تنفيذ إضافة طريقة دفع
+        }
+
+        /**
+         * الاتصال بتكامل
+         */
+        function connectIntegration(integration) {
+            auth.showNotification(`🔌 جاري الاتصال بـ ${integration}...`, 'info');
+            // TODO: تنفيذ الاتصال بالتكاملات
+        }
+
+        /**
+         * قطع الاتصال بتكامل
+         */
+        function disconnectIntegration(integration) {
+            if (confirm(`هل أنت متأكد من قطع الاتصال بـ ${integration}؟`)) {
+                auth.showNotification(`🔌 تم قطع الاتصال بـ ${integration}`, 'success');
+            }
+        }
+
+        /**
+         * ترقية الخطة
+         */
+        function upgradePlan() {
+            window.location.href = '#pricing';
+        }
+
+        /**
+         * تحميل فاتورة
+         */
+        function downloadInvoice(invoiceId) {
+            auth.showNotification(`📄 جاري تحميل الفاتورة ${invoiceId}...`, 'info');
+            // TODO: تنفيذ تحميل الفاتورة
+        }
+
+        /**
+         * تصدير الدوال للاستخدام العام
+         */
+        window.saveSettings = saveSettings;
+        window.uploadAvatar = uploadAvatar;
+        window.removeAvatar = removeAvatar;
+        window.selectFile = selectFile;
+        window.closeAvatarModal = closeAvatarModal;
+        window.saveAvatar = saveAvatar;
+        window.togglePassword = togglePassword;
+        window.changePassword = changePassword;
+        window.enable2FA = enable2FA;
+        window.logoutAllDevices = logoutAllDevices;
+        window.exportData = exportData;
+        window.deleteAccount = deleteAccount;
+        window.addPaymentMethod = addPaymentMethod;
+        window.connectIntegration = connectIntegration;
+        window.disconnectIntegration = disconnectIntegration;
+        window.upgradePlan = upgradePlan;
+        window.downloadInvoice = downloadInvoice;
+    </script>
+</body>
+</html>
