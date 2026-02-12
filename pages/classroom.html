@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الفصل التفاعلي - تعليمي</title>
+    <meta name="description" content="غرف تعليمية تفاعلية مع سبورة ودردشة ومشاركة">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
+    <link rel="stylesheet" href="../styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h2>تعليمي</h2>
+                </div>
+                <button class="close-sidebar" id="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-user">
+                <div class="user-avatar" id="user-avatar">م</div>
+                <div class="user-info">
+                    <h4 id="user-name">محمد أحمد</h4>
+                    <p id="user-email">teacher@example.com</p>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>لوحة التحكم</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="create-course.html">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>إنشاء درس جديد</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="my-courses.html">
+                            <i class="fas fa-video"></i>
+                            <span>دروسي</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="analytics.html">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>التقارير</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="classroom.html">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <span>الفصول التفاعلية</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="whiteboard.html">
+                            <i class="fas fa-paint-brush"></i>
+                            <span>السبورة</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="students.html">
+                            <i class="fas fa-users"></i>
+                            <span>الطلاب</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fas fa-cog"></i>
+                            <span>الإعدادات</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="profile.html" class="profile-link">
+                    <i class="fas fa-user"></i>
+                    <span>الملف الشخصي</span>
+                </a>
+                <button onclick="auth.signOut()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>تسجيل خروج</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>الفصول التفاعلية</h1>
+                </div>
+                
+                <div class="header-right">
+                    <button class="btn-primary" id="create-session-btn">
+                        <i class="fas fa-plus"></i>
+                        جلسة جديدة
+                    </button>
+                    
+                    <button class="btn-secondary" id="join-session-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        انضمام بكود
+                    </button>
+                </div>
+            </header>
+
+            <!-- Active Sessions -->
+            <section class="sessions-section">
+                <div class="section-header">
+                    <h2>الجلسات النشطة</h2>
+                    <span id="active-sessions-count">0</span>
+                </div>
+                
+                <div id="active-sessions-grid" class="sessions-grid">
+                    <!-- سيتم إضافة الجلسات هنا -->
+                    <div class="loading-state">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>جاري تحميل الجلسات...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Past Sessions -->
+            <section class="sessions-section">
+                <div class="section-header">
+                    <h2>الجلسات السابقة</h2>
+                    <a href="#" class="view-all">عرض الكل</a>
+                </div>
+                
+                <div id="past-sessions-list" class="sessions-list">
+                    <!-- سيتم إضافة الجلسات السابقة هنا -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Create Session Modal -->
+    <div id="create-session-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إنشاء جلسة تفاعلية جديدة</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <form id="create-session-form">
+                    <div class="form-group">
+                        <label for="session-title">عنوان الجلسة</label>
+                        <input type="text" id="session-title" placeholder="أدخل عنوان الجلسة" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="session-description">وصف الجلسة (اختياري)</label>
+                        <textarea id="session-description" rows="3" placeholder="أدخل وصفاً للجلسة"></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="session-course">ربط بدورة</label>
+                            <select id="session-course">
+                                <option value="">اختر دورة (اختياري)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="session-duration">المدة المتوقعة</label>
+                            <select id="session-duration">
+                                <option value="30">30 دقيقة</option>
+                                <option value="60">ساعة</option>
+                                <option value="90">ساعة ونصف</option>
+                                <option value="120">ساعتان</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>إعدادات الجلسة</label>
+                        <div class="settings-checkbox">
+                            <label>
+                                <input type="checkbox" id="allow-chat" checked>
+                                السماح بالدردشة
+                            </label>
+                            <label>
+                                <input type="checkbox" id="allow-whiteboard" checked>
+                                السماح بالسبورة التفاعلية
+                            </label>
+                            <label>
+                                <input type="checkbox" id="allow-screen-sharing" checked>
+                                السماح بمشاركة الشاشة
+                            </label>
+                            <label>
+                                <input type="checkbox" id="allow-hand-raise" checked>
+                                السماح برفع الأيدي
+                            </label>
+                            <label>
+                                <input type="checkbox" id="record-session">
+                                تسجيل الجلسة
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="max-participants">الحد الأقصى للمشاركين</label>
+                        <input type="number" id="max-participants" min="1" max="500" value="100">
+                    </div>
+                </form>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeCreateSessionModal()">إلغاء</button>
+                <button class="btn-primary" onclick="createSession()">إنشاء الجلسة</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Join Session Modal -->
+    <div id="join-session-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>الانضمام إلى جلسة</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="join-options">
+                    <div class="join-tabs">
+                        <button class="join-tab active" data-tab="code">باستخدام الكود</button>
+                        <button class="join-tab" data-tab="link">باستخدام الرابط</button>
+                    </div>
+                    
+                    <div class="join-panel active" id="join-code-panel">
+                        <div class="form-group">
+                            <label for="session-code">كود الجلسة</label>
+                            <div class="code-input-group">
+                                <input type="text" id="session-code" placeholder="أدخل كود الجلسة المكون من 6 أحرف" 
+                                       maxlength="6" style="text-transform: uppercase; direction: ltr;">
+                                <button class="btn-primary" onclick="joinSessionWithCode()">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    انضمام
+                                </button>
+                            </div>
+                            <small>الكود مكون من 6 أحرف وأرقام (مثال: ABC123)</small>
+                        </div>
+                    </div>
+                    
+                    <div class="join-panel" id="join-link-panel">
+                        <div class="form-group">
+                            <label for="session-link">رابط الجلسة</label>
+                            <div class="link-input-group">
+                                <input type="url" id="session-link" placeholder="الصق رابط الجلسة هنا">
+                                <button class="btn-primary" onclick="joinSessionWithLink()">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    انضمام
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="join-info">
+                    <i class="fas fa-info-circle"></i>
+                    <p>يمكنك الانضمام كطالب أو كمعلم مساعد حسب صلاحياتك</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../scripts/utils.js"></script>
+    <script src="../scripts/supabase-client.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/course-manager.js"></script>
+    <script>
+        /**
+         * تهيئة صفحة الفصول التفاعلية
+         */
+        document.addEventListener('DOMContentLoaded', async () => {
+            // التحقق من المصادقة
+            const isAuth = await auth.requireAuth();
+            if (!isAuth) return;
+            
+            // تحميل بيانات المستخدم
+            loadUserData();
+            
+            // تحميل الدورات للقائمة المنسدلة
+            await loadCourses();
+            
+            // تحميل الجلسات
+            await loadSessions();
+            
+            // إعداد المستمعين
+            setupEventListeners();
+        });
+
+        /**
+         * تحميل بيانات المستخدم
+         */
+        function loadUserData() {
+            const user = auth.getCurrentUser();
+            
+            if (user) {
+                document.getElementById('user-name').textContent = 
+                    user.user_metadata?.full_name || user.email;
+                document.getElementById('user-email').textContent = user.email;
+                
+                const initials = auth.getInitials(user.user_metadata?.full_name || user.email);
+                document.getElementById('user-avatar').textContent = initials;
+            }
+        }
+
+        /**
+         * تحميل الدورات للقائمة المنسدلة
+         */
+        async function loadCourses() {
+            try {
+                const user = auth.getCurrentUser();
+                if (!user) return;
+                
+                const { data: courses, error } = await supabase.client
+                    .from('courses')
+                    .select('id, title')
+                    .eq('user_id', user.id)
+                    .eq('status', 'published');
+                
+                if (error) throw error;
+                
+                const select = document.getElementById('session-course');
+                select.innerHTML = '<option value="">اختر دورة (اختياري)</option>';
+                
+                courses.forEach(course => {
+                    select.innerHTML += `<option value="${course.id}">${course.title}</option>`;
+                });
+                
+            } catch (error) {
+                console.error('Load courses error:', error);
+            }
+        }
+
+        /**
+         * تحميل الجلسات
+         */
+        async function loadSessions() {
+            try {
+                const user = auth.getCurrentUser();
+                if (!user) return;
+                
+                // تحميل الجلسات النشطة
+                const { data: activeSessions, error: activeError } = await supabase.client
+                    .from('classroom_sessions')
+                    .select(`
+                        *,
+                        courses (title, thumbnail_url),
+                        session_participants (*)
+                    `)
+                    .eq('teacher_id', user.id)
+                    .eq('is_active', true)
+                    .order('created_at', { ascending: false });
+                
+                if (activeError) throw activeError;
+                
+                // تحميل الجلسات السابقة
+                const { data: pastSessions, error: pastError } = await supabase.client
+                    .from('classroom_sessions')
+                    .select(`
+                        *,
+                        courses (title, thumbnail_url),
+                        session_participants (*)
+                    `)
+                    .eq('teacher_id', user.id)
+                    .eq('is_active', false)
+                    .order('created_at', { ascending: false })
+                    .limit(10);
+                
+                if (pastError) throw pastError;
+                
+                displayActiveSessions(activeSessions || []);
+                displayPastSessions(pastSessions || []);
+                
+            } catch (error) {
+                console.error('Load sessions error:', error);
+                showError('فشل تحميل الجلسات');
+            }
+        }
+
+        /**
+         * عرض الجلسات النشطة
+         */
+        function displayActiveSessions(sessions) {
+            const grid = document.getElementById('active-sessions-grid');
+            const countEl = document.getElementById('active-sessions-count');
+            
+            countEl.textContent = sessions.length;
+            
+            if (sessions.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <h3>لا توجد جلسات نشطة</h3>
+                        <p>ابدأ بإنشاء جلسة تفاعلية جديدة</p>
+                        <button class="btn-primary" onclick="openCreateSessionModal()">
+                            <i class="fas fa-plus"></i>
+                            إنشاء جلسة
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            
+            sessions.forEach(session => {
+                const participantCount = session.session_participants?.length || 0;
+                const courseTitle = session.courses?.title || 'جلسة عامة';
+                const startTime = new Date(session.actual_start).toLocaleTimeString('ar-SA', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                html += `
+                    <div class="session-card active" data-id="${session.id}">
+                        <div class="session-header">
+                            <div class="session-badge active">
+                                <i class="fas fa-circle"></i>
+                                نشطة
+                            </div>
+                            <div class="session-code" onclick="copySessionCode('${session.session_code}')">
+                                <i class="fas fa-key"></i>
+                                <span>${session.session_code}</span>
+                                <i class="fas fa-copy"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="session-body">
+                            <h3 class="session-title">${session.title}</h3>
+                            <p class="session-course">${courseTitle}</p>
+                            <p class="session-description">${session.description || 'لا يوجد وصف'}</p>
+                            
+                            <div class="session-stats">
+                                <span title="المشاركين">
+                                    <i class="fas fa-users"></i>
+                                    ${participantCount}
+                                </span>
+                                <span title="وقت البدء">
+                                    <i class="fas fa-clock"></i>
+                                    ${startTime}
+                                </span>
+                                <span title="الرسائل">
+                                    <i class="fas fa-comments"></i>
+                                    ${session.total_messages || 0}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="session-footer">
+                            <button class="btn-primary" onclick="joinSession('${session.id}')">
+                                <i class="fas fa-sign-in-alt"></i>
+                                دخول الجلسة
+                            </button>
+                            <button class="btn-secondary" onclick="manageSession('${session.id}')">
+                                <i class="fas fa-cog"></i>
+                                إدارة
+                            </button>
+                            <button class="btn-secondary" onclick="endSession('${session.id}')">
+                                <i class="fas fa-stop"></i>
+                                إنهاء
+                            </button>
+                            <button class="btn-secondary" onclick="shareSession('${session.session_code}')">
+                                <i class="fas fa-share-alt"></i>
+                                مشاركة
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            grid.innerHTML = html;
+        }
+
+        /**
+         * عرض الجلسات السابقة
+         */
+        function displayPastSessions(sessions) {
+            const list = document.getElementById('past-sessions-list');
+            
+            if (sessions.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state small">
+                        <i class="fas fa-history"></i>
+                        <p>لا توجد جلسات سابقة</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            
+            sessions.forEach(session => {
+                const participantCount = session.session_participants?.length || 0;
+                const date = new Date(session.created_at).toLocaleDateString('ar-SA');
+                const duration = session.actual_end 
+                    ? Math.round((new Date(session.actual_end) - new Date(session.actual_start)) / 1000 / 60)
+                    : 'غير محدد';
+                
+                html += `
+                    <div class="session-item">
+                        <div class="session-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="session-details">
+                            <h4>${session.title}</h4>
+                            <div class="session-meta">
+                                <span><i class="fas fa-calendar"></i> ${date}</span>
+                                <span><i class="fas fa-users"></i> ${participantCount}</span>
+                                <span><i class="fas fa-clock"></i> ${duration} دقيقة</span>
+                            </div>
+                        </div>
+                        <div class="session-actions">
+                            <button class="action-btn" onclick="viewSessionReport('${session.id}')">
+                                <i class="fas fa-chart-bar"></i>
+                            </button>
+                            <button class="action-btn" onclick="replaySession('${session.id}')">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            list.innerHTML = html;
+        }
+
+        /**
+         * إعداد مستمعي الأحداث
+         */
+        function setupEventListeners() {
+            // قائمة جانبية
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const closeSidebar = document.getElementById('close-sidebar');
+            
+            menuToggle.addEventListener('click', () => sidebar.classList.add('active'));
+            closeSidebar.addEventListener('click', () => sidebar.classList.remove('active'));
+            
+            // نافذة إنشاء جلسة
+            const createBtn = document.getElementById('create-session-btn');
+            const createModal = document.getElementById('create-session-modal');
+            const closeCreateBtn = createModal.querySelector('.close-modal');
+            
+            createBtn.addEventListener('click', () => {
+                createModal.style.display = 'flex';
+            });
+            
+            closeCreateBtn.addEventListener('click', closeCreateSessionModal);
+            
+            // نافذة الانضمام
+            const joinBtn = document.getElementById('join-session-btn');
+            const joinModal = document.getElementById('join-session-modal');
+            const closeJoinBtn = joinModal.querySelector('.close-modal');
+            
+            joinBtn.addEventListener('click', () => {
+                joinModal.style.display = 'flex';
+            });
+            
+            closeJoinBtn.addEventListener('click', () => {
+                joinModal.style.display = 'none';
+            });
+            
+            // تبويبات الانضمام
+            document.querySelectorAll('.join-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.join-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.join-panel').forEach(p => p.classList.remove('active'));
+                    
+                    tab.classList.add('active');
+                    document.getElementById(`${tab.dataset.tab}-panel`).classList.add('active');
+                });
+            });
+            
+            // إغلاق النوافذ بالنقر خارجها
+            window.addEventListener('click', (e) => {
+                if (e.target === createModal) closeCreateSessionModal();
+                if (e.target === joinModal) joinModal.style.display = 'none';
+            });
+            
+            // كود الجلسة - تحويل تلقائي إلى uppercase
+            const sessionCode = document.getElementById('session-code');
+            if (sessionCode) {
+                sessionCode.addEventListener('input', function() {
+                    this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+                });
+            }
+        }
+
+        /**
+         * فتح نافذة إنشاء جلسة
+         */
+        function openCreateSessionModal() {
+            document.getElementById('create-session-modal').style.display = 'flex';
+        }
+
+        /**
+         * إغلاق نافذة إنشاء جلسة
+         */
+        function closeCreateSessionModal() {
+            document.getElementById('create-session-modal').style.display = 'none';
+            document.getElementById('create-session-form').reset();
+        }
+
+        /**
+         * إنشاء جلسة جديدة
+         */
+        async function createSession() {
+            const title = document.getElementById('session-title').value.trim();
+            if (!title) {
+                auth.showNotification('❌ الرجاء إدخال عنوان الجلسة', 'error');
+                return;
+            }
+            
+            const user = auth.getCurrentUser();
+            if (!user) return;
+            
+            const sessionData = {
+                teacher_id: user.id,
+                title: title,
+                description: document.getElementById('session-description').value.trim(),
+                course_id: document.getElementById('session-course').value || null,
+                scheduled_duration: parseInt(document.getElementById('session-duration').value),
+                max_participants: parseInt(document.getElementById('max-participants').value),
+                allow_chat: document.getElementById('allow-chat').checked,
+                allow_whiteboard: document.getElementById('allow-whiteboard').checked,
+                allow_screen_sharing: document.getElementById('allow-screen-sharing').checked,
+                allow_hand_raise: document.getElementById('allow-hand-raise').checked,
+                record_session: document.getElementById('record-session').checked
+            };
+            
+            try {
+                const result = await supabase.classroom.createSession(sessionData);
+                
+                if (result.success) {
+                    auth.showNotification('✅ تم إنشاء الجلسة بنجاح', 'success');
+                    closeCreateSessionModal();
+                    
+                    // الانتقال إلى الجلسة
+                    setTimeout(() => {
+                        window.location.href = `session.html?id=${result.data.id}`;
+                    }, 1000);
+                }
+                
+            } catch (error) {
+                console.error('Create session error:', error);
+                auth.showNotification('❌ فشل إنشاء الجلسة', 'error');
+            }
+        }
+
+        /**
+         * الانضمام إلى جلسة باستخدام الكود
+         */
+        async function joinSessionWithCode() {
+            const code = document.getElementById('session-code').value.trim().toUpperCase();
+            
+            if (!code || code.length !== 6) {
+                auth.showNotification('❌ الرجاء إدخال كود صحيح مكون من 6 أحرف', 'error');
+                return;
+            }
+            
+            const user = auth.getCurrentUser();
+            if (!user) return;
+            
+            try {
+                const result = await supabase.classroom.joinSession(code, user.id);
+                
+                if (result.success) {
+                    auth.showNotification('✅ تم الانضمام إلى الجلسة', 'success');
+                    document.getElementById('join-session-modal').style.display = 'none';
+                    
+                    window.location.href = `session.html?id=${result.data.session.id}`;
+                }
+                
+            } catch (error) {
+                console.error('Join session error:', error);
+                auth.showNotification('❌ فشل الانضمام إلى الجلسة', 'error');
+            }
+        }
+
+        /**
+         * الانضمام إلى جلسة باستخدام الرابط
+         */
+        function joinSessionWithLink() {
+            const link = document.getElementById('session-link').value.trim();
+            
+            if (!link) {
+                auth.showNotification('❌ الرجاء إدخال رابط الجلسة', 'error');
+                return;
+            }
+            
+            // استخراج معرف الجلسة من الرابط
+            const url = new URL(link);
+            const sessionId = url.searchParams.get('id');
+            
+            if (sessionId) {
+                window.location.href = `session.html?id=${sessionId}`;
+            } else {
+                auth.showNotification('❌ رابط غير صالح', 'error');
+            }
+        }
+
+        /**
+         * دخول جلسة
+         */
+        function joinSession(sessionId) {
+            window.location.href = `session.html?id=${sessionId}`;
+        }
+
+        /**
+         * إدارة الجلسة
+         */
+        function manageSession(sessionId) {
+            window.location.href = `session-management.html?id=${sessionId}`;
+        }
+
+        /**
+         * إنهاء الجلسة
+         */
+        async function endSession(sessionId) {
+            if (!confirm('هل أنت متأكد من إنهاء هذه الجلسة؟')) {
+                return;
+            }
+            
+            try {
+                const result = await supabase.classroom.endSession(sessionId);
+                
+                if (result.success) {
+                    auth.showNotification('✅ تم إنهاء الجلسة', 'success');
+                    await loadSessions();
+                }
+                
+            } catch (error) {
+                console.error('End session error:', error);
+                auth.showNotification('❌ فشل إنهاء الجلسة', 'error');
+            }
+        }
+
+        /**
+         * مشاركة الجلسة
+         */
+        async function shareSession(sessionCode) {
+            const url = `${window.location.origin}/pages/session.html?code=${sessionCode}`;
+            
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'جلسة تفاعلية في تعليمي',
+                        text: 'انضم إلي في هذه الجلسة التفاعلية',
+                        url: url
+                    });
+                } catch (error) {
+                    console.error('Share error:', error);
+                }
+            } else {
+                await Utils.copyToClipboard(url);
+                auth.showNotification('✅ تم نسخ رابط الجلسة', 'success');
+            }
+        }
+
+        /**
+         * نسخ كود الجلسة
+         */
+        async function copySessionCode(code) {
+            await Utils.copyToClipboard(code);
+            auth.showNotification('✅ تم نسخ كود الجلسة', 'success');
+        }
+
+        /**
+         * عرض تقرير الجلسة
+         */
+        function viewSessionReport(sessionId) {
+            window.location.href = `session-report.html?id=${sessionId}`;
+        }
+
+        /**
+         * إعادة تشغيل الجلسة
+         */
+        function replaySession(sessionId) {
+            if (confirm('هل تريد إعادة تشغيل هذه الجلسة؟')) {
+                window.location.href = `session.html?id=${sessionId}&replay=true`;
+            }
+        }
+
+        /**
+         * إظهار خطأ
+         */
+        function showError(message) {
+            const grid = document.getElementById('active-sessions-grid');
+            grid.innerHTML = `
+                <div class="error-state">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>عذراً، حدث خطأ</h3>
+                    <p>${message}</p>
+                    <button class="btn-primary" onclick="location.reload()">
+                        <i class="fas fa-redo"></i>
+                        إعادة تحميل
+                    </button>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
