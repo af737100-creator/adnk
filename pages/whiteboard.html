@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>السبورة التفاعلية - تعليمي</title>
+    <meta name="description" content="سبورة تفاعلية متقدمة للرسم والشرح والتعاون في الوقت الفعلي">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/icons/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+    <link rel="manifest" href="../manifest.json">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
+    <link rel="stylesheet" href="../styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dashboard-page">
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h2>تعليمي</h2>
+                </div>
+                <button class="close-sidebar" id="close-sidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="sidebar-user">
+                <div class="user-avatar" id="user-avatar">م</div>
+                <div class="user-info">
+                    <h4 id="user-name">محمد أحمد</h4>
+                    <p id="user-email">teacher@example.com</p>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>لوحة التحكم</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="create-course.html">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>إنشاء درس جديد</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="my-courses.html">
+                            <i class="fas fa-video"></i>
+                            <span>دروسي</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="classroom.html">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <span>الفصول التفاعلية</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="whiteboard.html">
+                            <i class="fas fa-paint-brush"></i>
+                            <span>السبورة</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="analytics.html">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>التقارير</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="students.html">
+                            <i class="fas fa-users"></i>
+                            <span>الطلاب</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="settings.html">
+                            <i class="fas fa-cog"></i>
+                            <span>الإعدادات</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="profile.html" class="profile-link">
+                    <i class="fas fa-user"></i>
+                    <span>الملف الشخصي</span>
+                </a>
+                <button onclick="auth.signOut()" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>تسجيل خروج</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content whiteboard-page">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1>السبورة التفاعلية</h1>
+                </div>
+                
+                <div class="header-right">
+                    <div class="whiteboard-actions">
+                        <button class="btn-primary" id="new-whiteboard">
+                            <i class="fas fa-plus"></i>
+                            سبورة جديدة
+                        </button>
+                        <button class="btn-secondary" id="open-whiteboard">
+                            <i class="fas fa-folder-open"></i>
+                            فتح
+                        </button>
+                        <button class="btn-secondary" id="collaborate-btn">
+                            <i class="fas fa-users"></i>
+                            تعاون
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Whiteboard Container -->
+            <div class="whiteboard-container">
+                <div id="whiteboard" class="whiteboard"></div>
+            </div>
+
+            <!-- Whiteboard Templates -->
+            <div class="templates-panel" id="templates-panel">
+                <div class="panel-header">
+                    <h3>قوالب جاهزة</h3>
+                    <button class="close-panel" id="close-templates">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="templates-grid">
+                    <div class="template-item" onclick="loadTemplate('blank')">
+                        <i class="fas fa-file"></i>
+                        <span>فارغ</span>
+                    </div>
+                    <div class="template-item" onclick="loadTemplate('grid')">
+                        <i class="fas fa-border-all"></i>
+                        <span>شبكة</span>
+                    </div>
+                    <div class="template-item" onclick="loadTemplate('math')">
+                        <i class="fas fa-calculator"></i>
+                        <span>رياضيات</span>
+                    </div>
+                    <div class="template-item" onclick="loadTemplate('science')">
+                        <i class="fas fa-flask"></i>
+                        <span>علوم</span>
+                    </div>
+                    <div class="template-item" onclick="loadTemplate('timeline')">
+                        <i class="fas fa-clock"></i>
+                        <span>خط زمني</span>
+                    </div>
+                    <div class="template-item" onclick="loadTemplate('mindmap')">
+                        <i class="fas fa-sitemap"></i>
+                        <span>خريطة ذهنية</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Collaborative Session Modal -->
+            <div id="collaborate-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3>جلسة تعاونية</h3>
+                        <button class="close-modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="collaborate-options">
+                            <div class="option-card" onclick="startCollaborativeSession()">
+                                <i class="fas fa-plus-circle"></i>
+                                <h4>إنشاء جلسة جديدة</h4>
+                                <p>أنشئ جلسة تعاونية ودع الآخرين للانضمام</p>
+                            </div>
+                            <div class="option-card" onclick="joinCollaborativeSession()">
+                                <i class="fas fa-sign-in-alt"></i>
+                                <h4>الانضمام إلى جلسة</h4>
+                                <p>انضم باستخدام كود الجلسة</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../scripts/utils.js"></script>
+    <script src="../scripts/supabase-client.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/whiteboard.js"></script>
+    <script>
+        /**
+         * تهيئة السبورة التفاعلية
+         */
+        let whiteboard = null;
+        
+        document.addEventListener('DOMContentLoaded', async () => {
+            // التحقق من المصادقة
+            const isAuth = await auth.requireAuth();
+            if (!isAuth) return;
+            
+            // تحميل بيانات المستخدم
+            loadUserData();
+            
+            // تهيئة السبورة
+            initWhiteboard();
+            
+            // إعداد المستمعين
+            setupEventListeners();
+        });
+
+        /**
+         * تحميل بيانات المستخدم
+         */
+        function loadUserData() {
+            const user = auth.getCurrentUser();
+            
+            if (user) {
+                document.getElementById('user-name').textContent = 
+                    user.user_metadata?.full_name || user.email;
+                document.getElementById('user-email').textContent = user.email;
+                
+                const initials = auth.getInitials(user.user_metadata?.full_name || user.email);
+                document.getElementById('user-avatar').textContent = initials;
+            }
+        }
+
+        /**
+         * تهيئة السبورة
+         */
+        function initWhiteboard() {
+            whiteboard = new Whiteboard('whiteboard', {
+                width: 1200,
+                height: 800,
+                backgroundColor: '#ffffff',
+                strokeColor: '#000000',
+                strokeWidth: 2,
+                fontSize: 20,
+                fontFamily: 'Cairo, Arial, sans-serif'
+            });
+            
+            // تحميل آخر سبورة من التخزين
+            loadLastWhiteboard();
+        }
+
+        /**
+         * تحميل آخر سبورة
+         */
+        function loadLastWhiteboard() {
+            const saved = localStorage.getItem('ta3lemi_whiteboard_current');
+            if (saved) {
+                try {
+                    const img = new Image();
+                    img.onload = () => {
+                        const ctx = whiteboard.canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0);
+                    };
+                    img.src = saved;
+                } catch (error) {
+                    console.error('Load last whiteboard error:', error);
+                }
+            }
+        }
+
+        /**
+         * إعداد مستمعي الأحداث
+         */
+        function setupEventListeners() {
+            // قائمة جانبية
+            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const closeSidebar = document.getElementById('close-sidebar');
+            
+            menuToggle.addEventListener('click', () => sidebar.classList.add('active'));
+            closeSidebar.addEventListener('click', () => sidebar.classList.remove('active'));
+            
+            // سبورة جديدة
+            document.getElementById('new-whiteboard').addEventListener('click', () => {
+                if (confirm('هل تريد إنشاء سبورة جديدة؟ سيتم فقدان التغييرات غير المحفوظة.')) {
+                    whiteboard.clear();
+                }
+            });
+            
+            // فتح سبورة
+            document.getElementById('open-whiteboard').addEventListener('click', () => {
+                document.getElementById('templates-panel').classList.add('active');
+            });
+            
+            // إغلاق لوحة القوالب
+            document.getElementById('close-templates').addEventListener('click', () => {
+                document.getElementById('templates-panel').classList.remove('active');
+            });
+            
+            // تعاون
+            document.getElementById('collaborate-btn').addEventListener('click', () => {
+                document.getElementById('collaborate-modal').style.display = 'flex';
+            });
+            
+            // إغلاق نافذة التعاون
+            const modal = document.getElementById('collaborate-modal');
+            const closeBtn = modal.querySelector('.close-modal');
+            
+            closeBtn.addEventListener('click', () => {
+                modal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // حفظ تلقائي كل 30 ثانية
+            setInterval(() => {
+                if (whiteboard) {
+                    whiteboard.save();
+                }
+            }, 30000);
+        }
+
+        /**
+         * تحميل قالب
+         */
+        function loadTemplate(template) {
+            whiteboard.clear();
+            
+            const ctx = whiteboard.canvas.getContext('2d');
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 1;
+            
+            switch (template) {
+                case 'grid':
+                    // رسم شبكة
+                    for (let i = 0; i <= whiteboard.canvas.width; i += 50) {
+                        ctx.beginPath();
+                        ctx.moveTo(i, 0);
+                        ctx.lineTo(i, whiteboard.canvas.height);
+                        ctx.stroke();
+                    }
+                    for (let i = 0; i <= whiteboard.canvas.height; i += 50) {
+                        ctx.beginPath();
+                        ctx.moveTo(0, i);
+                        ctx.lineTo(whiteboard.canvas.width, i);
+                        ctx.stroke();
+                    }
+                    break;
+                    
+                case 'math':
+                    // رسم محاور
+                    ctx.strokeStyle = '#000000';
+                    ctx.lineWidth = 2;
+                    
+                    // محور x
+                    ctx.beginPath();
+                    ctx.moveTo(50, whiteboard.canvas.height / 2);
+                    ctx.lineTo(whiteboard.canvas.width - 50, whiteboard.canvas.height / 2);
+                    ctx.stroke();
+                    
+                    // محور y
+                    ctx.beginPath();
+                    ctx.moveTo(whiteboard.canvas.width / 2, 50);
+                    ctx.lineTo(whiteboard.canvas.width / 2, whiteboard.canvas.height - 50);
+                    ctx.stroke();
+                    break;
+                    
+                case 'timeline':
+                    // رسم خط زمني
+                    ctx.strokeStyle = '#000000';
+                    ctx.lineWidth = 3;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(100, whiteboard.canvas.height / 2);
+                    ctx.lineTo(whiteboard.canvas.width - 100, whiteboard.canvas.height / 2);
+                    ctx.stroke();
+                    
+                    // نقاط زمنية
+                    for (let i = 0; i < 5; i++) {
+                        const x = 100 + (i * (whiteboard.canvas.width - 200) / 4);
+                        ctx.beginPath();
+                        ctx.arc(x, whiteboard.canvas.height / 2, 5, 0, 2 * Math.PI);
+                        ctx.fillStyle = '#4361ee';
+                        ctx.fill();
+                    }
+                    break;
+                    
+                case 'mindmap':
+                    // رسم خريطة ذهنية
+                    ctx.fillStyle = '#4361ee';
+                    ctx.beginPath();
+                    ctx.arc(whiteboard.canvas.width / 2, whiteboard.canvas.height / 2, 30, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#4ade80';
+                    ctx.beginPath();
+                    ctx.arc(whiteboard.canvas.width / 2 - 150, whiteboard.canvas.height / 2 - 100, 20, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#f59e0b';
+                    ctx.beginPath();
+                    ctx.arc(whiteboard.canvas.width / 2 + 150, whiteboard.canvas.height / 2 - 80, 20, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#ef4444';
+                    ctx.beginPath();
+                    ctx.arc(whiteboard.canvas.width / 2 - 120, whiteboard.canvas.height / 2 + 120, 20, 0, 2 * Math.PI);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#8b5cf6';
+                    ctx.beginPath();
+                    ctx.arc(whiteboard.canvas.width / 2 + 140, whiteboard.canvas.height / 2 + 100, 20, 0, 2 * Math.PI);
+                    ctx.fill();
+                    break;
+            }
+            
+            document.getElementById('templates-panel').classList.remove('active');
+            whiteboard.saveState();
+        }
+
+        /**
+         * بدء جلسة تعاونية
+         */
+        async function startCollaborativeSession() {
+            try {
+                const user = auth.getCurrentUser();
+                if (!user) return;
+                
+                // إنشاء جلسة جديدة في Supabase
+                const sessionCode = Utils.generateCode(6);
+                
+                const { data, error } = await supabase.client
+                    .from('whiteboard_sessions')
+                    .insert([{
+                        session_code: sessionCode,
+                        user_id: user.id,
+                        title: `سبورة تعاونية - ${user.user_metadata?.full_name || user.email}`,
+                        created_at: new Date().toISOString()
+                    }])
+                    .select()
+                    .single();
+                
+                if (error) throw error;
+                
+                // تفعيل الوضع التعاوني
+                whiteboard.enableCollaborative(data.id);
+                
+                // إظهار كود الجلسة
+                const code = prompt('تم إنشاء الجلسة! شارك هذا الكود مع الآخرين:', sessionCode);
+                
+                document.getElementById('collaborate-modal').style.display = 'none';
+                auth.showNotification('✅ وضع التعاون مفعل', 'success');
+                
+            } catch (error) {
+                console.error('Start collaborative session error:', error);
+                auth.showNotification('❌ فشل إنشاء الجلسة التعاونية', 'error');
+            }
+        }
+
+        /**
+         * الانضمام إلى جلسة تعاونية
+         */
+        async function joinCollaborativeSession() {
+            const sessionCode = prompt('أدخل كود الجلسة:');
+            
+            if (!sessionCode) return;
+            
+            try {
+                const user = auth.getCurrentUser();
+                if (!user) return;
+                
+                const { data, error } = await supabase.client
+                    .from('whiteboard_sessions')
+                    .select('*')
+                    .eq('session_code', sessionCode.toUpperCase())
+                    .single();
+                
+                if (error) throw error;
+                
+                if (data) {
+                    whiteboard.enableCollaborative(data.id);
+                    document.getElementById('collaborate-modal').style.display = 'none';
+                    auth.showNotification('✅ تم الانضمام إلى الجلسة', 'success');
+                }
+                
+            } catch (error) {
+                console.error('Join collaborative session error:', error);
+                auth.showNotification('❌ فشل الانضمام إلى الجلسة', 'error');
+            }
+        }
+
+        /**
+         * حفظ السبورة
+         */
+        window.saveWhiteboard = function() {
+            if (whiteboard) {
+                whiteboard.save();
+            }
+        };
+
+        /**
+         * تحميل السبورة
+         */
+        window.downloadWhiteboard = function() {
+            if (whiteboard) {
+                whiteboard.download();
+            }
+        };
+
+        /**
+         * مسح السبورة
+         */
+        window.clearWhiteboard = function() {
+            if (whiteboard) {
+                whiteboard.clear();
+            }
+        };
+    </script>
+</body>
+</html>
