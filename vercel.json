@@ -11,69 +11,75 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
     },
     {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "source": "/dashboard",
+      "destination": "/pages/dashboard.html"
     },
     {
-      "src": "/",
-      "dest": "/index.html"
+      "source": "/courses",
+      "destination": "/pages/my-courses.html"
     },
     {
-      "src": "/dashboard",
-      "dest": "/pages/dashboard.html"
+      "source": "/create",
+      "destination": "/pages/create-course.html"
     },
     {
-      "src": "/courses",
-      "dest": "/pages/my-courses.html"
+      "source": "/classroom",
+      "destination": "/pages/classroom.html"
     },
     {
-      "src": "/create",
-      "dest": "/pages/create-course.html"
+      "source": "/whiteboard",
+      "destination": "/pages/whiteboard.html"
     },
     {
-      "src": "/classroom",
-      "dest": "/pages/classroom.html"
+      "source": "/analytics",
+      "destination": "/pages/analytics.html"
     },
     {
-      "src": "/whiteboard",
-      "dest": "/pages/whiteboard.html"
+      "source": "/students",
+      "destination": "/pages/students.html"
     },
     {
-      "src": "/analytics",
-      "dest": "/pages/analytics.html"
+      "source": "/settings",
+      "destination": "/pages/settings.html"
     },
     {
-      "src": "/students",
-      "dest": "/pages/students.html"
+      "source": "/profile",
+      "destination": "/pages/profile.html"
     },
     {
-      "src": "/settings",
-      "dest": "/pages/settings.html"
+      "source": "/help",
+      "destination": "/pages/help.html"
     },
     {
-      "src": "/profile",
-      "dest": "/pages/profile.html"
+      "source": "/about",
+      "destination": "/pages/about.html"
     },
     {
-      "src": "/help",
-      "dest": "/pages/help.html"
+      "source": "/login",
+      "destination": "/pages/dashboard.html?login=true"
     },
     {
-      "src": "/about",
-      "dest": "/pages/about.html"
+      "source": "/signup",
+      "destination": "/pages/dashboard.html?signup=true"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/$1"
     }
   ],
-  "env": {
-    "SUPABASE_URL": "https://ollwqisezqkawrulahqq.supabase.co",
-    "SUPABASE_ANON_KEY": "sb_publishable_HnNvDq3tgZa1GBODyM8FxA_Z2mMyqDF",
-    "YOUTUBE_API_KEY": "AIzaSyCh9scasVWUK4AktfSUE5NlCcMyvCmGs2o"
-  },
+  "redirects": [
+    {
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -101,37 +107,11 @@
       ]
     }
   ],
-  "rewrites": [
-    {
-      "source": "/sitemap.xml",
-      "destination": "/sitemap.xml"
-    },
-    {
-      "source": "/robots.txt",
-      "destination": "/robots.txt"
-    },
-    {
-      "source": "/manifest.json",
-      "destination": "/manifest.json"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/home",
-      "destination": "/"
-    },
-    {
-      "source": "/login",
-      "destination": "/pages/dashboard.html?login=true"
-    },
-    {
-      "source": "/signup",
-      "destination": "/pages/dashboard.html?signup=true"
-    }
-  ],
-  "github": {
-    "silent": true
-  },
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "env": {
+    "SUPABASE_URL": "https://ollwqisezqkawrulahqq.supabase.co",
+    "SUPABASE_ANON_KEY": "sb_publishable_HnNvDq3tgZa1GBODyM8FxA_Z2mMyqDF",
+    "YOUTUBE_API_KEY": "AIzaSyCh9scasVWUK4AktfSUE5NlCcMyvCmGs2o"
+  }
 }
