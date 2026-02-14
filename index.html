@@ -588,5 +588,54 @@
     <!-- Scripts -->
     <script src="scripts/utils.js"></script>
     <script src="scripts/main.js"></script>
+    
+    <!-- 🔥 كود إصلاح مشكلة GitHub Pages -->
+    <script>
+    // إصلاح مشكلة إعادة التوجيه في GitHub Pages
+    (function() {
+        console.log('✅ تم تفعيل إصلاح GitHub Pages');
+        
+        // منع إعادة التوجيه التلقائي
+        window.addEventListener('load', function() {
+            // التحقق من وجود معلمة signup في URL
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('signup')) {
+                // إذا كنا في الصفحة الرئيسية ولدينا معلمة signup
+                if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
+                    console.log('🔄 جاري التوجيه إلى صفحة التسجيل...');
+                    window.location.href = 'pages/dashboard.html?signup=true';
+                }
+            }
+        });
+
+        // إصلاح روابط تسجيل الدخول
+        document.addEventListener('DOMContentLoaded', function() {
+            // تأخير بسيط للتأكد من تحميل DOM
+            setTimeout(function() {
+                document.querySelectorAll('.btn-login, .btn-signup, .btn-primary, .btn-secondary').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        const href = this.getAttribute('href');
+                        if (href && href.includes('pages/dashboard.html')) {
+                            e.preventDefault();
+                            console.log('🔗 جاري الانتقال إلى:', href);
+                            window.location.href = href;
+                        }
+                    });
+                });
+            }, 100);
+        });
+
+        // دالة قبول الكوكيز
+        window.acceptCookies = function() {
+            document.getElementById('cookieConsent').style.display = 'none';
+            localStorage.setItem('cookiesAccepted', 'true');
+        };
+
+        // التحقق من حالة الكوكيز
+        if (localStorage.getItem('cookiesAccepted') === 'true') {
+            document.getElementById('cookieConsent').style.display = 'none';
+        }
+    })();
+    </script>
 </body>
 </html>
