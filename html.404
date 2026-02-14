@@ -3,18 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الصفحة غير موجودة - تعليمي</title>
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <meta http-equiv="refresh" content="0; url=/">
+    <title>جاري التوجيه - تعليمي</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            direction: rtl;
+        }
+        .message {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        h1 { font-size: 2.5rem; margin-bottom: 20px; }
+        p { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.9; }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin: 0 auto;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        a { color: white; }
+    </style>
 </head>
 <body>
-    <div style="text-align: center; padding: 100px 20px;">
-        <h1>جاري تحويلك...</h1>
-        <p>إذا لم يتم تحويلك تلقائياً، <a href="/">اضغط هنا</a></p>
+    <div class="message">
+        <h1>جاري تحويلك إلى الصفحة المطلوبة</h1>
+        <div class="spinner"></div>
+        <p>إذا لم يتم التحويل تلقائياً، <a href="/adnk/">اضغط هنا للعودة للرئيسية</a>.</p>
     </div>
+
     <script>
-        window.location.href = '/';
+        // هذا هو الجزء السحري الذي يحل المشكلة
+        (function() {
+            // 1. نأخذ المسار الذي حاول المستخدم زيارته (مثلاً /adnk/pages/dashboard.html)
+            const path = window.location.pathname;
+            console.log('المسار المطلوب:', path);
+
+            // 2. نتحقق إذا كان المسار يطلب صفحة داخل مجلد 'pages' أو أي صفحة فرعية
+            //    نتأكد أننا لا نعيد توجيه الصفحة الرئيسية نفسها لتجنب حلقة لا نهائية
+            if (path !== '/adnk/' && path !== '/adnk/index.html' && !path.includes('404.html')) {
+                
+                // 3. نحاول إعادة التوجيه إلى المسار المطلوب مباشرة.
+                //    في بعض الأحيان، تحتاج المواقع إلى وجود '#' في الرابط.
+                //    سنحاول الطريقة المباشرة أولاً.
+                const redirectUrl = path; // هذا هو نفس الرابط الذي حاوله المستخدم
+                
+                console.log('جاري إعادة التوجيه إلى:', redirectUrl);
+                
+                // نستخدم setTimeout لإعطاء وقت للمتصفح لقراءة الرسالة
+                setTimeout(function() {
+                    window.location.href = redirectUrl;
+                }, 1500); // تأخير بسيط لرؤية الرسالة
+            }
+        })();
     </script>
 </body>
 </html>
