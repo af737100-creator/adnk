@@ -1,21 +1,137 @@
 {
-  "name": "youtube-interactive-platform",
+  "name": "ta3lemi-platform",
   "version": 2,
   "builds": [
     {
-      "src": "**",
+      "src": "**/*.html",
       "use": "@vercel/static"
+    },
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/"
+      "dest": "/$1"
+    },
+    {
+      "src": "/",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/dashboard",
+      "dest": "/pages/dashboard.html"
+    },
+    {
+      "src": "/courses",
+      "dest": "/pages/my-courses.html"
+    },
+    {
+      "src": "/create",
+      "dest": "/pages/create-course.html"
+    },
+    {
+      "src": "/classroom",
+      "dest": "/pages/classroom.html"
+    },
+    {
+      "src": "/whiteboard",
+      "dest": "/pages/whiteboard.html"
+    },
+    {
+      "src": "/analytics",
+      "dest": "/pages/analytics.html"
+    },
+    {
+      "src": "/students",
+      "dest": "/pages/students.html"
+    },
+    {
+      "src": "/settings",
+      "dest": "/pages/settings.html"
+    },
+    {
+      "src": "/profile",
+      "dest": "/pages/profile.html"
+    },
+    {
+      "src": "/help",
+      "dest": "/pages/help.html"
+    },
+    {
+      "src": "/about",
+      "dest": "/pages/about.html"
     }
   ],
   "env": {
-    "SUPABASE_URL": "https://aohehiaqfqagoqyuhrmm.supabase.co",
-    "SUPABASE_ANON_KEY": "sb_publishable_eq_PjuSiAbWvxNAD6QHThw_v_x-jVSI",
+    "SUPABASE_URL": "https://ollwqisezqkawrulahqq.supabase.co",
+    "SUPABASE_ANON_KEY": "sb_publishable_HnNvDq3tgZa1GBODyM8FxA_Z2mMyqDF",
     "YOUTUBE_API_KEY": "AIzaSyCh9scasVWUK4AktfSUE5NlCcMyvCmGs2o"
-  }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; img-src 'self' data: https:; font-src 'self' https://cdnjs.cloudflare.com; connect-src 'self' https://*.supabase.co https://www.googleapis.com; frame-src 'self' https://www.youtube.com;"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/sitemap.xml",
+      "destination": "/sitemap.xml"
+    },
+    {
+      "source": "/robots.txt",
+      "destination": "/robots.txt"
+    },
+    {
+      "source": "/manifest.json",
+      "destination": "/manifest.json"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/home",
+      "destination": "/"
+    },
+    {
+      "source": "/login",
+      "destination": "/pages/dashboard.html?login=true"
+    },
+    {
+      "source": "/signup",
+      "destination": "/pages/dashboard.html?signup=true"
+    }
+  ],
+  "github": {
+    "silent": true
+  },
+  "cleanUrls": true,
+  "trailingSlash": false
 }
