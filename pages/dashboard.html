@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم - تعليمي</title>
     
-    <!-- تحديد المسار الأساسي (مهم جداً لـ GitHub Pages) -->
-    <base href="/adnk/">
-    
     <!-- Styles -->
     <link rel="stylesheet" href="/adnk/styles/main.css">
     <link rel="stylesheet" href="/adnk/styles/dashboard.css">
@@ -20,560 +17,135 @@
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="dashboard-page">
+<body>
     <div class="dashboard-container">
-        <!-- الشريط الجانبي -->
+        <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <h2><i class="fas fa-graduation-cap"></i> تعليمي</h2>
+                <h2>تعليمي</h2>
             </div>
-            
             <nav class="sidebar-menu">
                 <ul>
-                    <li><a href="/adnk/pages/dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i>لوحة التحكم</a></li>
-                    <li><a href="/adnk/pages/create-course.html"><i class="fas fa-plus-circle"></i>إنشاء درس جديد</a></li>
-                    <li><a href="/adnk/pages/my-courses.html"><i class="fas fa-video"></i>دروسي</a></li>
-                    <li><a href="/adnk/pages/students.html"><i class="fas fa-users"></i>الطلاب</a></li>
-                    <li><a href="/adnk/pages/analytics.html"><i class="fas fa-chart-bar"></i>التقارير</a></li>
-                    <li><a href="/adnk/pages/classroom.html"><i class="fas fa-chalkboard-teacher"></i>الغرف التفاعلية</a></li>
-                    <li><a href="/adnk/pages/whiteboard.html"><i class="fas fa-paint-brush"></i>السبورة</a></li>
-                    <li><a href="/adnk/pages/settings.html"><i class="fas fa-cog"></i>الإعدادات</a></li>
+                    <li><a href="#" onclick="goToDashboard(); return false;" class="active">لوحة التحكم</a></li>
+                    <li><a href="#" onclick="goToCreateCourse(); return false;">إنشاء درس جديد</a></li>
+                    <li><a href="#" onclick="alert('قيد التطوير'); return false;">دروسي</a></li>
+                    <li><a href="#" onclick="alert('قيد التطوير'); return false;">الطلاب</a></li>
+                    <li><a href="#" onclick="alert('قيد التطوير'); return false;">التقارير</a></li>
+                    <li><a href="#" onclick="alert('قيد التطوير'); return false;">الغرف التفاعلية</a></li>
+                    <li><a href="#" onclick="alert('قيد التطوير'); return false;">السبورة</a></li>
+                    <li><a href="#" onclick="goToSettings(); return false;">الإعدادات</a></li>
                 </ul>
             </nav>
-            
             <div class="sidebar-footer">
                 <div class="user-info">
-                    <div class="user-avatar" id="user-avatar">م</div>
+                    <div class="user-avatar">م</div>
                     <div class="user-details">
-                        <h4 id="user-name">محمد أحمد</h4>
-                        <p id="user-email">teacher@example.com</p>
+                        <h4>محمد أحمد</h4>
+                        <p>teacher@example.com</p>
                     </div>
                 </div>
             </div>
         </aside>
 
-        <!-- المحتوى الرئيسي -->
+        <!-- Main Content -->
         <main class="main-content">
-            <!-- شريط العنوان -->
+            <!-- Header -->
             <header class="main-header">
                 <div class="search-bar">
                     <i class="fas fa-search"></i>
-                    <input type="text" placeholder="ابحث عن دروس، طلاب، أو تقارير...">
+                    <input type="text" placeholder="ابحث...">
                 </div>
-                
                 <div class="header-actions">
-                    <button class="notification-btn" id="notificationBtn">
+                    <button class="notification-btn">
                         <i class="fas fa-bell"></i>
-                        <span class="notification-count" id="notificationCount">3</span>
+                        <span class="notification-count">3</span>
                     </button>
-                    
-                    <button class="create-btn" onclick="window.location.href='/adnk/pages/create-course.html'">
-                        <i class="fas fa-plus"></i>
-                        درس جديد
-                    </button>
-                    
-                    <button class="hamburger" id="sidebar-toggle">
-                        <span></span>
-                        <span></span>
-                        <span></span>
+                    <button class="create-btn" onclick="goToCreateCourse(); return false;">
+                        <i class="fas fa-plus"></i> درس جديد
                     </button>
                 </div>
             </header>
 
-            <!-- بطاقات الإحصائيات -->
+            <!-- Stats Cards -->
             <section class="stats-cards">
                 <div class="stat-card">
                     <div class="stat-info">
                         <h3>إجمالي الدروس</h3>
-                        <p id="courses-count">12</p>
-                    </div>
-                    <div class="stat-icon courses">
-                        <i class="fas fa-video"></i>
+                        <p>12</p>
                     </div>
                 </div>
-                
                 <div class="stat-card">
                     <div class="stat-info">
                         <h3>الطلاب النشطين</h3>
-                        <p id="students-count">245</p>
-                    </div>
-                    <div class="stat-icon students">
-                        <i class="fas fa-users"></i>
+                        <p>245</p>
                     </div>
                 </div>
-                
                 <div class="stat-card">
                     <div class="stat-info">
                         <h3>معدل الإكمال</h3>
-                        <p id="completion-rate">78%</p>
-                    </div>
-                    <div class="stat-icon completion">
-                        <i class="fas fa-check-circle"></i>
+                        <p>78%</p>
                     </div>
                 </div>
-                
                 <div class="stat-card">
                     <div class="stat-info">
                         <h3>معدل التفاعل</h3>
-                        <p id="engagement-rate">92%</p>
-                    </div>
-                    <div class="stat-icon engagement">
-                        <i class="fas fa-chart-line"></i>
+                        <p>92%</p>
                     </div>
                 </div>
             </section>
 
-            <!-- الدورات الحديثة -->
+            <!-- Recent Courses -->
             <section class="dashboard-section">
                 <div class="section-header">
                     <h2>الدروس الأخيرة</h2>
-                    <a href="/adnk/pages/my-courses.html" class="view-all">عرض الكل <i class="fas fa-arrow-left"></i></a>
                 </div>
-                
                 <table class="courses-table">
                     <thead>
                         <tr>
                             <th>عنوان الدرس</th>
                             <th>عدد الطلاب</th>
-                            <th>آخر تحديث</th>
                             <th>الحالة</th>
                             <th>الإجراءات</th>
                         </tr>
                     </thead>
-                    <tbody id="recent-courses">
-                        <!-- سيتم ملؤها بواسطة JavaScript -->
+                    <tbody>
+                        <tr>
+                            <td>مقدمة في البرمجة</td>
+                            <td>45</td>
+                            <td><span class="status-badge status-published">منشور</span></td>
+                            <td>
+                                <button class="action-btn edit" onclick="alert('تعديل');"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn delete" onclick="alert('حذف');"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
-            </section>
-
-            <!-- الطلاب النشطين -->
-            <section class="dashboard-section">
-                <div class="section-header">
-                    <h2>الطلاب النشطين</h2>
-                    <a href="/adnk/pages/students.html" class="view-all">عرض الكل <i class="fas fa-arrow-left"></i></a>
-                </div>
-                
-                <div class="students-grid" id="active-students">
-                    <!-- سيتم ملؤها بواسطة JavaScript -->
-                </div>
-            </section>
-
-            <!-- رسوم بيانية -->
-            <section class="dashboard-section">
-                <div class="section-header">
-                    <h2>إحصائيات التفاعل</h2>
-                    <div class="time-filter">
-                        <select id="time-filter">
-                            <option value="week">آخر أسبوع</option>
-                            <option value="month">آخر شهر</option>
-                            <option value="year">آخر سنة</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div class="charts-container">
-                    <div class="chart">
-                        <h3>تفاعلات الطلاب</h3>
-                        <canvas id="interactions-chart"></canvas>
-                    </div>
-                    <div class="chart">
-                        <h3>معدلات الإكمال</h3>
-                        <canvas id="completion-chart"></canvas>
-                    </div>
-                </div>
-            </section>
-
-            <!-- الإشعارات -->
-            <section class="dashboard-section">
-                <div class="section-header">
-                    <h2>الإشعارات</h2>
-                    <button class="mark-all-read" onclick="markAllAsRead()">تحديد الكل كمقروء</button>
-                </div>
-                
-                <div class="notifications-list" id="notifications-list">
-                    <!-- سيتم ملؤها بواسطة JavaScript -->
-                </div>
             </section>
         </main>
     </div>
 
-    <!-- نافذة الإشعارات -->
-    <div class="notifications-modal" id="notifications-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>الإشعارات</h3>
-                <button class="close-modal" id="closeNotifications">&times;</button>
-            </div>
-            <div class="modal-body" id="notifications-modal-body">
-                <!-- محتوى الإشعارات -->
-            </div>
-        </div>
-    </div>
-
-    <!-- السكريبت الرئيسي المُصلح -->
+    <!-- Scripts -->
     <script src="/adnk/scripts/supabase-client.js"></script>
     <script>
-    // ============================================
-    // تهيئة الصفحة
-    // ============================================
-    document.addEventListener('DOMContentLoaded', async function() {
-        console.log('✅ Dashboard Page Loaded');
-        
-        // التحقق من المصادقة
-        if (window.auth) {
-            const isAuth = await window.auth.requireAuth();
-            if (!isAuth) return;
-        }
-        
-        // تحميل البيانات
-        loadUserData();
-        loadRecentCourses();
-        loadActiveStudents();
-        loadNotifications();
-        initCharts();
-        setupMobileMenu();
-        setupNotifications();
-    });
-
-    // ============================================
-    // دوال مساعدة
-    // ============================================
-    function loadUserData() {
-        const user = window.auth?.getCurrentUser();
-        
-        if (user) {
-            document.getElementById('user-name').textContent = user.user_metadata?.full_name || 'مستخدم';
-            document.getElementById('user-email').textContent = user.email || 'user@example.com';
-            
-            const initials = window.auth?.getInitials(user.user_metadata?.full_name) || 'م';
-            document.getElementById('user-avatar').textContent = initials;
-        } else {
-            // بيانات افتراضية للتجربة
-            document.getElementById('user-name').textContent = 'محمد أحمد';
-            document.getElementById('user-email').textContent = 'teacher@example.com';
-            document.getElementById('user-avatar').textContent = 'م';
-        }
+    // دوال التنقل
+    function goToDashboard() {
+        window.location.href = '/adnk/pages/dashboard.html';
     }
-
-    function setupMobileMenu() {
-        const toggleBtn = document.getElementById('sidebar-toggle');
-        const sidebar = document.getElementById('sidebar');
-        
-        if (toggleBtn && sidebar) {
-            toggleBtn.addEventListener('click', function() {
-                sidebar.classList.toggle('active');
-                this.classList.toggle('active');
-            });
-            
-            document.addEventListener('click', function(event) {
-                if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target)) {
-                    sidebar.classList.remove('active');
-                    toggleBtn.classList.remove('active');
-                }
-            });
-        }
+    
+    function goToCreateCourse() {
+        window.location.href = '/adnk/pages/create-course.html';
     }
-
-    // ============================================
-    // تحميل الدورات الحديثة
-    // ============================================
-    function loadRecentCourses() {
-        // محاكاة البيانات
-        const courses = [
-            {
-                id: 1,
-                title: 'مقدمة في البرمجة',
-                thumbnail: 'https://img.youtube.com/vi/abc123/0.jpg',
-                students: 45,
-                interactions: 12,
-                status: 'published',
-                lastUpdated: '2023-10-15'
-            },
-            {
-                id: 2,
-                title: 'تعلم JavaScript من الصفر',
-                thumbnail: 'https://img.youtube.com/vi/def456/0.jpg',
-                students: 78,
-                interactions: 18,
-                status: 'published',
-                lastUpdated: '2023-10-10'
-            },
-            {
-                id: 3,
-                title: 'أساسيات تصميم الويب',
-                thumbnail: 'https://img.youtube.com/vi/ghi789/0.jpg',
-                students: 32,
-                interactions: 8,
-                status: 'draft',
-                lastUpdated: '2023-10-05'
-            },
-            {
-                id: 4,
-                title: 'قواعد البيانات MySQL',
-                thumbnail: 'https://img.youtube.com/vi/jkl012/0.jpg',
-                students: 56,
-                interactions: 15,
-                status: 'published',
-                lastUpdated: '2023-10-01'
-            }
-        ];
-        
-        const tbody = document.getElementById('recent-courses');
-        if (!tbody) return;
-        
-        tbody.innerHTML = '';
-        
-        courses.forEach(course => {
-            const row = document.createElement('tr');
-            const statusClass = course.status === 'published' ? 'status-published' : 'status-draft';
-            const statusText = course.status === 'published' ? 'منشور' : 'مسودة';
-            
-            row.innerHTML = `
-                <td>
-                    <div class="course-title">
-                        <div class="course-thumbnail">
-                            <img src="${course.thumbnail}" alt="${course.title}" onerror="this.src='/adnk/assets/images/default-thumbnail.jpg'">
-                        </div>
-                        <div>
-                            <h4>${course.title}</h4>
-                            <small>${course.interactions} تفاعل</small>
-                        </div>
-                    </div>
-                </td>
-                <td>${course.students}</td>
-                <td>${course.lastUpdated}</td>
-                <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                <td>
-                    <button class="action-btn edit" onclick="editCourse(${course.id})">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="action-btn view" onclick="viewCourse(${course.id})">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                    <button class="action-btn delete" onclick="deleteCourse(${course.id})">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </td>
-            `;
-            
-            tbody.appendChild(row);
-        });
+    
+    function goToSettings() {
+        window.location.href = '/adnk/pages/settings.html';
     }
-
-    // ============================================
-    // تحميل الطلاب النشطين
-    // ============================================
-    function loadActiveStudents() {
-        const students = [
-            { id: 1, name: 'أحمد محمد', email: 'ahmed@example.com', progress: 85, lastActive: 'منذ ساعتين' },
-            { id: 2, name: 'فاطمة علي', email: 'fatima@example.com', progress: 92, lastActive: 'منذ 30 دقيقة' },
-            { id: 3, name: 'خالد سعيد', email: 'khaled@example.com', progress: 67, lastActive: 'منذ يوم' },
-            { id: 4, name: 'سارة عبدالله', email: 'sara@example.com', progress: 78, lastActive: 'منذ 5 ساعات' },
-            { id: 5, name: 'محمد حسن', email: 'mohamed@example.com', progress: 95, lastActive: 'منذ ساعة' }
-        ];
-        
-        const container = document.getElementById('active-students');
-        if (!container) return;
-        
-        container.innerHTML = '';
-        
-        students.forEach(student => {
-            const studentCard = document.createElement('div');
-            studentCard.className = 'student-card';
-            
-            const initials = student.name.split(' ').map(n => n[0]).join('').toUpperCase();
-            
-            studentCard.innerHTML = `
-                <div class="student-avatar">${initials}</div>
-                <div class="student-info">
-                    <h4>${student.name}</h4>
-                    <p>${student.email}</p>
-                    <div class="student-progress">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: ${student.progress}%"></div>
-                        </div>
-                        <span>${student.progress}%</span>
-                    </div>
-                    <div class="student-meta">
-                        <span><i class="fas fa-clock"></i> ${student.lastActive}</span>
-                    </div>
-                </div>
-            `;
-            
-            container.appendChild(studentCard);
-        });
-    }
-
-    // ============================================
-    // تحميل الإشعارات
-    // ============================================
-    function loadNotifications() {
-        const notifications = [
-            { id: 1, title: 'طالب جديد', message: 'انضم أحمد محمد إلى دورة البرمجة', time: 'منذ 5 دقائق', read: false },
-            { id: 2, title: 'إكمال الدورة', message: 'أكملت فاطمة علي دورة JavaScript بنسبة 100%', time: 'منذ ساعة', read: false },
-            { id: 3, title: 'سؤال جديد', message: 'لديك سؤال غير مجاب في دورة قواعد البيانات', time: 'منذ 3 ساعات', read: true },
-            { id: 4, title: 'تذكير', message: 'دورة تصميم الويب تحتاج تحديث التفاعلات', time: 'منذ يوم', read: true }
-        ];
-        
-        const list = document.getElementById('notifications-list');
-        const modalBody = document.getElementById('notifications-modal-body');
-        
-        if (list) list.innerHTML = '';
-        if (modalBody) modalBody.innerHTML = '';
-        
-        notifications.forEach(notification => {
-            const item = document.createElement('div');
-            item.className = `notification-item ${notification.read ? 'read' : 'unread'}`;
-            item.innerHTML = `
-                <div class="notification-icon">
-                    <i class="fas fa-bell"></i>
-                </div>
-                <div class="notification-content">
-                    <h4>${notification.title}</h4>
-                    <p>${notification.message}</p>
-                    <span class="notification-time">${notification.time}</span>
-                </div>
-            `;
-            
-            if (list) list.appendChild(item.cloneNode(true));
-            if (modalBody) modalBody.appendChild(item.cloneNode(true));
-        });
-        
-        // تحديث عداد الإشعارات
-        const unreadCount = notifications.filter(n => !n.read).length;
-        const countEl = document.querySelector('.notification-count');
-        if (countEl) countEl.textContent = unreadCount;
-    }
-
-    // ============================================
-    // إعداد نظام الإشعارات
-    // ============================================
-    function setupNotifications() {
-        const notificationBtn = document.getElementById('notificationBtn');
-        const notificationModal = document.getElementById('notifications-modal');
-        const closeBtn = document.getElementById('closeNotifications');
-        
-        if (notificationBtn && notificationModal) {
-            notificationBtn.addEventListener('click', function() {
-                notificationModal.style.display = 'flex';
-            });
-        }
-        
-        if (closeBtn && notificationModal) {
-            closeBtn.addEventListener('click', function() {
-                notificationModal.style.display = 'none';
-            });
-        }
-        
-        if (notificationModal) {
-            notificationModal.addEventListener('click', function(event) {
-                if (event.target === notificationModal) {
-                    notificationModal.style.display = 'none';
-                }
-            });
-        }
-    }
-
-    function markAllAsRead() {
-        document.querySelectorAll('.notification-item').forEach(item => {
-            item.classList.add('read');
-        });
-        document.querySelector('.notification-count').textContent = '0';
-        window.auth?.showNotification('✅ تم تحديد الكل كمقروء', 'success');
-    }
-
-    // ============================================
-    // تهيئة الرسوم البيانية
-    // ============================================
-    function initCharts() {
-        // رسم بياني للتفاعلات
-        const interactionsCanvas = document.getElementById('interactions-chart');
-        if (interactionsCanvas) {
-            new Chart(interactionsCanvas.getContext('2d'), {
-                type: 'line',
-                data: {
-                    labels: ['السبت', 'الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'],
-                    datasets: [{
-                        label: 'تفاعلات الطلاب',
-                        data: [65, 78, 90, 81, 56, 55, 40],
-                        borderColor: '#4361ee',
-                        backgroundColor: 'rgba(67, 97, 238, 0.1)',
-                        tension: 0.4,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
-                        x: { grid: { display: false } }
-                    }
-                }
-            });
-        }
-        
-        // رسم بياني للإكمال
-        const completionCanvas = document.getElementById('completion-chart');
-        if (completionCanvas) {
-            new Chart(completionCanvas.getContext('2d'), {
-                type: 'doughnut',
-                data: {
-                    labels: ['مكتمل', 'قيد التقدم', 'لم يبدأ'],
-                    datasets: [{
-                        data: [65, 25, 10],
-                        backgroundColor: ['#4ade80', '#f59e0b', '#ef4444']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: { legend: { position: 'bottom' } }
-                }
-            });
-        }
-    }
-
-    // ============================================
-    // دوال الإجراءات
-    // ============================================
-    function editCourse(courseId) {
-        window.location.href = `/adnk/pages/create-course.html?edit=${courseId}`;
-    }
-
-    function viewCourse(courseId) {
-        window.location.href = `/adnk/pages/viewer.html?course=${courseId}`;
-    }
-
-    function deleteCourse(courseId) {
-        if (confirm('هل أنت متأكد من حذف هذا الدرس؟')) {
-            window.auth?.showNotification('✅ تم حذف الدرس (محاكاة)', 'success');
-            loadRecentCourses();
-        }
-    }
-
-    // تحديث الإحصائيات
-    function updateStats() {
-        const coursesCount = Math.floor(Math.random() * 5) + 10;
-        const studentsCount = Math.floor(Math.random() * 50) + 200;
-        const completionRate = Math.floor(Math.random() * 10) + 75;
-        const engagementRate = Math.floor(Math.random() * 10) + 85;
-        
-        document.getElementById('courses-count').textContent = coursesCount;
-        document.getElementById('students-count').textContent = studentsCount;
-        document.getElementById('completion-rate').textContent = completionRate + '%';
-        document.getElementById('engagement-rate').textContent = engagementRate + '%';
-    }
-
-    // تحديث كل 30 ثانية
-    setInterval(updateStats, 30000);
-
-    // ============================================
-    // تصدير الدوال للاستخدام العام
-    // ============================================
-    window.editCourse = editCourse;
-    window.viewCourse = viewCourse;
-    window.deleteCourse = deleteCourse;
-    window.markAllAsRead = markAllAsRead;
+    
+    // تصدير الدوال
+    window.goToDashboard = goToDashboard;
+    window.goToCreateCourse = goToCreateCourse;
+    window.goToSettings = goToSettings;
+    
+    console.log('✅ Dashboard loaded');
     </script>
 </body>
 </html>
