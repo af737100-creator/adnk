@@ -6,20 +6,19 @@
     <title>تعليمي - منصة التعلم التفاعلي</title>
     
     <!-- Styles -->
-    <link rel="stylesheet" href="/adnk/styles/main.css">
-    <link rel="stylesheet" href="/adnk/styles/responsive.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <nav class="navbar">
             <div class="container">
                 <div class="nav-brand">
-                    <a href="/adnk/">تعليمي</a>
+                    <a href="/">تعليمي</a>
                 </div>
                 
                 <ul class="nav-menu">
@@ -33,7 +32,6 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="container">
             <div class="hero-content">
@@ -51,66 +49,41 @@
             </div>
             
             <div class="hero-image">
-                <img src="/adnk/assets/images/hero-dashboard.png" alt="لوحة التحكم">
+                <img src="assets/images/hero-dashboard.png" alt="لوحة التحكم">
             </div>
         </div>
     </section>
 
-    <!-- باقي المحتوى (نفسه) -->
+    <!-- باقي المحتوى كما هو -->
 
-    <!-- Scripts -->
-    <script src="/adnk/scripts/supabase-client.js"></script>
-    
-    <!-- كود إصلاح جميع المشاكل -->
+    <script src="scripts/supabase-client.js"></script>
     <script>
     // ============================================
-    // دوال التنقل الآمنة (تعمل في كل مكان)
+    // نظام التنقل الموحد (يعمل في كل البيئات)
     // ============================================
     function goToDashboard() {
-        window.location.href = '/adnk/pages/dashboard.html';
+        window.location.href = 'pages/dashboard.html';
     }
     
     function goToSignup() {
-        window.location.href = '/adnk/pages/dashboard.html?signup=true';
+        window.location.href = 'pages/dashboard.html?signup=true';
     }
     
     function goToCreateCourse() {
-        window.location.href = '/adnk/pages/create-course.html';
+        window.location.href = 'pages/create-course.html';
     }
     
     function goToSettings() {
-        window.location.href = '/adnk/pages/settings.html';
+        window.location.href = 'pages/settings.html';
     }
     
-    // ============================================
     // تصدير الدوال للاستخدام العام
-    // ============================================
     window.goToDashboard = goToDashboard;
     window.goToSignup = goToSignup;
     window.goToCreateCourse = goToCreateCourse;
     window.goToSettings = goToSettings;
     
-    // ============================================
-    // إصلاح جميع الروابط تلقائياً
-    // ============================================
-    document.addEventListener('DOMContentLoaded', function() {
-        // تحويل جميع روابط تسجيل الدخول
-        document.querySelectorAll('.btn-login, .btn-signup, .btn-primary').forEach(btn => {
-            const href = btn.getAttribute('href');
-            if (href && href.includes('dashboard.html')) {
-                btn.removeAttribute('href');
-                btn.setAttribute('onclick', 'goToDashboard()');
-            }
-        });
-        
-        // تحويل روابط إنشاء حساب
-        document.querySelectorAll('[href*="signup=true"]').forEach(link => {
-            link.removeAttribute('href');
-            link.setAttribute('onclick', 'goToSignup()');
-        });
-        
-        console.log('✅ جميع الروابط تم إصلاحها');
-    });
+    console.log('✅ Navigation system ready');
     </script>
 </body>
 </html>
