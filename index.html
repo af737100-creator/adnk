@@ -4,16 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تعليمي - منصة التعلم التفاعلي</title>
-    <meta name="description" content="حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية">
     
-    <!-- تحديد المسار الأساسي للموقع (مهم جداً لـ GitHub Pages) -->
+    <!-- المسار الأساسي -->
     <base href="/adnk/">
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
-    
-    <!-- Styles - استخدام مسارات مطلقة -->
+    <!-- Styles -->
     <link rel="stylesheet" href="/adnk/styles/main.css">
     <link rel="stylesheet" href="/adnk/styles/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -23,101 +18,26 @@
 </head>
 <body>
     <!-- Header -->
-    <header class="header">
+    <header>
         <nav class="navbar">
             <div class="container">
                 <div class="nav-brand">
-                    <a href="/adnk/">
-                        <img src="/adnk/assets/images/logo.png" alt="تعليمي" class="logo" onerror="this.style.display='none'">
-                        <span>تعليمي</span>
-                    </a>
+                    <a href="/adnk/">تعليمي</a>
                 </div>
-                
                 <ul class="nav-menu">
-                    <li><a href="#features">المميزات</a></li>
-                    <li><a href="#how-it-works">كيف تعمل</a></li>
-                    <li><a href="#pricing">الأسعار</a></li>
-                    <li><a href="/adnk/pages/help.html">اتصل بنا</a></li>
-                    <li><a href="/adnk/pages/dashboard.html" class="btn-login">تسجيل الدخول</a></li>
-                    <li><a href="/adnk/pages/dashboard.html?signup=true" class="btn-signup">إنشاء حساب</a></li>
+                    <li><a href="/adnk/pages/dashboard.html">تسجيل الدخول</a></li>
+                    <li><a href="/adnk/pages/dashboard.html?signup=true">إنشاء حساب</a></li>
                 </ul>
-                
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
             </div>
         </nav>
     </header>
 
-    <!-- باقي محتوى الصفحة (نفس المحتوى السابق) -->
+    <!-- باقي المحتوى هنا -->
 
     <!-- Scripts -->
-    <script src="/adnk/scripts/utils.js"></script>
     <script src="/adnk/scripts/supabase-client.js"></script>
-    <script src="/adnk/scripts/main.js"></script>
-    
-    <!-- كود إصلاح الروابط لـ GitHub Pages -->
     <script>
-    (function() {
-        // تحديد المسار الأساسي
-        const BASE_PATH = '/adnk';
-        
-        // إصلاح جميع الروابط النسبية
-        document.addEventListener('DOMContentLoaded', function() {
-            // إصلاح روابط الصور
-            document.querySelectorAll('img[src^="assets/"]').forEach(img => {
-                if (!img.src.startsWith(window.location.origin + BASE_PATH)) {
-                    img.src = BASE_PATH + '/' + img.getAttribute('src');
-                }
-            });
-            
-            // إصلاح روابط CSS
-            document.querySelectorAll('link[rel="stylesheet"][href^="styles/"]').forEach(link => {
-                if (!link.href.startsWith(window.location.origin + BASE_PATH)) {
-                    link.href = BASE_PATH + '/' + link.getAttribute('href');
-                }
-            });
-            
-            // إصلاح روابط JavaScript
-            document.querySelectorAll('script[src^="scripts/"]').forEach(script => {
-                if (!script.src.startsWith(window.location.origin + BASE_PATH)) {
-                    script.src = BASE_PATH + '/' + script.getAttribute('src');
-                }
-            });
-            
-            // إصلاح روابط الأزرار
-            document.querySelectorAll('a[href^="pages/"]').forEach(link => {
-                const href = link.getAttribute('href');
-                if (!href.startsWith(BASE_PATH)) {
-                    link.setAttribute('href', BASE_PATH + '/' + href);
-                }
-            });
-            
-            // إصلاح أزرار "ابدأ مجاناً"
-            document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
-                const href = btn.getAttribute('href');
-                if (href && href.includes('dashboard.html')) {
-                    if (!href.startsWith(BASE_PATH)) {
-                        btn.setAttribute('href', BASE_PATH + '/' + href);
-                    }
-                }
-            });
-        });
-        
-        // معالجة النقر على الروابط
-        document.addEventListener('click', function(e) {
-            const link = e.target.closest('a');
-            if (link) {
-                const href = link.getAttribute('href');
-                if (href && href.includes('dashboard.html') && !href.startsWith('http')) {
-                    e.preventDefault();
-                    window.location.href = href.startsWith('/') ? href : BASE_PATH + '/' + href;
-                }
-            }
-        });
-    })();
+    console.log('✅ الموقع يعمل');
     </script>
 </body>
 </html>
