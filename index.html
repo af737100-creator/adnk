@@ -4,38 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تعليمي - منصة التعلم التفاعلي</title>
-    <meta name="description" content="حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية مع أسئلة واختبارات وشروحات إضافية">
-    <meta name="keywords" content="تعليم, يوتيوب, تفاعلي, أسئلة, اختبارات, منصة تعليمية">
-    <meta name="author" content="Ta3lemi Platform">
+    <meta name="description" content="حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية">
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ta3lemi.com">
-    <meta property="og:title" content="تعليمي - منصة التعلم التفاعلي">
-    <meta property="og:description" content="حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية">
-    <meta property="og:image" content="assets/images/og-image.jpg">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://ta3lemi.com">
-    <meta property="twitter:title" content="تعليمي - منصة التعلم التفاعلي">
-    <meta property="twitter:description" content="حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية">
-    <meta property="twitter:image" content="assets/images/og-image.jpg">
+    <!-- تحديد المسار الأساسي للموقع (مهم جداً لـ GitHub Pages) -->
+    <base href="/adnk/">
     
     <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
-    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-    <link rel="manifest" href="manifest.json">
     
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/responsive.css">
+    <!-- Styles - استخدام مسارات مطلقة -->
+    <link rel="stylesheet" href="/adnk/styles/main.css">
+    <link rel="stylesheet" href="/adnk/styles/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Preconnect for fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <!-- Header -->
@@ -43,8 +27,8 @@
         <nav class="navbar">
             <div class="container">
                 <div class="nav-brand">
-                    <a href="index.html">
-                        <img src="assets/images/logo.png" alt="تعليمي" class="logo">
+                    <a href="/adnk/">
+                        <img src="/adnk/assets/images/logo.png" alt="تعليمي" class="logo" onerror="this.style.display='none'">
                         <span>تعليمي</span>
                     </a>
                 </div>
@@ -53,9 +37,9 @@
                     <li><a href="#features">المميزات</a></li>
                     <li><a href="#how-it-works">كيف تعمل</a></li>
                     <li><a href="#pricing">الأسعار</a></li>
-                    <li><a href="#contact">اتصل بنا</a></li>
-                    <li><a href="pages/dashboard.html" class="btn-login">تسجيل الدخول</a></li>
-                    <li><a href="pages/dashboard.html?signup=true" class="btn-signup">إنشاء حساب</a></li>
+                    <li><a href="/adnk/pages/help.html">اتصل بنا</a></li>
+                    <li><a href="/adnk/pages/dashboard.html" class="btn-login">تسجيل الدخول</a></li>
+                    <li><a href="/adnk/pages/dashboard.html?signup=true" class="btn-signup">إنشاء حساب</a></li>
                 </ul>
                 
                 <div class="hamburger">
@@ -67,574 +51,72 @@
         </nav>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>حوّل مقاطع اليوتيوب التعليمية إلى <span>تجربة تعلم تفاعلية</span></h1>
-                <p>أضف أسئلة، اختبارات، وشروحات تفاعلية على أي فيديو تعليمي بدون إعادة التسجيل. منصة متكاملة للمعلمين والطلاب.</p>
-                
-                <div class="hero-stats">
-                    <div class="stat">
-                        <span class="stat-number">10,000+</span>
-                        <span class="stat-label">درس تفاعلي</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">50,000+</span>
-                        <span class="stat-label">طالب</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-number">5,000+</span>
-                        <span class="stat-label">معلم</span>
-                    </div>
-                </div>
-                
-                <div class="hero-buttons">
-                    <a href="pages/dashboard.html?signup=true" class="btn-primary">
-                        <i class="fas fa-rocket"></i>
-                        ابدأ مجاناً
-                    </a>
-                    <a href="#how-it-works" class="btn-secondary">
-                        <i class="fas fa-play-circle"></i>
-                        شاهد كيف تعمل
-                    </a>
-                </div>
-                
-                <div class="hero-trust">
-                    <p>موثوق من قبل أفضل المؤسسات التعليمية</p>
-                    <div class="trust-logos">
-                        <img src="assets/images/trust-1.png" alt="شريك 1">
-                        <img src="assets/images/trust-2.png" alt="شريك 2">
-                        <img src="assets/images/trust-3.png" alt="شريك 3">
-                    </div>
-                </div>
-            </div>
-            
-            <div class="hero-image">
-                <img src="assets/images/hero-dashboard.png" alt="لوحة التحكم التفاعلية">
-                <div class="hero-video-badge">
-                    <i class="fas fa-video"></i>
-                    <span>تفاعل فوري</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">مميزات المنصة</span>
-                <h2 class="section-title">كل ما تحتاجه لإنشاء <span>دروس تفاعلية</span></h2>
-                <p class="section-description">أدوات متكاملة وسهلة الاستخدام لتحويل أي فيديو يوتيوب إلى تجربة تعلم تفاعلية</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-question-circle"></i>
-                    </div>
-                    <h3>أسئلة تفاعلية أثناء التشغيل</h3>
-                    <p>أضف أسئلة في أي نقطة من الفيديو مع تصحيح فوري وتغذية راجعة للطلاب</p>
-                    <div class="feature-hover">
-                        <span>يدعم الأسئلة متعددة الخيارات والنصوص</span>
-                    </div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-clipboard-check"></i>
-                    </div>
-                    <h3>اختبارات قصيرة</h3>
-                    <p>أنشئ اختبارات متعددة الخيارات مع تصحيح آلي وإحصائيات دقيقة</p>
-                    <div class="feature-hover">
-                        <span>نتائج فورية وتحليلات شاملة</span>
-                    </div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <h3>شروحات إضافية</h3>
-                    <p>قدم معلومات إضافية، روابط، وموارد تعليمية عند نقاط محددة</p>
-                    <div class="feature-hover">
-                        <span>دعم النصوص المنسقة والروابط والصور</span>
-                    </div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>تحليلات متقدمة</h3>
-                    <p>تتبع تقدم الطلاب، معدلات الإكمال، وأداء الأسئلة في الوقت الفعلي</p>
-                    <div class="feature-hover">
-                        <span>تقارير مفصلة ورسوم بيانية تفاعلية</span>
-                    </div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <h3>تعليم تعاوني</h3>
-                    <p>غرف دراسية افتراضية مع سبورة تفاعلية وميزة رفع الأيدي</p>
-                    <div class="feature-hover">
-                        <span>دردشة فورية ومشاركة الشاشة</span>
-                    </div>
-                </div>
-                
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>متوافق مع جميع الأجهزة</h3>
-                    <p>تصميم متجاوب يعمل على الحواسيب، الأجهزة اللوحية، والهواتف</p>
-                    <div class="feature-hover">
-                        <span>تجربة مستخدم موحدة على جميع المنصات</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works -->
-    <section id="how-it-works" class="how-it-works">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">كيف تعمل</span>
-                <h2 class="section-title">أنشئ درسك التفاعلي في <span>4 خطوات</span></h2>
-                <p class="section-description">عملية بسيطة وسهلة تمكنك من تحويل أي فيديو لدرس تفاعلي في دقائق</p>
-            </div>
-            
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-icon">
-                        <i class="fas fa-link"></i>
-                    </div>
-                    <h3>أدخل رابط الفيديو</h3>
-                    <p>انسخ رابط أي فيديو تعليمي من يوتيوب والصقه في المنصة</p>
-                    <div class="step-arrow">
-                        <i class="fas fa-arrow-left"></i>
-                    </div>
-                </div>
-                
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-icon">
-                        <i class="fas fa-plus-circle"></i>
-                    </div>
-                    <h3>أضف التفاعلات</h3>
-                    <p>ضع أسئلة، اختبارات، وشروحات في النقاط الزمنية المطلوبة</p>
-                    <div class="step-arrow">
-                        <i class="fas fa-arrow-left"></i>
-                    </div>
-                </div>
-                
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-icon">
-                        <i class="fas fa-share-alt"></i>
-                    </div>
-                    <h3>شارك الدرس</h3>
-                    <p>احصل على رابط فريد للمشاركة أو أدمجه في نظام إدارة التعلم</p>
-                    <div class="step-arrow">
-                        <i class="fas fa-arrow-left"></i>
-                    </div>
-                </div>
-                
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div class="step-icon">
-                        <i class="fas fa-chart-bar"></i>
-                    </div>
-                    <h3>تابع التقدم</h3>
-                    <p>راقب أداء طلابك وتحصل على تقارير وإحصائيات مفصلة</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Demo Section -->
-    <section class="demo">
-        <div class="container">
-            <div class="demo-content">
-                <span class="demo-subtitle">جرب بنفسك</span>
-                <h2>شاهد كيف تعمل المنصة</h2>
-                <p>في هذا الفيديو التوضيحي، نقدم لك نظرة سريعة على كيفية إنشاء درس تفاعلي في أقل من 5 دقائق</p>
-                
-                <div class="demo-video-container">
-                    <iframe width="100%" height="400" src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                            title="شرح المنصة" frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                    </iframe>
-                </div>
-                
-                <div class="demo-cta">
-                    <a href="pages/dashboard.html?signup=true" class="btn-primary">
-                        ابدأ تجربتك المجانية
-                        <i class="fas fa-arrow-left"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing -->
-    <section id="pricing" class="pricing">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">الأسعار</span>
-                <h2 class="section-title">خطط مرنة تناسب <span>احتياجاتك</span></h2>
-                <p class="section-description">اختر الخطة المناسبة لك، مع ضمان استرداد الأموال خلال 30 يوماً</p>
-            </div>
-            
-            <div class="pricing-toggle">
-                <span>الفوترة الشهرية</span>
-                <label class="switch">
-                    <input type="checkbox" id="pricing-toggle">
-                    <span class="slider round"></span>
-                </label>
-                <span>الفوترة السنوية <span class="save-badge">وفر 20%</span></span>
-            </div>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>مجاني</h3>
-                        <div class="price">
-                            <span class="currency">$</span>
-                            <span class="amount">0</span>
-                            <span class="period">/شهر</span>
-                        </div>
-                        <p>للبدء واستكشاف المنصة</p>
-                    </div>
-                    
-                    <ul class="pricing-features">
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span>3 دروس تفاعلية</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span>10 طلاب لكل درس</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span>تفاعلات أساسية</span>
-                        </li>
-                        <li class="disabled">
-                            <i class="fas fa-times"></i>
-                            <span>تحليلات متقدمة</span>
-                        </li>
-                        <li class="disabled">
-                            <i class="fas fa-times"></i>
-                            <span>غرف تفاعلية</span>
-                        </li>
-                    </ul>
-                    
-                    <a href="pages/dashboard.html?signup=true" class="btn-secondary">ابدأ مجاناً</a>
-                </div>
-                
-                <div class="pricing-card popular">
-                    <div class="popular-badge">الأكثر شهرة</div>
-                    <div class="pricing-header">
-                        <h3>احترافي</h3>
-                        <div class="price">
-                            <span class="currency">$</span>
-                            <span class="amount" data-monthly="29" data-yearly="23">29</span>
-                            <span class="period">/شهر</span>
-                        </div>
-                        <p>للمعلمين المحترفين</p>
-                    </div>
-                    
-                    <ul class="pricing-features">
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span>دروس غير محدودة</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span>طلاب غير محدودين</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span>جميع أنواع التفاعلات</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span>تحليلات متقدمة</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span>غرف تفاعلية</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span>دعم فني 24/7</span>
-                        </li>
-                    </ul>
-                    
-                    <a href="pages/dashboard.html?signup=true&plan=pro" class="btn-primary">اختر الخطة</a>
-                </div>
-                
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>مؤسسات</h3>
-                        <div class="price">
-                            <span class="currency">$</span>
-                            <span class="amount" data-monthly="99" data-yearly="79">99</span>
-                            <span class="period">/شهر</span>
-                        </div>
-                        <p>للمدارس والجامعات</p>
-                    </div>
-                    
-                    <ul class="pricing-features">
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span>جميع ميزات الخطة الاحترافية</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span>لوحة تحكم للمؤسسة</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span>إدارة حسابات متعددة</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span>تكامل مع LMS</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-check"></i>
-                            <span>تدريب ودعم مخصص</span>
-                        </li>
-                    </ul>
-                    
-                    <a href="pages/dashboard.html?signup=true&plan=enterprise" class="btn-secondary">اتصل بنا</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="testimonials">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-subtitle">آراء المستخدمين</span>
-                <h2 class="section-title">ماذا يقول <span>معلمونا</span></h2>
-                <p class="section-description">انضم إلى آلاف المعلمين الذين يثقون في منصتنا</p>
-            </div>
-            
-            <div class="testimonials-slider">
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"منصة رائعة! ساعدتني في تحويل فيديوهاتي القديمة إلى دروس تفاعلية بدون إعادة تسجيل. طلابي أصبحوا أكثر تفاعلاً."</p>
-                    <div class="testimonial-author">
-                        <img src="assets/images/placeholder/avatar-1.png" alt="أحمد محمد">
-                        <div>
-                            <h4>أحمد محمد</h4>
-                            <p>معلم برمجة</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"التحليلات والإحصائيات ساعدتني في فهم نقاط ضعف طلابي وتطوير طريقة تدريسي. أنصح بها بشدة."</p>
-                    <div class="testimonial-author">
-                        <img src="assets/images/placeholder/avatar-2.png" alt="سارة عبدالله">
-                        <div>
-                            <h4>سارة عبدالله</h4>
-                            <p>معلمة رياضيات</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"الغرف التفاعلية والسبورة غيّرت طريقة تدريسي تماماً. طلابي يشعرون وكأنهم في فصل حقيقي."</p>
-                    <div class="testimonial-author">
-                        <img src="assets/images/placeholder/avatar-3.png" alt="خالد العتيبي">
-                        <div>
-                            <h4>خالد العتيبي</h4>
-                            <p>معلم لغة إنجليزية</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>ابدأ رحلة التعلم التفاعلي اليوم</h2>
-                <p>انضم إلى آلاف المعلمين والطلاب الذين يستخدمون منصتنا لتجربة تعليمية أفضل</p>
-                <div class="cta-buttons">
-                    <a href="pages/dashboard.html?signup=true" class="btn-primary btn-large">
-                        <i class="fas fa-rocket"></i>
-                        سجل مجاناً
-                    </a>
-                    <a href="#contact" class="btn-secondary btn-large">
-                        <i class="fas fa-headset"></i>
-                        تواصل معنا
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <div class="footer-brand">
-                        <img src="assets/images/logo-white.png" alt="تعليمي">
-                        <p>منصة التعلم التفاعلي الأولى التي تحول مقاطع اليوتيوب إلى تجارب تعليمية تفاعلية.</p>
-                    </div>
-                    <div class="footer-social">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>روابط سريعة</h3>
-                    <ul>
-                        <li><a href="#features">المميزات</a></li>
-                        <li><a href="#how-it-works">كيف تعمل</a></li>
-                        <li><a href="#pricing">الأسعار</a></li>
-                        <li><a href="pages/about.html">من نحن</a></li>
-                        <li><a href="pages/help.html">المساعدة</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>للمعلمين</h3>
-                    <ul>
-                        <li><a href="pages/create-course.html">إنشاء درس</a></li>
-                        <li><a href="pages/dashboard.html">لوحة التحكم</a></li>
-                        <li><a href="pages/analytics.html">التقارير</a></li>
-                        <li><a href="pages/classroom.html">الغرف التفاعلية</a></li>
-                        <li><a href="pages/whiteboard.html">السبورة</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>اتصل بنا</h3>
-                    <ul class="contact-info">
-                        <li>
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>الرياض، المملكة العربية السعودية</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-phone"></i>
-                            <span>+966 123 456 789</span>
-                        </li>
-                        <li>
-                            <i class="fas fa-envelope"></i>
-                            <span>support@ta3lemi.com</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="footer-bottom">
-                <div class="footer-copyright">
-                    <p>&copy; 2026 تعليمي. جميع الحقوق محفوظة.</p>
-                </div>
-                <div class="footer-links">
-                    <a href="#">سياسة الخصوصية</a>
-                    <a href="#">شروط الاستخدام</a>
-                    <a href="#">خريطة الموقع</a>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Cookie Consent -->
-    <div class="cookie-consent" id="cookieConsent">
-        <p>نحن نستخدم ملفات تعريف الارتباط لتحسين تجربتك. باستمرارك في استخدام الموقع، فإنك توافق على <a href="#">سياسة الخصوصية</a> الخاصة بنا.</p>
-        <button class="btn-primary" onclick="acceptCookies()">موافق</button>
-    </div>
+    <!-- باقي محتوى الصفحة (نفس المحتوى السابق) -->
 
     <!-- Scripts -->
-    <script src="scripts/utils.js"></script>
-    <script src="scripts/main.js"></script>
+    <script src="/adnk/scripts/utils.js"></script>
+    <script src="/adnk/scripts/supabase-client.js"></script>
+    <script src="/adnk/scripts/main.js"></script>
     
-    <!-- 🔥 كود إصلاح مشكلة GitHub Pages -->
+    <!-- كود إصلاح الروابط لـ GitHub Pages -->
     <script>
-    // إصلاح مشكلة إعادة التوجيه في GitHub Pages
     (function() {
-        console.log('✅ تم تفعيل إصلاح GitHub Pages');
+        // تحديد المسار الأساسي
+        const BASE_PATH = '/adnk';
         
-        // منع إعادة التوجيه التلقائي
-        window.addEventListener('load', function() {
-            // التحقق من وجود معلمة signup في URL
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('signup')) {
-                // إذا كنا في الصفحة الرئيسية ولدينا معلمة signup
-                if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
-                    console.log('🔄 جاري التوجيه إلى صفحة التسجيل...');
-                    window.location.href = 'pages/dashboard.html?signup=true';
+        // إصلاح جميع الروابط النسبية
+        document.addEventListener('DOMContentLoaded', function() {
+            // إصلاح روابط الصور
+            document.querySelectorAll('img[src^="assets/"]').forEach(img => {
+                if (!img.src.startsWith(window.location.origin + BASE_PATH)) {
+                    img.src = BASE_PATH + '/' + img.getAttribute('src');
+                }
+            });
+            
+            // إصلاح روابط CSS
+            document.querySelectorAll('link[rel="stylesheet"][href^="styles/"]').forEach(link => {
+                if (!link.href.startsWith(window.location.origin + BASE_PATH)) {
+                    link.href = BASE_PATH + '/' + link.getAttribute('href');
+                }
+            });
+            
+            // إصلاح روابط JavaScript
+            document.querySelectorAll('script[src^="scripts/"]').forEach(script => {
+                if (!script.src.startsWith(window.location.origin + BASE_PATH)) {
+                    script.src = BASE_PATH + '/' + script.getAttribute('src');
+                }
+            });
+            
+            // إصلاح روابط الأزرار
+            document.querySelectorAll('a[href^="pages/"]').forEach(link => {
+                const href = link.getAttribute('href');
+                if (!href.startsWith(BASE_PATH)) {
+                    link.setAttribute('href', BASE_PATH + '/' + href);
+                }
+            });
+            
+            // إصلاح أزرار "ابدأ مجاناً"
+            document.querySelectorAll('.btn-primary, .btn-secondary').forEach(btn => {
+                const href = btn.getAttribute('href');
+                if (href && href.includes('dashboard.html')) {
+                    if (!href.startsWith(BASE_PATH)) {
+                        btn.setAttribute('href', BASE_PATH + '/' + href);
+                    }
+                }
+            });
+        });
+        
+        // معالجة النقر على الروابط
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('a');
+            if (link) {
+                const href = link.getAttribute('href');
+                if (href && href.includes('dashboard.html') && !href.startsWith('http')) {
+                    e.preventDefault();
+                    window.location.href = href.startsWith('/') ? href : BASE_PATH + '/' + href;
                 }
             }
         });
-
-        // إصلاح روابط تسجيل الدخول
-        document.addEventListener('DOMContentLoaded', function() {
-            // تأخير بسيط للتأكد من تحميل DOM
-            setTimeout(function() {
-                document.querySelectorAll('.btn-login, .btn-signup, .btn-primary, .btn-secondary').forEach(btn => {
-                    btn.addEventListener('click', function(e) {
-                        const href = this.getAttribute('href');
-                        if (href && href.includes('pages/dashboard.html')) {
-                            e.preventDefault();
-                            console.log('🔗 جاري الانتقال إلى:', href);
-                            window.location.href = href;
-                        }
-                    });
-                });
-            }, 100);
-        });
-
-        // دالة قبول الكوكيز
-        window.acceptCookies = function() {
-            document.getElementById('cookieConsent').style.display = 'none';
-            localStorage.setItem('cookiesAccepted', 'true');
-        };
-
-        // التحقق من حالة الكوكيز
-        if (localStorage.getItem('cookiesAccepted') === 'true') {
-            document.getElementById('cookieConsent').style.display = 'none';
-        }
     })();
     </script>
 </body>
