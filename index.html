@@ -1,38 +1,31 @@
-<script>
-function goToDashboard() {
-    window.location.href = '?page=dashboard';
-}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تعليمي - منصة التعلم التفاعلي</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/adnk/">الرئيسية</a>
+            <a href="/adnk/pages/dashboard.html" target="_self" class="btn-login">تسجيل الدخول</a>
+            <a href="/adnk/pages/dashboard.html?signup=true" target="_self" class="btn-signup">إنشاء حساب</a>
+        </nav>
+    </header>
 
-function goToCreateCourse() {
-    window.location.href = '?page=create-course';
-}
+    <section class="hero">
+        <h1>حوّل مقاطع اليوتيوب إلى تجربة تعلم تفاعلية</h1>
+        <a href="/adnk/pages/dashboard.html?signup=true" target="_self" class="btn-primary">ابدأ مجاناً</a>
+    </section>
 
-function goToSettings() {
-    window.location.href = '?page=settings';
-}
-
-// معالجة التوجيه
-window.addEventListener('load', function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const page = urlParams.get('page');
-    
-    if (page === 'dashboard') {
-        loadPage('pages/dashboard.html');
-    } else if (page === 'create-course') {
-        loadPage('pages/create-course.html');
-    } else if (page === 'settings') {
-        loadPage('pages/settings.html');
+    <script>
+    // منع أي إعادة توجيه تلقائي
+    if (window.location.pathname === '/adnk/' && window.location.search) {
+        // تجاهل معلمات البحث في الصفحة الرئيسية
     }
-});
-
-function loadPage(url) {
-    fetch(url)
-        .then(response => response.text())
-        .then(html => {
-            const match = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-            if (match && match[1]) {
-                document.body.innerHTML = match[1];
-            }
-        });
-}
-</script>
+    </script>
+</body>
+</html>
