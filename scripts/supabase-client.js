@@ -1,11 +1,4 @@
-/**
- * Supabase Client - نسخة مبسطة تعمل فوراً
- */
-
-const SUPABASE_URL = 'https://ollwqisezqkawrulahqq.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_HnNvDq3tgZa1GBODyM8FxA_Z2mMyqDF';
-
-// تهيئة auth بسيط
+// نظام مبسط يعمل في كل مكان
 window.auth = {
     getCurrentUser: () => ({
         id: '1',
@@ -16,4 +9,4 @@ window.auth = {
     showNotification: (msg) => alert(msg)
 };
 
-console.log('✅ Supabase ready');
+console.log('✅ النظام جاهز');
