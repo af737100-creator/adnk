@@ -1,41 +1,7 @@
 {
   "name": "ta3lemi",
   "version": 2,
-  "builds": [
-    {
-      "src": "**/*.html",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ],
   "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/dashboard", "destination": "/pages/dashboard.html" },
-    { "source": "/create-course", "destination": "/pages/create-course.html" },
-    { "source": "/settings", "destination": "/pages/settings.html" },
-    { "source": "/my-courses", "destination": "/pages/my-courses.html" },
-    { "source": "/students", "destination": "/pages/students.html" },
-    { "source": "/analytics", "destination": "/pages/analytics.html" },
-    { "source": "/classroom", "destination": "/pages/classroom.html" },
-    { "source": "/whiteboard", "destination": "/pages/whiteboard.html" },
-    { "source": "/help", "destination": "/pages/help.html" },
-    { "source": "/about", "destination": "/pages/about.html" }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "Content-Type", "value": "text/html; charset=utf-8" }
-      ]
-    }
-  ],
-  "env": {
-    "SUPABASE_URL": "https://ollwqisezqkawrulahqq.supabase.co",
-    "SUPABASE_ANON_KEY": "sb_publishable_HnNvDq3tgZa1GBODyM8FxA_Z2mMyqDF"
-  }
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
