@@ -3,77 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إنشاء درس جديد - تعليمي</title>
-    
-    <link rel="stylesheet" href="../styles/main.css">
-    <link rel="stylesheet" href="../styles/dashboard.css">
+    <title>إنشاء درس - تعليمي</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="dashboard-container">
         <aside class="sidebar">
-            <div class="sidebar-header">
-                <h2>تعليمي</h2>
-            </div>
-            <nav class="sidebar-menu">
-                <ul>
-                    <li><button onclick="goToDashboard()">لوحة التحكم</button></li>
-                    <li><button class="active" onclick="goToCreateCourse()">إنشاء درس جديد</button></li>
-                    <li><button onclick="goToSettings()">الإعدادات</button></li>
-                </ul>
+            <h2>تعليمي</h2>
+            <nav>
+                <a href="/pages/dashboard.html">لوحة التحكم</a>
+                <a href="/pages/create-course.html">إنشاء درس</a>
+                <a href="/pages/settings.html">الإعدادات</a>
             </nav>
         </aside>
-
-        <main class="main-content">
-            <header class="main-header">
-                <h1>إنشاء درس جديد</h1>
-                <button class="btn-secondary" onclick="goToDashboard()">رجوع</button>
-            </header>
-
-            <div style="padding: 20px;">
-                <div class="form-group">
-                    <label>عنوان الدرس</label>
-                    <input type="text" id="title" class="form-control" placeholder="أدخل عنوان الدرس">
-                </div>
-                
-                <div class="form-group">
-                    <label>رابط يوتيوب</label>
-                    <input type="url" id="url" class="form-control" placeholder="https://youtube.com/watch?v=...">
-                </div>
-                
-                <button class="btn-primary" onclick="saveCourse()">حفظ الدرس</button>
-            </div>
+        <main>
+            <h1>إنشاء درس جديد</h1>
+            <form id="courseForm">
+                <input type="text" id="title" placeholder="عنوان الدرس">
+                <input type="url" id="youtubeUrl" placeholder="رابط يوتيوب">
+                <button type="submit">حفظ</button>
+            </form>
         </main>
     </div>
-
-    <script src="../scripts/supabase-client.js"></script>
+    <script src="/scripts/supabase-client.js"></script>
     <script>
-    function goToDashboard() {
-        window.location.href = 'dashboard.html';
-    }
-    
-    function goToCreateCourse() {
-        window.location.href = 'create-course.html';
-    }
-    
-    function goToSettings() {
-        window.location.href = 'settings.html';
-    }
-    
-    function saveCourse() {
-        const title = document.getElementById('title').value;
-        if (!title) {
-            alert('الرجاء إدخال عنوان الدرس');
-            return;
-        }
-        alert('تم حفظ الدرس بنجاح!');
-        goToDashboard();
-    }
-    
-    window.goToDashboard = goToDashboard;
-    window.goToCreateCourse = goToCreateCourse;
-    window.goToSettings = goToSettings;
-    window.saveCourse = saveCourse;
+    document.getElementById('courseForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('تم حفظ الدرس');
+        window.location.href = '/pages/dashboard.html';
+    });
     </script>
 </body>
 </html>
