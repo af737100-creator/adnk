@@ -9,81 +9,87 @@
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="styles/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <header class="header">
-        <nav class="navbar">
-            <div class="container">
-                <div class="nav-brand">
-                    <a href="/">تعليمي</a>
-                </div>
-                
-                <ul class="nav-menu">
-                    <li><a href="#features">المميزات</a></li>
-                    <li><a href="#how-it-works">كيف تعمل</a></li>
-                    <li><a href="#pricing">الأسعار</a></li>
-                    <li><button class="btn-login" onclick="goToDashboard()">تسجيل الدخول</button></li>
-                    <li><button class="btn-signup" onclick="goToSignup()">إنشاء حساب</button></li>
-                </ul>
-            </div>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="navigateTo('#dashboard'); return false;">تسجيل الدخول</a></li>
+                <li><a href="#" onclick="navigateTo('#signup'); return false;">إنشاء حساب</a></li>
+            </ul>
         </nav>
     </header>
 
     <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
-                <p>أضف أسئلة، اختبارات، وشروحات تفاعلية على أي فيديو تعليمي بدون إعادة التسجيل.</p>
-                
-                <div class="hero-buttons">
-                    <button class="btn-primary" onclick="goToSignup()">
-                        <i class="fas fa-rocket"></i> ابدأ مجاناً
-                    </button>
-                    <a href="#how-it-works" class="btn-secondary">
-                        <i class="fas fa-play-circle"></i> شاهد كيف تعمل
-                    </a>
-                </div>
-            </div>
-            
-            <div class="hero-image">
-                <img src="assets/images/hero-dashboard.png" alt="لوحة التحكم">
-            </div>
-        </div>
+        <button onclick="navigateTo('#signup'); return false;">ابدأ مجاناً</button>
     </section>
-
-    <!-- باقي المحتوى كما هو -->
 
     <script src="scripts/supabase-client.js"></script>
     <script>
     // ============================================
-    // نظام التنقل الموحد (يعمل في كل البيئات)
+    // نظام التنقل باستخدام الهاش (يعمل دائماً)
     // ============================================
-    function goToDashboard() {
-        window.location.href = 'pages/dashboard.html';
+    function navigateTo(page) {
+        if (page === '#dashboard') {
+            window.location.href = '#dashboard';
+            loadPage('pages/dashboard.html');
+        } else if (page === '#signup') {
+            window.location.href = '#signup';
+            loadPage('pages/dashboard.html?signup=true');
+        } else if (page === '#create-course') {
+            window.location.href = '#create-course';
+            loadPage('pages/create-course.html');
+        } else if (page === '#settings') {
+            window.location.href = '#settings';
+            loadPage('pages/settings.html');
+        }
+        return false;
     }
     
-    function goToSignup() {
-        window.location.href = 'pages/dashboard.html?signup=true';
+    function loadPage(url) {
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                // استخراج المحتوى بين <body> و </body>
+                const match = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+                if (match && match[1]) {
+                    document.body.innerHTML = match[1];
+                    
+                    // إعادة تشغيل السكربتات
+                    const scripts = document.body.querySelectorAll('script');
+                    scripts.forEach(oldScript => {
+                        const newScript = document.createElement('script');
+                        if (oldScript.src) {
+                            newScript.src = oldScript.src;
+                        } else {
+                            newScript.textContent = oldScript.textContent;
+                        }
+                        document.body.appendChild(newScript);
+                    });
+                    
+                    // تحديث عنوان الصفحة
+                    const titleMatch = html.match(/<title[^>]*>([\s\S]*)<\/title>/i);
+                    if (titleMatch && titleMatch[1]) {
+                        document.title = titleMatch[1];
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('خطأ في تحميل الصفحة:', error);
+                alert('حدث خطأ في تحميل الصفحة');
+            });
     }
     
-    function goToCreateCourse() {
-        window.location.href = 'pages/create-course.html';
-    }
+    // معالجة التحميل الأولي بناءً على الهاش
+    window.addEventListener('load', function() {
+        const hash = window.location.hash;
+        if (hash) {
+            navigateTo(hash);
+        }
+    });
     
-    function goToSettings() {
-        window.location.href = 'pages/settings.html';
-    }
-    
-    // تصدير الدوال للاستخدام العام
-    window.goToDashboard = goToDashboard;
-    window.goToSignup = goToSignup;
-    window.goToCreateCourse = goToCreateCourse;
-    window.goToSettings = goToSettings;
-    
-    console.log('✅ Navigation system ready');
+    window.navigateTo = navigateTo;
+    console.log('✅ نظام التنقل بالهاش يعمل');
     </script>
 </body>
 </html>
