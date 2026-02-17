@@ -1,2 +1,13 @@
+# ملف _redirects - يجب وضعه في جذر المشروع (مجلد adnk/)
 /adnk/*    /adnk/index.html    200
-/adnk/pages/*    /adnk/pages/:splat    200
+*/index.html    /adnk/index.html    200
+*/dashboard.html    /adnk/pages/dashboard.html    200
+*/create-course.html    /adnk/pages/create-course.html    200
+*/settings.html    /adnk/pages/settings.html    200
+*/my-courses.html    /adnk/pages/my-courses.html    200
+*/students.html    /adnk/pages/students.html    200
+*/analytics.html    /adnk/pages/analytics.html    200
+*/classroom.html    /adnk/pages/classroom.html    200
+*/whiteboard.html    /adnk/pages/whiteboard.html    200
+*/help.html    /adnk/pages/help.html    200
+*/about.html    /adnk/pages/about.html    200
