@@ -3,7 +3,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "**/*.html",
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "pages/*.html",
       "use": "@vercel/static"
     }
   ],
@@ -17,19 +21,16 @@
       "dest": "/pages/$1"
     },
     {
+      "src": "/styles/(.*)",
+      "dest": "/styles/$1"
+    },
+    {
+      "src": "/scripts/(.*)",
+      "dest": "/scripts/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/html; charset=utf-8"
-        }
-      ]
     }
   ]
 }
