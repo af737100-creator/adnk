@@ -1,95 +1,38 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تعليمي - منصة التعلم التفاعلي</title>
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel="stylesheet" href="styles/responsive.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#" onclick="navigateTo('#dashboard'); return false;">تسجيل الدخول</a></li>
-                <li><a href="#" onclick="navigateTo('#signup'); return false;">إنشاء حساب</a></li>
-            </ul>
-        </nav>
-    </header>
+<script>
+function goToDashboard() {
+    window.location.href = '?page=dashboard';
+}
 
-    <section class="hero">
-        <button onclick="navigateTo('#signup'); return false;">ابدأ مجاناً</button>
-    </section>
+function goToCreateCourse() {
+    window.location.href = '?page=create-course';
+}
 
-    <script src="scripts/supabase-client.js"></script>
-    <script>
-    // ============================================
-    // نظام التنقل باستخدام الهاش (يعمل دائماً)
-    // ============================================
-    function navigateTo(page) {
-        if (page === '#dashboard') {
-            window.location.href = '#dashboard';
-            loadPage('pages/dashboard.html');
-        } else if (page === '#signup') {
-            window.location.href = '#signup';
-            loadPage('pages/dashboard.html?signup=true');
-        } else if (page === '#create-course') {
-            window.location.href = '#create-course';
-            loadPage('pages/create-course.html');
-        } else if (page === '#settings') {
-            window.location.href = '#settings';
-            loadPage('pages/settings.html');
-        }
-        return false;
+function goToSettings() {
+    window.location.href = '?page=settings';
+}
+
+// معالجة التوجيه
+window.addEventListener('load', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const page = urlParams.get('page');
+    
+    if (page === 'dashboard') {
+        loadPage('pages/dashboard.html');
+    } else if (page === 'create-course') {
+        loadPage('pages/create-course.html');
+    } else if (page === 'settings') {
+        loadPage('pages/settings.html');
     }
-    
-    function loadPage(url) {
-        fetch(url)
-            .then(response => response.text())
-            .then(html => {
-                // استخراج المحتوى بين <body> و </body>
-                const match = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-                if (match && match[1]) {
-                    document.body.innerHTML = match[1];
-                    
-                    // إعادة تشغيل السكربتات
-                    const scripts = document.body.querySelectorAll('script');
-                    scripts.forEach(oldScript => {
-                        const newScript = document.createElement('script');
-                        if (oldScript.src) {
-                            newScript.src = oldScript.src;
-                        } else {
-                            newScript.textContent = oldScript.textContent;
-                        }
-                        document.body.appendChild(newScript);
-                    });
-                    
-                    // تحديث عنوان الصفحة
-                    const titleMatch = html.match(/<title[^>]*>([\s\S]*)<\/title>/i);
-                    if (titleMatch && titleMatch[1]) {
-                        document.title = titleMatch[1];
-                    }
-                }
-            })
-            .catch(error => {
-                console.error('خطأ في تحميل الصفحة:', error);
-                alert('حدث خطأ في تحميل الصفحة');
-            });
-    }
-    
-    // معالجة التحميل الأولي بناءً على الهاش
-    window.addEventListener('load', function() {
-        const hash = window.location.hash;
-        if (hash) {
-            navigateTo(hash);
-        }
-    });
-    
-    window.navigateTo = navigateTo;
-    console.log('✅ نظام التنقل بالهاش يعمل');
-    </script>
-</body>
-</html>
+});
+
+function loadPage(url) {
+    fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            const match = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+            if (match && match[1]) {
+                document.body.innerHTML = match[1];
+            }
+        });
+}
+</script>
