@@ -13,26 +13,28 @@
         <aside class="sidebar">
             <h2>تعليمي</h2>
             <nav>
-                <a href="/pages/dashboard.html">لوحة التحكم</a>
-                <a href="/pages/create-course.html">إنشاء درس</a>
-                <a href="/pages/settings.html">الإعدادات</a>
+                <a href="#" onclick="parent.navigate('#dashboard'); return false;">لوحة التحكم</a>
+                <a href="#" onclick="parent.navigate('#create-course'); return false;">إنشاء درس</a>
+                <a href="#" onclick="parent.navigate('#settings'); return false;">الإعدادات</a>
             </nav>
         </aside>
         <main>
             <h1>إنشاء درس جديد</h1>
+            <button onclick="parent.navigate('#dashboard'); return false;">رجوع</button>
+            
             <form id="courseForm">
-                <input type="text" id="title" placeholder="عنوان الدرس">
+                <input type="text" id="title" placeholder="عنوان الدرس" required>
                 <input type="url" id="youtubeUrl" placeholder="رابط يوتيوب">
-                <button type="submit">حفظ</button>
+                <button type="submit">حفظ الدرس</button>
             </form>
         </main>
     </div>
-    <script src="/scripts/supabase-client.js"></script>
+
     <script>
     document.getElementById('courseForm').addEventListener('submit', (e) => {
         e.preventDefault();
-        alert('تم حفظ الدرس');
-        window.location.href = '/pages/dashboard.html';
+        alert('تم حفظ الدرس بنجاح!');
+        window.parent.navigate('#dashboard');
     });
     </script>
 </body>
