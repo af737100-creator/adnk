@@ -3,31 +3,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "*.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "pages/*.html",
+      "src": "**/*.html",
       "use": "@vercel/static"
     }
   ],
   "routes": [
-    {
-      "src": "/",
-      "dest": "/index.html"
-    },
-    {
-      "src": "/pages/(.*)",
-      "dest": "/pages/$1"
-    },
-    {
-      "src": "/styles/(.*)",
-      "dest": "/styles/$1"
-    },
-    {
-      "src": "/scripts/(.*)",
-      "dest": "/scripts/$1"
-    },
     {
       "src": "/(.*)",
       "dest": "/index.html"
