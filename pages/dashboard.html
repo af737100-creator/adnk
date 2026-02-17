@@ -4,47 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم - تعليمي</title>
-    
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- Sidebar -->
         <aside class="sidebar">
-            <div class="sidebar-header">
-                <h2>تعليمي</h2>
-            </div>
-            <nav class="sidebar-menu">
-                <ul>
-                    <li><a href="#" onclick="parent.navigateTo ? parent.navigateTo('#dashboard') : window.navigateTo('#dashboard'); return false;" class="active">لوحة التحكم</a></li>
-                    <li><a href="#" onclick="parent.navigateTo ? parent.navigateTo('#create-course') : window.navigateTo('#create-course'); return false;">إنشاء درس جديد</a></li>
-                    <li><a href="#" onclick="parent.navigateTo ? parent.navigateTo('#settings') : window.navigateTo('#settings'); return false;">الإعدادات</a></li>
-                </ul>
+            <h2>تعليمي</h2>
+            <nav>
+                <a href="/adnk/pages/dashboard.html" class="active">لوحة التحكم</a>
+                <a href="/adnk/pages/create-course.html">إنشاء درس جديد</a>
+                <a href="/adnk/pages/settings.html">الإعدادات</a>
             </nav>
         </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <header class="main-header">
-                <h1>لوحة التحكم</h1>
-                <button class="btn-primary" onclick="parent.navigateTo ? parent.navigateTo('#create-course') : window.navigateTo('#create-course'); return false;">
-                    درس جديد
-                </button>
-            </header>
-
-            <!-- Stats Cards -->
-            <section class="stats-cards">
-                <div class="stat-card">
-                    <h3>إجمالي الدروس</h3>
-                    <p class="stat-number">12</p>
-                </div>
-                <div class="stat-card">
-                    <h3>الطلاب</h3>
-                    <p class="stat-number">245</p>
-                </div>
-            </section>
+        <main>
+            <h1>لوحة التحكم</h1>
+            <a href="/adnk/pages/create-course.html" class="btn-primary">درس جديد</a>
+            
+            <div class="stats">
+                <div class="stat-card">12 درس</div>
+                <div class="stat-card">245 طالب</div>
+            </div>
         </main>
     </div>
 </body>
