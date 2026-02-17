@@ -5,147 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم - تعليمي</title>
     
-    <!-- Styles -->
-    <link rel="stylesheet" href="/adnk/styles/main.css">
-    <link rel="stylesheet" href="/adnk/styles/dashboard.css">
-    <link rel="stylesheet" href="/adnk/styles/responsive.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div class="dashboard-container">
         <!-- Sidebar -->
-        <aside class="sidebar" id="sidebar">
+        <aside class="sidebar">
             <div class="sidebar-header">
                 <h2>تعليمي</h2>
             </div>
             <nav class="sidebar-menu">
                 <ul>
-                    <li><a href="#" onclick="goToDashboard(); return false;" class="active">لوحة التحكم</a></li>
-                    <li><a href="#" onclick="goToCreateCourse(); return false;">إنشاء درس جديد</a></li>
-                    <li><a href="#" onclick="alert('قيد التطوير'); return false;">دروسي</a></li>
-                    <li><a href="#" onclick="alert('قيد التطوير'); return false;">الطلاب</a></li>
-                    <li><a href="#" onclick="alert('قيد التطوير'); return false;">التقارير</a></li>
-                    <li><a href="#" onclick="alert('قيد التطوير'); return false;">الغرف التفاعلية</a></li>
-                    <li><a href="#" onclick="alert('قيد التطوير'); return false;">السبورة</a></li>
-                    <li><a href="#" onclick="goToSettings(); return false;">الإعدادات</a></li>
+                    <li><button class="active" onclick="goToDashboard()">لوحة التحكم</button></li>
+                    <li><button onclick="goToCreateCourse()">إنشاء درس جديد</button></li>
+                    <li><button onclick="goToSettings()">الإعدادات</button></li>
                 </ul>
             </nav>
-            <div class="sidebar-footer">
-                <div class="user-info">
-                    <div class="user-avatar">م</div>
-                    <div class="user-details">
-                        <h4>محمد أحمد</h4>
-                        <p>teacher@example.com</p>
-                    </div>
-                </div>
-            </div>
         </aside>
 
         <!-- Main Content -->
         <main class="main-content">
-            <!-- Header -->
             <header class="main-header">
-                <div class="search-bar">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="ابحث...">
-                </div>
-                <div class="header-actions">
-                    <button class="notification-btn">
-                        <i class="fas fa-bell"></i>
-                        <span class="notification-count">3</span>
-                    </button>
-                    <button class="create-btn" onclick="goToCreateCourse(); return false;">
-                        <i class="fas fa-plus"></i> درس جديد
-                    </button>
-                </div>
+                <h1>لوحة التحكم</h1>
+                <button class="btn-primary" onclick="goToCreateCourse()">
+                    <i class="fas fa-plus"></i> درس جديد
+                </button>
             </header>
 
             <!-- Stats Cards -->
             <section class="stats-cards">
                 <div class="stat-card">
-                    <div class="stat-info">
-                        <h3>إجمالي الدروس</h3>
-                        <p>12</p>
-                    </div>
+                    <h3>إجمالي الدروس</h3>
+                    <p class="stat-number">12</p>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-info">
-                        <h3>الطلاب النشطين</h3>
-                        <p>245</p>
-                    </div>
+                    <h3>الطلاب</h3>
+                    <p class="stat-number">245</p>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-info">
-                        <h3>معدل الإكمال</h3>
-                        <p>78%</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-info">
-                        <h3>معدل التفاعل</h3>
-                        <p>92%</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Recent Courses -->
-            <section class="dashboard-section">
-                <div class="section-header">
-                    <h2>الدروس الأخيرة</h2>
-                </div>
-                <table class="courses-table">
-                    <thead>
-                        <tr>
-                            <th>عنوان الدرس</th>
-                            <th>عدد الطلاب</th>
-                            <th>الحالة</th>
-                            <th>الإجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>مقدمة في البرمجة</td>
-                            <td>45</td>
-                            <td><span class="status-badge status-published">منشور</span></td>
-                            <td>
-                                <button class="action-btn edit" onclick="alert('تعديل');"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn delete" onclick="alert('حذف');"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
             </section>
         </main>
     </div>
 
-    <!-- Scripts -->
-    <script src="/adnk/scripts/supabase-client.js"></script>
+    <script src="../scripts/supabase-client.js"></script>
     <script>
     // دوال التنقل
     function goToDashboard() {
-        window.location.href = '/adnk/pages/dashboard.html';
+        window.location.href = 'dashboard.html';
     }
     
     function goToCreateCourse() {
-        window.location.href = '/adnk/pages/create-course.html';
+        window.location.href = 'create-course.html';
     }
     
     function goToSettings() {
-        window.location.href = '/adnk/pages/settings.html';
+        window.location.href = 'settings.html';
     }
     
-    // تصدير الدوال
     window.goToDashboard = goToDashboard;
     window.goToCreateCourse = goToCreateCourse;
     window.goToSettings = goToSettings;
-    
-    console.log('✅ Dashboard loaded');
     </script>
 </body>
 </html>
