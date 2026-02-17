@@ -1,4 +1,83 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - تعليمي</title>
+    
+    <!-- تحديد المسار الأساسي -->
+    <base href="/adnk/">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/adnk/styles/main.css">
+    <link rel="stylesheet" href="/adnk/styles/dashboard.css">
+    <link rel="stylesheet" href="/adnk/styles/responsive.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+    <!-- ... محتوى الصفحة ... -->
 
+    <!-- Scripts - استخدام مسارات مطلقة -->
+    <script src="/adnk/scripts/utils.js"></script>
+    <script src="/adnk/scripts/supabase-client.js"></script>
+    <script src="/adnk/scripts/main.js"></script>
+    
+    <script>
+    // تهيئة الصفحة
+    document.addEventListener('DOMContentLoaded', async function() {
+        // التحقق من المصادقة
+        const isAuth = await window.auth?.requireAuth();
+        if (!isAuth) return;
+        
+        // تحميل بيانات المستخدم
+        loadUserData();
+        loadRecentCourses();
+        loadActiveStudents();
+        loadNotifications();
+        initCharts();
+        setupMobileMenu();
+        setupNotifications();
+    });
+    
+    // ... باقي الدوال ...
+    
+    // إصلاح دالة loadUserData
+    function loadUserData() {
+        const user = window.auth?.getCurrentUser();
+        
+        if (user) {
+            document.getElementById('user-name').textContent = user.user_metadata?.full_name || 'مستخدم';
+            document.getElementById('user-email').textContent = user.email || 'user@example.com';
+            
+            const initials = window.auth?.getInitials(user.user_metadata?.full_name) || 'م';
+            document.getElementById('user-avatar').textContent = initials;
+        }
+    }
+    
+    // إصلاح دوال الإجراءات
+    window.editCourse = function(courseId) {
+        window.location.href = `/adnk/pages/create-course.html?edit=${courseId}`;
+    };
+    
+    window.viewCourse = function(courseId) {
+        window.location.href = `/adnk/pages/viewer.html?course=${courseId}`;
+    };
+    
+    window.deleteCourse = function(courseId) {
+        if (confirm('هل أنت متأكد من حذف هذا الدرس؟')) {
+            window.auth?.showNotification('تم حذف الدرس (محاكاة)', 'success');
+            loadRecentCourses();
+        }
+    };
+    </script>
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
