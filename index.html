@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تعليمي - منصة التعلم التفاعلي</title>
     
-    <!-- المسار الأساسي -->
-    <base href="/adnk/">
-    
     <!-- Styles -->
     <link rel="stylesheet" href="/adnk/styles/main.css">
     <link rel="stylesheet" href="/adnk/styles/responsive.css">
@@ -18,26 +15,102 @@
 </head>
 <body>
     <!-- Header -->
-    <header>
+    <header class="header">
         <nav class="navbar">
             <div class="container">
                 <div class="nav-brand">
                     <a href="/adnk/">تعليمي</a>
                 </div>
+                
                 <ul class="nav-menu">
-                    <li><a href="/adnk/pages/dashboard.html">تسجيل الدخول</a></li>
-                    <li><a href="/adnk/pages/dashboard.html?signup=true">إنشاء حساب</a></li>
+                    <li><a href="#features">المميزات</a></li>
+                    <li><a href="#how-it-works">كيف تعمل</a></li>
+                    <li><a href="#pricing">الأسعار</a></li>
+                    <li><button class="btn-login" onclick="goToDashboard()">تسجيل الدخول</button></li>
+                    <li><button class="btn-signup" onclick="goToSignup()">إنشاء حساب</button></li>
                 </ul>
             </div>
         </nav>
     </header>
 
-    <!-- باقي المحتوى هنا -->
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
+                <p>أضف أسئلة، اختبارات، وشروحات تفاعلية على أي فيديو تعليمي بدون إعادة التسجيل.</p>
+                
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="goToSignup()">
+                        <i class="fas fa-rocket"></i> ابدأ مجاناً
+                    </button>
+                    <a href="#how-it-works" class="btn-secondary">
+                        <i class="fas fa-play-circle"></i> شاهد كيف تعمل
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <img src="/adnk/assets/images/hero-dashboard.png" alt="لوحة التحكم">
+            </div>
+        </div>
+    </section>
+
+    <!-- باقي المحتوى (نفسه) -->
 
     <!-- Scripts -->
     <script src="/adnk/scripts/supabase-client.js"></script>
+    
+    <!-- كود إصلاح جميع المشاكل -->
     <script>
-    console.log('✅ الموقع يعمل');
+    // ============================================
+    // دوال التنقل الآمنة (تعمل في كل مكان)
+    // ============================================
+    function goToDashboard() {
+        window.location.href = '/adnk/pages/dashboard.html';
+    }
+    
+    function goToSignup() {
+        window.location.href = '/adnk/pages/dashboard.html?signup=true';
+    }
+    
+    function goToCreateCourse() {
+        window.location.href = '/adnk/pages/create-course.html';
+    }
+    
+    function goToSettings() {
+        window.location.href = '/adnk/pages/settings.html';
+    }
+    
+    // ============================================
+    // تصدير الدوال للاستخدام العام
+    // ============================================
+    window.goToDashboard = goToDashboard;
+    window.goToSignup = goToSignup;
+    window.goToCreateCourse = goToCreateCourse;
+    window.goToSettings = goToSettings;
+    
+    // ============================================
+    // إصلاح جميع الروابط تلقائياً
+    // ============================================
+    document.addEventListener('DOMContentLoaded', function() {
+        // تحويل جميع روابط تسجيل الدخول
+        document.querySelectorAll('.btn-login, .btn-signup, .btn-primary').forEach(btn => {
+            const href = btn.getAttribute('href');
+            if (href && href.includes('dashboard.html')) {
+                btn.removeAttribute('href');
+                btn.setAttribute('onclick', 'goToDashboard()');
+            }
+        });
+        
+        // تحويل روابط إنشاء حساب
+        document.querySelectorAll('[href*="signup=true"]').forEach(link => {
+            link.removeAttribute('href');
+            link.setAttribute('onclick', 'goToSignup()');
+        });
+        
+        console.log('✅ جميع الروابط تم إصلاحها');
+    });
     </script>
 </body>
 </html>
