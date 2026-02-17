@@ -1,5 +1,5 @@
 {
-  "name": "ta3lemi-platform",
+  "name": "ta3lemi",
   "version": 2,
   "builds": [
     {
@@ -14,31 +14,23 @@
     }
   ],
   "rewrites": [
-    {
-      "source": "/dashboard",
-      "destination": "/pages/dashboard.html"
-    },
-    {
-      "source": "/create",
-      "destination": "/pages/create-course.html"
-    },
-    {
-      "source": "/settings",
-      "destination": "/pages/settings.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/dashboard", "destination": "/pages/dashboard.html" },
+    { "source": "/create-course", "destination": "/pages/create-course.html" },
+    { "source": "/settings", "destination": "/pages/settings.html" },
+    { "source": "/my-courses", "destination": "/pages/my-courses.html" },
+    { "source": "/students", "destination": "/pages/students.html" },
+    { "source": "/analytics", "destination": "/pages/analytics.html" },
+    { "source": "/classroom", "destination": "/pages/classroom.html" },
+    { "source": "/whiteboard", "destination": "/pages/whiteboard.html" },
+    { "source": "/help", "destination": "/pages/help.html" },
+    { "source": "/about", "destination": "/pages/about.html" }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "Content-Type",
-          "value": "text/html; charset=utf-8"
-        }
+        { "key": "Content-Type", "value": "text/html; charset=utf-8" }
       ]
     }
   ],
