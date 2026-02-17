@@ -5,39 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إنشاء درس جديد - تعليمي</title>
     
-    <!-- Styles -->
-    <link rel="stylesheet" href="/adnk/styles/main.css">
-    <link rel="stylesheet" href="/adnk/styles/dashboard.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- Sidebar (مختصر) -->
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h2>تعليمي</h2>
             </div>
             <nav class="sidebar-menu">
                 <ul>
-                    <li><a href="#" onclick="goToDashboard(); return false;">لوحة التحكم</a></li>
-                    <li><a href="#" onclick="goToCreateCourse(); return false;" class="active">إنشاء درس جديد</a></li>
-                    <li><a href="#" onclick="goToSettings(); return false;">الإعدادات</a></li>
+                    <li><button onclick="goToDashboard()">لوحة التحكم</button></li>
+                    <li><button class="active" onclick="goToCreateCourse()">إنشاء درس جديد</button></li>
+                    <li><button onclick="goToSettings()">الإعدادات</button></li>
                 </ul>
             </nav>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
             <header class="main-header">
-                <h1>إنشاء درس تفاعلي جديد</h1>
-                <button class="btn-secondary" onclick="goToDashboard(); return false;">رجوع</button>
+                <h1>إنشاء درس جديد</h1>
+                <button class="btn-secondary" onclick="goToDashboard()">رجوع</button>
             </header>
 
-            <!-- نموذج بسيط -->
-            <div class="form-container" style="padding: 20px;">
+            <div style="padding: 20px;">
                 <div class="form-group">
                     <label>عنوان الدرس</label>
                     <input type="text" id="title" class="form-control" placeholder="أدخل عنوان الدرس">
@@ -45,75 +38,41 @@
                 
                 <div class="form-group">
                     <label>رابط يوتيوب</label>
-                    <input type="url" id="youtubeUrl" class="form-control" placeholder="https://youtube.com/watch?v=...">
+                    <input type="url" id="url" class="form-control" placeholder="https://youtube.com/watch?v=...">
                 </div>
                 
-                <div class="form-group">
-                    <button class="btn-primary" onclick="loadVideo()">تحميل الفيديو</button>
-                </div>
-                
-                <div id="preview" style="display: none; margin-top: 20px;">
-                    <h3>معاينة الفيديو</h3>
-                    <img id="thumbnail" src="" style="max-width: 100%;">
-                </div>
-                
-                <div class="form-actions" style="margin-top: 30px;">
-                    <button class="btn-primary" onclick="saveCourse()">حفظ الدرس</button>
-                </div>
+                <button class="btn-primary" onclick="saveCourse()">حفظ الدرس</button>
             </div>
         </main>
     </div>
 
-    <!-- Scripts -->
-    <script src="/adnk/scripts/supabase-client.js"></script>
+    <script src="../scripts/supabase-client.js"></script>
     <script>
-    // دوال التنقل
     function goToDashboard() {
-        window.location.href = '/adnk/pages/dashboard.html';
+        window.location.href = 'dashboard.html';
     }
     
     function goToCreateCourse() {
-        window.location.href = '/adnk/pages/create-course.html';
+        window.location.href = 'create-course.html';
     }
     
     function goToSettings() {
-        window.location.href = '/adnk/pages/settings.html';
-    }
-    
-    // تحميل الفيديو
-    function loadVideo() {
-        const url = document.getElementById('youtubeUrl').value;
-        const videoId = extractYouTubeId(url);
-        
-        if (videoId) {
-            document.getElementById('thumbnail').src = `https://img.youtube.com/vi/${videoId}/0.jpg`;
-            document.getElementById('preview').style.display = 'block';
-            alert('✅ تم تحميل الفيديو');
-        } else {
-            alert('❌ رابط غير صالح');
-        }
-    }
-    
-    function extractYouTubeId(url) {
-        const match = url.match(/(?:youtube\.com\/watch\?v=)([^&]+)/);
-        return match ? match[1] : null;
+        window.location.href = 'settings.html';
     }
     
     function saveCourse() {
         const title = document.getElementById('title').value;
         if (!title) {
-            alert('❌ الرجاء إدخال عنوان الدرس');
+            alert('الرجاء إدخال عنوان الدرس');
             return;
         }
-        alert('✅ تم حفظ الدرس');
+        alert('تم حفظ الدرس بنجاح!');
         goToDashboard();
     }
     
-    // تصدير الدوال
     window.goToDashboard = goToDashboard;
     window.goToCreateCourse = goToCreateCourse;
     window.goToSettings = goToSettings;
-    window.loadVideo = loadVideo;
     window.saveCourse = saveCourse;
     </script>
 </body>
