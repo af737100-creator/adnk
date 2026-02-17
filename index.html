@@ -9,27 +9,74 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header class="header">
-        <nav class="navbar">
-            <div class="container">
-                <div class="nav-brand">
-                    <a href="/">تعليمي</a>
-                </div>
-                <ul class="nav-menu">
-                    <li><a href="/pages/dashboard.html">تسجيل الدخول</a></li>
-                    <li><a href="/pages/dashboard.html?signup=true">إنشاء حساب</a></li>
-                </ul>
-            </div>
+    <header>
+        <nav>
+            <a href="#" onclick="navigate('#dashboard'); return false;">تسجيل الدخول</a>
+            <a href="#" onclick="navigate('#signup'); return false;">إنشاء حساب</a>
         </nav>
     </header>
 
     <section class="hero">
-        <div class="container">
-            <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
-            <a href="/pages/dashboard.html?signup=true" class="btn-primary">ابدأ مجاناً</a>
-        </div>
+        <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
+        <button onclick="navigate('#signup'); return false;">ابدأ مجاناً</button>
     </section>
 
+    <div id="app"></div>
+
     <script src="/scripts/supabase-client.js"></script>
+    <script>
+    // ============================================
+    // نظام التنقل بالهاش (يعمل في كل مكان)
+    // ============================================
+    const pages = {
+        '#dashboard': '/pages/dashboard.html',
+        '#signup': '/pages/dashboard.html?signup=true',
+        '#create-course': '/pages/create-course.html',
+        '#settings': '/pages/settings.html'
+    };
+
+    async function navigate(hash) {
+        window.location.hash = hash;
+        const url = pages[hash];
+        
+        if (!url) return;
+        
+        try {
+            const response = await fetch(url);
+            const html = await response.text();
+            
+            // استخراج المحتوى بين <body> و </body>
+            const match = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+            if (match && match[1]) {
+                document.getElementById('app').innerHTML = match[1];
+                document.title = html.match(/<title[^>]*>([\s\S]*)<\/title>/i)?.[1] || 'تعليمي';
+                
+                // إعادة تشغيل السكربتات
+                const scripts = document.getElementById('app').querySelectorAll('script');
+                scripts.forEach(oldScript => {
+                    const newScript = document.createElement('script');
+                    if (oldScript.src) {
+                        newScript.src = oldScript.src;
+                    } else {
+                        newScript.textContent = oldScript.textContent;
+                    }
+                    document.body.appendChild(newScript);
+                });
+            }
+        } catch (error) {
+            console.error('خطأ في تحميل الصفحة:', error);
+            alert('حدث خطأ في تحميل الصفحة');
+        }
+    }
+
+    // معالجة التحميل الأولي
+    window.addEventListener('load', () => {
+        if (window.location.hash && pages[window.location.hash]) {
+            navigate(window.location.hash);
+        }
+    });
+
+    window.navigate = navigate;
+    </script>
 </body>
 </html>
