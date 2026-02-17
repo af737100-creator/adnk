@@ -4,28 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تعليمي - منصة التعلم التفاعلي</title>
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="/adnk/">الرئيسية</a>
-            <a href="/adnk/pages/dashboard.html" target="_self" class="btn-login">تسجيل الدخول</a>
-            <a href="/adnk/pages/dashboard.html?signup=true" target="_self" class="btn-signup">إنشاء حساب</a>
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="/">تعليمي</a>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="/pages/dashboard.html">تسجيل الدخول</a></li>
+                    <li><a href="/pages/dashboard.html?signup=true">إنشاء حساب</a></li>
+                </ul>
+            </div>
         </nav>
     </header>
 
     <section class="hero">
-        <h1>حوّل مقاطع اليوتيوب إلى تجربة تعلم تفاعلية</h1>
-        <a href="/adnk/pages/dashboard.html?signup=true" target="_self" class="btn-primary">ابدأ مجاناً</a>
+        <div class="container">
+            <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
+            <a href="/pages/dashboard.html?signup=true" class="btn-primary">ابدأ مجاناً</a>
+        </div>
     </section>
 
-    <script>
-    // منع أي إعادة توجيه تلقائي
-    if (window.location.pathname === '/adnk/' && window.location.search) {
-        // تجاهل معلمات البحث في الصفحة الرئيسية
-    }
-    </script>
+    <script src="/scripts/supabase-client.js"></script>
 </body>
 </html>
