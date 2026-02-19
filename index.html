@@ -4,79 +4,339 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تعليمي - منصة التعلم التفاعلي</title>
-    <link rel="stylesheet" href="/styles/main.css">
-    <link rel="stylesheet" href="/styles/responsive.css">
+    <style>
+        /* ===== الأساسيات ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f9fafb; color: #1e293b; direction: rtl; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        
+        /* ===== شريط التنقل ===== */
+        .navbar { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 15px 0; }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+        .nav-brand a { font-size: 1.8rem; font-weight: bold; color: #4361ee; text-decoration: none; }
+        .nav-menu { display: flex; list-style: none; gap: 20px; }
+        .nav-menu a { text-decoration: none; color: #1e293b; padding: 8px 12px; border-radius: 6px; }
+        .nav-menu a:hover { background: rgba(67,97,238,0.1); color: #4361ee; }
+        .btn-login { color: #4361ee !important; border: 2px solid #4361ee; }
+        .btn-signup { background: #4361ee; color: white !important; }
+        
+        /* ===== قسم البطل ===== */
+        .hero { padding: 80px 0; background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%); }
+        .hero .container { display: flex; align-items: center; gap: 40px; }
+        .hero-content { flex: 1; }
+        .hero h1 { font-size: 2.8rem; margin-bottom: 20px; }
+        .hero p { font-size: 1.2rem; color: #64748b; margin-bottom: 30px; }
+        .hero-buttons { display: flex; gap: 15px; }
+        .btn-primary, .btn-secondary { padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block; }
+        .btn-primary { background: #4361ee; color: white; border: none; }
+        .btn-primary:hover { background: #3a0ca3; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .btn-secondary { background: white; color: #4361ee; border: 2px solid #4361ee; }
+        
+        /* ===== المميزات ===== */
+        .features { padding: 80px 0; background: white; }
+        .section-title { text-align: center; font-size: 2.2rem; margin-bottom: 50px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .feature-card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #e5e7eb; }
+        .feature-icon { width: 60px; height: 60px; background: linear-gradient(135deg, #4361ee, #4cc9f0); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: white; font-size: 1.8rem; }
+        .feature-card h3 { font-size: 1.4rem; margin-bottom: 15px; }
+        .feature-card p { color: #64748b; }
+        
+        /* ===== كيف تعمل ===== */
+        .how-it-works { padding: 80px 0; background: #f8fafc; }
+        .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+        .step { background: white; border-radius: 12px; padding: 30px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .step-number { width: 60px; height: 60px; background: linear-gradient(135deg, #4361ee, #4cc9f0); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; margin: 0 auto 20px; }
+        
+        /* ===== الأسعار ===== */
+        .pricing { padding: 80px 0; background: white; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .pricing-card { background: white; border-radius: 12px; padding: 40px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e5e7eb; }
+        .popular { border: 2px solid #4361ee; position: relative; }
+        .popular-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #4361ee; color: white; padding: 5px 20px; border-radius: 20px; font-size: 0.9rem; }
+        .price { font-size: 2.5rem; font-weight: bold; margin: 20px 0; }
+        .pricing-features { list-style: none; margin: 30px 0; }
+        .pricing-features li { padding: 10px 0; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 10px; }
+        .pricing-features i.fa-check { color: #4ade80; }
+        .pricing-features i.fa-times { color: #ef4444; }
+        .disabled { opacity: 0.5; }
+        
+        /* ===== آراء المستخدمين ===== */
+        .testimonials { padding: 80px 0; background: #f8fafc; }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .testimonial-card { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .testimonial-rating { color: #f59e0b; margin-bottom: 15px; }
+        .testimonial-author { display: flex; align-items: center; gap: 15px; margin-top: 20px; }
+        .testimonial-author img { width: 50px; height: 50px; border-radius: 50%; background: #e5e7eb; }
+        
+        /* ===== تذييل ===== */
+        .footer { background: #1e293b; color: white; padding: 60px 0 20px; }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-section h3 { margin-bottom: 20px; color: white; }
+        .footer-section ul { list-style: none; }
+        .footer-section ul li { margin-bottom: 10px; }
+        .footer-section a { color: #cbd5e1; text-decoration: none; }
+        .footer-section a:hover { color: #4cc9f0; }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #334155; color: #94a3b8; }
+        
+        /* ===== استجابة للأجهزة ===== */
+        @media (max-width: 768px) {
+            .hero .container { flex-direction: column; }
+            .hero h1 { font-size: 2rem; }
+            .hero-buttons { flex-direction: column; }
+            .nav-menu { display: none; }
+            .hamburger { display: flex; flex-direction: column; cursor: pointer; }
+            .hamburger span { width: 25px; height: 3px; background: #1e293b; margin: 3px 0; border-radius: 2px; }
+        }
+    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <header>
-        <nav>
-            <a href="#" onclick="navigate('#dashboard'); return false;">تسجيل الدخول</a>
-            <a href="#" onclick="navigate('#signup'); return false;">إنشاء حساب</a>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <a href="/">تعليمي</a>
+                </div>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <ul class="nav-menu" id="navMenu">
+                    <li><a href="#features">المميزات</a></li>
+                    <li><a href="#how-it-works">كيف تعمل</a></li>
+                    <li><a href="#pricing">الأسعار</a></li>
+                    <li><a href="#contact">اتصل بنا</a></li>
+                    <li><a href="/pages/dashboard.html" class="btn-login">تسجيل الدخول</a></li>
+                    <li><a href="/pages/dashboard.html?signup=true" class="btn-signup">إنشاء حساب</a></li>
+                </ul>
+            </div>
         </nav>
     </header>
 
     <section class="hero">
-        <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
-        <button onclick="navigate('#signup'); return false;">ابدأ مجاناً</button>
+        <div class="container">
+            <div class="hero-content">
+                <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
+                <p>أضف أسئلة، اختبارات، وشروحات تفاعلية على أي فيديو تعليمي بدون إعادة التسجيل. منصة متكاملة للمعلمين والطلاب.</p>
+                <div class="hero-buttons">
+                    <a href="/pages/dashboard.html?signup=true" class="btn-primary">
+                        <i class="fas fa-rocket"></i> ابدأ مجاناً
+                    </a>
+                    <a href="#how-it-works" class="btn-secondary">
+                        <i class="fas fa-play-circle"></i> شاهد كيف تعمل
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <i class="fas fa-chalkboard-teacher" style="font-size: 200px; color: #4361ee;"></i>
+            </div>
+        </div>
     </section>
 
-    <div id="app"></div>
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">مميزات المنصة</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-question-circle"></i></div>
+                    <h3>أسئلة تفاعلية أثناء التشغيل</h3>
+                    <p>أضف أسئلة في أي نقطة من الفيديو مع تصحيح فوري وتغذية راجعة للطلاب</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-clipboard-check"></i></div>
+                    <h3>اختبارات قصيرة</h3>
+                    <p>أنشئ اختبارات متعددة الخيارات مع تصحيح آلي وإحصائيات دقيقة</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h3>شروحات إضافية</h3>
+                    <p>قدم معلومات إضافية، روابط، وموارد تعليمية عند نقاط محددة</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>تحليلات متقدمة</h3>
+                    <p>تتبع تقدم الطلاب، معدلات الإكمال، وأداء الأسئلة في الوقت الفعلي</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-users"></i></div>
+                    <h3>تعليم تعاوني</h3>
+                    <p>غرف دراسية افتراضية مع سبورة تفاعلية وميزة رفع الأيدي</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h3>متوافق مع جميع الأجهزة</h3>
+                    <p>تصميم متجاوب يعمل على الحواسيب، الأجهزة اللوحية، والهواتف</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <script src="/scripts/supabase-client.js"></script>
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">كيف تعمل المنصة؟</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>أدخل رابط الفيديو</h3>
+                    <p>انسخ رابط أي فيديو تعليمي من يوتيوب والصقه في المنصة</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>أضف التفاعلات</h3>
+                    <p>ضع أسئلة، اختبارات، وشروحات في النقاط الزمنية المطلوبة</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>شارك الدرس</h3>
+                    <p>احصل على رابط فريد للمشاركة أو أدمجه في نظام إدارة التعلم</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>تابع التقدم</h3>
+                    <p>راقب أداء طلابك وتحصل على تقارير وإحصائيات مفصلة</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2 class="section-title">خطط الأسعار</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>مجاني</h3>
+                    <div class="price">$0</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 3 دروس تفاعلية</li>
+                        <li><i class="fas fa-check"></i> 10 طلاب لكل درس</li>
+                        <li><i class="fas fa-check"></i> تفاعلات أساسية</li>
+                        <li class="disabled"><i class="fas fa-times"></i> تحليلات متقدمة</li>
+                        <li class="disabled"><i class="fas fa-times"></i> غرف تفاعلية</li>
+                    </ul>
+                    <a href="/pages/dashboard.html?signup=true" class="btn-secondary">ابدأ مجاناً</a>
+                </div>
+                <div class="pricing-card popular">
+                    <div class="popular-badge">الأكثر شهرة</div>
+                    <h3>احترافي</h3>
+                    <div class="price">$29</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> دروس غير محدودة</li>
+                        <li><i class="fas fa-check"></i> طلاب غير محدودين</li>
+                        <li><i class="fas fa-check"></i> جميع أنواع التفاعلات</li>
+                        <li><i class="fas fa-check"></i> تحليلات متقدمة</li>
+                        <li><i class="fas fa-check"></i> غرف تفاعلية</li>
+                    </ul>
+                    <a href="/pages/dashboard.html?signup=true&plan=pro" class="btn-primary">اختر الخطة</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>مؤسسات</h3>
+                    <div class="price">$99</div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> جميع ميزات الخطة الاحترافية</li>
+                        <li><i class="fas fa-check"></i> لوحة تحكم للمؤسسة</li>
+                        <li><i class="fas fa-check"></i> إدارة حسابات متعددة</li>
+                        <li><i class="fas fa-check"></i> تكامل مع LMS</li>
+                        <li><i class="fas fa-check"></i> تدريب ودعم مخصص</li>
+                    </ul>
+                    <a href="/pages/dashboard.html?signup=true&plan=enterprise" class="btn-secondary">اتصل بنا</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">آراء المستخدمين</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p>"منصة رائعة! ساعدتني في تحويل فيديوهاتي القديمة إلى دروس تفاعلية بدون إعادة تسجيل."</p>
+                    <div class="testimonial-author">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='25' fill='%234361ee'/%3E%3Ctext x='25' y='35' text-anchor='middle' fill='white' font-size='20'%3Eأ%3C/text%3E%3C/svg%3E" alt="أحمد">
+                        <div>
+                            <h4>أحمد محمد</h4>
+                            <p>معلم برمجة</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p>"التحليلات والإحصائيات ساعدتني في فهم نقاط ضعف طلابي وتطوير طريقة تدريسي."</p>
+                    <div class="testimonial-author">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='25' fill='%23f59e0b'/%3E%3Ctext x='25' y='35' text-anchor='middle' fill='white' font-size='20'%3Eس%3C/text%3E%3C/svg%3E" alt="سارة">
+                        <div>
+                            <h4>سارة عبدالله</h4>
+                            <p>معلمة رياضيات</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p>"الغرف التفاعلية والسبورة غيّرت طريقة تدريسي تماماً. طلابي يشعرون وكأنهم في فصل حقيقي."</p>
+                    <div class="testimonial-author">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='25' fill='%234ade80'/%3E%3Ctext x='25' y='35' text-anchor='middle' fill='white' font-size='20'%3Eخ%3C/text%3E%3C/svg%3E" alt="خالد">
+                        <div>
+                            <h4>خالد العتيبي</h4>
+                            <p>معلم لغة إنجليزية</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>تعليمي</h3>
+                    <p>منصة التعلم التفاعلي الأولى التي تحول مقاطع اليوتيوب إلى تجارب تعليمية تفاعلية.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="#features">المميزات</a></li>
+                        <li><a href="#how-it-works">كيف تعمل</a></li>
+                        <li><a href="#pricing">الأسعار</a></li>
+                        <li><a href="/pages/about.html">من نحن</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>تواصل معنا</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@ta3lemi.com</li>
+                        <li><i class="fas fa-phone"></i> +966 123 456 789</li>
+                        <li><i class="fas fa-map-marker-alt"></i> الرياض، السعودية</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 تعليمي. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
     <script>
-    // ============================================
-    // نظام التنقل بالهاش (يعمل في كل مكان)
-    // ============================================
-    const pages = {
-        '#dashboard': '/pages/dashboard.html',
-        '#signup': '/pages/dashboard.html?signup=true',
-        '#create-course': '/pages/create-course.html',
-        '#settings': '/pages/settings.html'
-    };
-
-    async function navigate(hash) {
-        window.location.hash = hash;
-        const url = pages[hash];
-        
-        if (!url) return;
-        
-        try {
-            const response = await fetch(url);
-            const html = await response.text();
-            
-            // استخراج المحتوى بين <body> و </body>
-            const match = html.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-            if (match && match[1]) {
-                document.getElementById('app').innerHTML = match[1];
-                document.title = html.match(/<title[^>]*>([\s\S]*)<\/title>/i)?.[1] || 'تعليمي';
-                
-                // إعادة تشغيل السكربتات
-                const scripts = document.getElementById('app').querySelectorAll('script');
-                scripts.forEach(oldScript => {
-                    const newScript = document.createElement('script');
-                    if (oldScript.src) {
-                        newScript.src = oldScript.src;
-                    } else {
-                        newScript.textContent = oldScript.textContent;
-                    }
-                    document.body.appendChild(newScript);
-                });
-            }
-        } catch (error) {
-            console.error('خطأ في تحميل الصفحة:', error);
-            alert('حدث خطأ في تحميل الصفحة');
-        }
+    function toggleMenu() {
+        const menu = document.getElementById('navMenu');
+        menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
     }
-
-    // معالجة التحميل الأولي
-    window.addEventListener('load', () => {
-        if (window.location.hash && pages[window.location.hash]) {
-            navigate(window.location.hash);
+    
+    window.addEventListener('resize', () => {
+        const menu = document.getElementById('navMenu');
+        if (window.innerWidth > 768) {
+            menu.style.display = 'flex';
+        } else {
+            menu.style.display = 'none';
         }
     });
-
-    window.navigate = navigate;
     </script>
 </body>
 </html>
