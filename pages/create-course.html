@@ -3,93 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إنشاء درس - تعليمي</title>
+    <title>إنشاء درس جديد - تعليمي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f3f4f6; direction: rtl; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f3f4f6; color: #1e293b; direction: rtl; }
         .dashboard-container { display: flex; min-height: 100vh; }
-        .sidebar { width: 250px; background: white; padding: 20px; }
+        
+        .sidebar { width: 260px; background: white; box-shadow: 2px 0 10px rgba(0,0,0,0.1); padding: 20px; }
+        .sidebar h2 { color: #4361ee; margin-bottom: 30px; }
+        .sidebar nav a { display: block; padding: 12px 15px; color: #1e293b; text-decoration: none; border-radius: 8px; margin-bottom: 5px; }
+        .sidebar nav a:hover, .sidebar nav a.active { background: rgba(67,97,238,0.1); color: #4361ee; }
+        
         .main-content { flex: 1; padding: 20px; }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; }
-        input, textarea { width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 8px; }
-        .btn-primary { background: #4361ee; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
-        .video-preview { margin-top: 20px; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; }
+        .main-header { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .btn-primary { background: #4361ee; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        .btn-secondary { background: #e5e7eb; color: #1e293b; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        
+        .form-container { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .form-group { margin-bottom: 25px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; color: #1e293b; }
+        input, textarea, select { width: 100%; padding: 12px 15px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 1rem; transition: all 0.3s; }
+        input:focus, textarea:focus, select:focus { outline: none; border-color: #4361ee; box-shadow: 0 0 0 3px rgba(67,97,238,0.1); }
+        
+        .video-preview { margin-top: 30px; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; background: #f8fafc; }
+        .video-thumbnail { width: 100%; max-width: 320px; border-radius: 8px; overflow: hidden; margin-bottom: 15px; }
+        .video-thumbnail img { width: 100%; display: block; }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
         <aside class="sidebar">
-            <h2>تعليمي</h2>
+            <h2><i class="fas fa-graduation-cap"></i> تعليمي</h2>
             <nav>
                 <a href="#" onclick="goToDashboard(); return false;">لوحة التحكم</a>
-                <a href="#" onclick="goToCreateCourse(); return false;">إنشاء درس</a>
+                <a href="#" onclick="goToCreateCourse(); return false;" class="active">إنشاء درس جديد</a>
+                <a href="#" onclick="goToSettings(); return false;">الإعدادات</a>
             </nav>
         </aside>
 
         <main class="main-content">
-            <h1>إنشاء درس جديد</h1>
-            
-            <div class="form-group">
-                <label>عنوان الدرس</label>
-                <input type="text" id="courseTitle" placeholder="أدخل عنوان الدرس">
+            <header class="main-header">
+                <h1>إنشاء درس تفاعلي جديد</h1>
+                <button class="btn-secondary" onclick="goToDashboard(); return false;">رجوع</button>
+            </header>
+
+            <div class="form-container">
+                <div class="form-group">
+                    <label>عنوان الدرس *</label>
+                    <input type="text" id="courseTitle" placeholder="مثال: مقدمة في البرمجة">
+                </div>
+
+                <div class="form-group">
+                    <label>وصف الدرس</label>
+                    <textarea id="courseDescription" rows="4" placeholder="صف محتوى الدرس والأهداف التعليمية..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>رابط فيديو يوتيوب *</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="url" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=..." style="flex: 1;">
+                        <button class="btn-primary" onclick="loadVideo()">تحميل</button>
+                    </div>
+                </div>
+
+                <div id="videoPreview" class="video-preview" style="display: none;">
+                    <h3>معاينة الفيديو</h3>
+                    <div class="video-thumbnail">
+                        <img id="videoThumbnail" src="" alt="صورة الفيديو">
+                    </div>
+                    <p id="videoTitle"></p>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 30px;">
+                    <button class="btn-primary" onclick="saveCourse()" style="flex: 1;">حفظ الدرس</button>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label>رابط يوتيوب</label>
-                <input type="url" id="youtubeUrl" placeholder="https://youtube.com/watch?v=...">
-            </div>
-            
-            <button class="btn-primary" onclick="loadVideo()">تحميل الفيديو</button>
-            
-            <div id="videoPreview" class="video-preview" style="display:none">
-                <h3>معاينة الفيديو</h3>
-                <img id="videoThumbnail" src="" style="max-width:100%">
-                <p id="videoTitle"></p>
-            </div>
-            
-            <button class="btn-primary" onclick="saveCourse()" style="margin-top:20px">حفظ الدرس</button>
         </main>
     </div>
 
+    <script src="../scripts/supabase-client.js"></script>
     <script>
-    const BASE_PATH = window.location.hostname.includes('github.io') ? '/adnk' : '';
-    
-    window.goToDashboard = function() { window.location.href = BASE_PATH + '/pages/dashboard.html'; };
-    window.goToCreateCourse = function() { window.location.href = BASE_PATH + '/pages/create-course.html'; };
-    
-    // دالة تحميل الفيديو (تعمل بدون API)
-    window.loadVideo = function() {
+    function loadVideo() {
         const url = document.getElementById('youtubeUrl').value;
-        const videoId = extractVideoId(url);
+        const result = YouTubeAPI.handleYouTubeUrlInput(url);
         
-        if (!videoId) {
-            alert('❌ رابط يوتيوب غير صالح');
+        if (!result.success) {
+            alert(result.message);
             return;
         }
         
-        document.getElementById('videoThumbnail').src = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+        document.getElementById('videoThumbnail').src = result.thumbnailUrl;
         document.getElementById('videoTitle').textContent = 'تم تحميل الفيديو بنجاح';
         document.getElementById('videoPreview').style.display = 'block';
         
         alert('✅ تم تحميل الفيديو');
-    };
-    
-    function extractVideoId(url) {
-        const match = url.match(/(?:youtube\.com\/watch\?v=)([^&]+)/);
-        return match ? match[1] : null;
     }
-    
-    window.saveCourse = function() {
+
+    function saveCourse() {
         const title = document.getElementById('courseTitle').value;
         if (!title) {
             alert('❌ الرجاء إدخال عنوان الدرس');
             return;
         }
+        
         alert('✅ تم حفظ الدرس بنجاح');
         goToDashboard();
-    };
+    }
     </script>
 </body>
 </html>
