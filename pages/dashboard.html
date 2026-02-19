@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم - تعليمي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f3f4f6; color: #1e293b; direction: rtl; }
@@ -12,208 +13,84 @@
         .sidebar { width: 250px; background: white; box-shadow: 2px 0 10px rgba(0,0,0,0.1); padding: 20px; }
         .sidebar h2 { color: #4361ee; margin-bottom: 30px; }
         .sidebar nav a { display: block; padding: 12px 15px; color: #1e293b; text-decoration: none; border-radius: 8px; margin-bottom: 5px; }
-        .sidebar nav a:hover, .sidebar nav a.active { background: rgba(67,97,238,0.1); color: #4361ee; }
+        .sidebar nav a:hover { background: rgba(67,97,238,0.1); color: #4361ee; }
         
         .main-content { flex: 1; padding: 20px; }
-        .main-header { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        .main-header { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; }
         .btn-primary { background: #4361ee; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
-        .btn-secondary { background: #e5e7eb; color: #1e293b; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
         
-        .stats-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .stat-card h3 { color: #64748b; font-size: 1rem; margin-bottom: 10px; }
-        .stat-card p { font-size: 2rem; font-weight: bold; color: #1e293b; }
+        .stats-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
+        .stat-card { background: white; padding: 20px; border-radius: 12px; }
+        .stat-card h3 { color: #64748b; font-size: 0.9rem; }
+        .stat-card p { font-size: 2rem; font-weight: bold; }
         
-        .dashboard-section { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 30px; }
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .dashboard-section { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        .section-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
         
         table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 15px; text-align: right; border-bottom: 1px solid #e5e7eb; }
+        th, td { padding: 12px; text-align: right; border-bottom: 1px solid #e5e7eb; }
         th { background: #f8fafc; color: #64748b; }
         
-        .status-badge { padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; }
-        .published { background: rgba(74,222,128,0.1); color: #4ade80; }
-        .draft { background: rgba(107,114,128,0.1); color: #6b7280; }
-        
-        .action-btn { padding: 5px 10px; background: none; border: none; cursor: pointer; color: #64748b; }
-        .action-btn:hover { color: #4361ee; }
-        
         .student-card { display: flex; align-items: center; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 10px; }
-        .student-avatar { width: 40px; height: 40px; background: #4361ee; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 10px; font-weight: bold; }
-        .student-info { flex: 1; }
-        .student-info h4 { margin-bottom: 5px; }
-        .student-progress { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
-        .progress-bar { flex: 1; height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden; }
-        .progress-fill { height: 100%; background: #4361ee; border-radius: 3px; }
+        .student-avatar { width: 40px; height: 40px; background: #4361ee; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 10px; }
         
         .notification-item { display: flex; gap: 15px; padding: 15px; border-bottom: 1px solid #e5e7eb; }
-        .notification-item.unread { background: rgba(67,97,238,0.05); }
-        .notification-icon { width: 40px; height: 40px; background: #4361ee; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <div class="dashboard-container">
         <aside class="sidebar">
             <h2><i class="fas fa-graduation-cap"></i> تعليمي</h2>
             <nav>
-                <a href="/pages/dashboard.html" class="active"><i class="fas fa-tachometer-alt"></i> لوحة التحكم</a>
-                <a href="/pages/create-course.html"><i class="fas fa-plus-circle"></i> إنشاء درس جديد</a>
-                <a href="/pages/settings.html"><i class="fas fa-cog"></i> الإعدادات</a>
+                <a href="#" onclick="goToDashboard(); return false;" class="active">لوحة التحكم</a>
+                <a href="#" onclick="goToCreateCourse(); return false;">إنشاء درس</a>
+                <a href="#" onclick="goToSettings(); return false;">الإعدادات</a>
             </nav>
         </aside>
 
         <main class="main-content">
             <header class="main-header">
                 <h1>لوحة التحكم</h1>
-                <button class="btn-primary" onclick="window.location.href='/pages/create-course.html'">
+                <button class="btn-primary" onclick="goToCreateCourse(); return false;">
                     <i class="fas fa-plus"></i> درس جديد
                 </button>
             </header>
 
             <section class="stats-cards">
-                <div class="stat-card">
-                    <h3>إجمالي الدروس</h3>
-                    <p>12</p>
-                </div>
-                <div class="stat-card">
-                    <h3>الطلاب النشطين</h3>
-                    <p>245</p>
-                </div>
-                <div class="stat-card">
-                    <h3>معدل الإكمال</h3>
-                    <p>78%</p>
-                </div>
-                <div class="stat-card">
-                    <h3>معدل التفاعل</h3>
-                    <p>92%</p>
-                </div>
+                <div class="stat-card"><h3>إجمالي الدروس</h3><p>12</p></div>
+                <div class="stat-card"><h3>الطلاب</h3><p>245</p></div>
+                <div class="stat-card"><h3>معدل الإكمال</h3><p>78%</p></div>
+                <div class="stat-card"><h3>التفاعلات</h3><p>92%</p></div>
             </section>
 
             <section class="dashboard-section">
                 <div class="section-header">
                     <h2>الدروس الأخيرة</h2>
-                    <a href="/pages/my-courses.html" class="btn-secondary">عرض الكل</a>
+                    <button class="btn-primary" onclick="alert('عرض الكل')">عرض الكل</button>
                 </div>
-                
                 <table>
-                    <thead>
-                        <tr>
-                            <th>عنوان الدرس</th>
-                            <th>عدد الطلاب</th>
-                            <th>آخر تحديث</th>
-                            <th>الحالة</th>
-                            <th>الإجراءات</th>
-                        </tr>
-                    </thead>
+                    <thead><tr><th>العنوان</th><th>الطلاب</th><th>الحالة</th></tr></thead>
                     <tbody>
-                        <tr>
-                            <td>مقدمة في البرمجة</td>
-                            <td>45</td>
-                            <td>2023-10-15</td>
-                            <td><span class="status-badge published">منشور</span></td>
-                            <td>
-                                <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>تعلم JavaScript</td>
-                            <td>78</td>
-                            <td>2023-10-10</td>
-                            <td><span class="status-badge published">منشور</span></td>
-                            <td>
-                                <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>أساسيات HTML</td>
-                            <td>32</td>
-                            <td>2023-10-05</td>
-                            <td><span class="status-badge draft">مسودة</span></td>
-                            <td>
-                                <button class="action-btn"><i class="fas fa-edit"></i></button>
-                                <button class="action-btn"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
+                        <tr><td>مقدمة في البرمجة</td><td>45</td><td>منشور</td></tr>
+                        <tr><td>تعلم JavaScript</td><td>78</td><td>منشور</td></tr>
+                        <tr><td>أساسيات HTML</td><td>32</td><td>مسودة</td></tr>
                     </tbody>
                 </table>
             </section>
-
-            <section class="dashboard-section">
-                <div class="section-header">
-                    <h2>الطلاب النشطين</h2>
-                    <a href="/pages/students.html" class="btn-secondary">عرض الكل</a>
-                </div>
-                
-                <div class="student-card">
-                    <div class="student-avatar">أ</div>
-                    <div class="student-info">
-                        <h4>أحمد محمد</h4>
-                        <p>ahmed@example.com</p>
-                        <div class="student-progress">
-                            <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
-                            <span>85%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="student-card">
-                    <div class="student-avatar">ف</div>
-                    <div class="student-info">
-                        <h4>فاطمة علي</h4>
-                        <p>fatima@example.com</p>
-                        <div class="student-progress">
-                            <div class="progress-bar"><div class="progress-fill" style="width:92%"></div></div>
-                            <span>92%</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="student-card">
-                    <div class="student-avatar">خ</div>
-                    <div class="student-info">
-                        <h4>خالد سعيد</h4>
-                        <p>khaled@example.com</p>
-                        <div class="student-progress">
-                            <div class="progress-bar"><div class="progress-fill" style="width:67%"></div></div>
-                            <span>67%</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="dashboard-section">
-                <div class="section-header">
-                    <h2>الإشعارات</h2>
-                    <button class="btn-secondary">تحديد الكل كمقروء</button>
-                </div>
-                
-                <div class="notification-item unread">
-                    <div class="notification-icon"><i class="fas fa-bell"></i></div>
-                    <div>
-                        <h4>طالب جديد</h4>
-                        <p>انضم أحمد محمد إلى دورة البرمجة</p>
-                        <small>منذ 5 دقائق</small>
-                    </div>
-                </div>
-                <div class="notification-item unread">
-                    <div class="notification-icon"><i class="fas fa-check-circle"></i></div>
-                    <div>
-                        <h4>إكمال الدورة</h4>
-                        <p>أكملت فاطمة علي دورة JavaScript</p>
-                        <small>منذ ساعة</small>
-                    </div>
-                </div>
-                <div class="notification-item">
-                    <div class="notification-icon"><i class="fas fa-question-circle"></i></div>
-                    <div>
-                        <h4>سؤال جديد</h4>
-                        <p>لديك سؤال غير مجاب</p>
-                        <small>منذ 3 ساعات</small>
-                    </div>
-                </div>
-            </section>
         </main>
     </div>
+
+    <script>
+    // ============================================
+    // نفس كود JavaScript من الصفحة الرئيسية
+    // ============================================
+    const BASE_PATH = window.location.hostname.includes('github.io') ? '/adnk' : '';
+    
+    window.goToDashboard = function() { window.location.href = BASE_PATH + '/pages/dashboard.html'; };
+    window.goToCreateCourse = function() { window.location.href = BASE_PATH + '/pages/create-course.html'; };
+    window.goToSettings = function() { window.location.href = BASE_PATH + '/pages/settings.html'; };
+    
+    console.log('✅ لوحة التحكم جاهزة');
+    </script>
 </body>
 </html>
