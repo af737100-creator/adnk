@@ -4,17 +4,15 @@
  */
 
 // ============================================
-// التهيئة الأساسية
+// إعدادات Supabase (من dashboard)
 // ============================================
 const SUPABASE_URL = 'https://ollwqisezqkawrulahqq.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_HnNvDq3tgZa1GBODyM8FxA_Z2mMyqDF';
 
-// تحديد المسار الأساسي للبيئة
+// تحديد المسار الأساسي حسب البيئة (مهم جداً)
 const BASE_PATH = (function() {
     const hostname = window.location.hostname;
     if (hostname.includes('github.io')) return '/adnk';
-    if (hostname.includes('netlify.app')) return '';
-    if (hostname.includes('vercel.app')) return '';
     return '';
 })();
 
@@ -22,17 +20,12 @@ console.log('🌐 البيئة:', window.location.hostname);
 console.log('📁 المسار الأساسي:', BASE_PATH);
 
 // ============================================
-// تهيئة Supabase (مع معالجة الأخطاء)
+// تهيئة Supabase مع معالجة الأخطاء
 // ============================================
 let supabaseClient = null;
 
-function initSupabase() {
-    try {
-        if (typeof supabase === 'undefined') {
-            console.warn('⚠️ Supabase library not loaded, using mock');
-            return createMockClient();
-        }
-        
+try {
+    if (typeof supabase !== 'undefined') {
         supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
             auth: {
                 autoRefreshToken: true,
@@ -41,93 +34,75 @@ function initSupabase() {
                 storage: localStorage
             }
         });
-        
         console.log('✅ Supabase connected');
-        return supabaseClient;
-    } catch (error) {
-        console.error('❌ Supabase error:', error);
-        return createMockClient();
+    } else {
+        console.warn('⚠️ Supabase library not loaded');
     }
+} catch (error) {
+    console.error('❌ Supabase error:', error);
 }
 
 // ============================================
-// نظام Auth المتكامل (مع محاكاة للتجربة)
+// نظام المصادقة المتكامل
 // ============================================
 window.auth = {
-    // الحصول على المستخدم الحالي
-    getCurrentUser: function() {
-        try {
-            // محاولة من Supabase أولاً
-            if (supabaseClient) {
-                const user = supabaseClient.auth.getUser();
-                if (user) return user;
-            }
-            
-            // ثم من localStorage
-            const userStr = localStorage.getItem('ta3lemi_user');
-            if (userStr) return JSON.parse(userStr);
-        } catch (e) {}
-        
-        // بيانات افتراضية للتجربة
-        return {
-            id: 'demo-1',
-            email: 'demo@ta3lemi.com',
-            user_metadata: { 
-                full_name: 'مستخدم تجريبي',
-                role: 'teacher'
-            }
-        };
-    },
-    
     // تسجيل الدخول
     signIn: async function(email, password) {
         try {
-            if (supabaseClient) {
-                const { data, error } = await supabaseClient.auth.signInWithPassword({
-                    email, password
-                });
-                if (!error) {
-                    localStorage.setItem('ta3lemi_user', JSON.stringify(data.user));
-                    return { success: true, data };
-                }
+            if (!supabaseClient) {
+                alert('⚠️ وضع التجربة: تم تسجيل الدخول بنجاح');
+                localStorage.setItem('ta3lemi_user', JSON.stringify({
+                    id: 'demo',
+                    email: email,
+                    user_metadata: { full_name: 'مستخدم تجريبي' }
+                }));
+                window.location.href = BASE_PATH + '/pages/dashboard.html';
+                return { success: true };
             }
-            
-            // محاكاة تسجيل دخول ناجح
-            const mockUser = {
-                id: 'mock-' + Date.now(),
-                email: email,
-                user_metadata: { full_name: email.split('@')[0] }
-            };
-            localStorage.setItem('ta3lemi_user', JSON.stringify(mockUser));
-            return { success: true, data: { user: mockUser } };
-            
+
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email, password
+            });
+
+            if (error) throw error;
+
+            localStorage.setItem('ta3lemi_user', JSON.stringify(data.user));
+            window.location.href = BASE_PATH + '/pages/dashboard.html';
+            return { success: true, data };
         } catch (error) {
             console.error('Sign in error:', error);
+            alert('❌ فشل تسجيل الدخول: ' + error.message);
             return { success: false, error: error.message };
         }
     },
-    
+
     // إنشاء حساب جديد
     signUp: async function(email, password, fullName) {
         try {
-            if (supabaseClient) {
-                const { data, error } = await supabaseClient.auth.signUp({
-                    email, password,
-                    options: { data: { full_name: fullName } }
-                });
-                if (!error) return { success: true, data };
+            if (!supabaseClient) {
+                alert('✅ تم إنشاء الحساب بنجاح (وضع التجربة)');
+                window.location.href = BASE_PATH + '/pages/dashboard.html?signup=true';
+                return { success: true };
             }
-            
-            // محاكاة إنشاء حساب
-            alert('✅ تم إنشاء الحساب بنجاح (وضع التجربة)');
-            return { success: true, data: { user: { email } } };
-            
+
+            const { data, error } = await supabaseClient.auth.signUp({
+                email, password,
+                options: {
+                    data: { full_name: fullName }
+                }
+            });
+
+            if (error) throw error;
+
+            alert('✅ تم إنشاء الحساب بنجاح! يرجى تفعيل بريدك الإلكتروني');
+            return { success: true, data };
         } catch (error) {
             console.error('Sign up error:', error);
+            alert('❌ فشل إنشاء الحساب: ' + error.message);
             return { success: false, error: error.message };
         }
     },
-    
+
     // تسجيل الخروج
     signOut: async function() {
         try {
@@ -142,8 +117,17 @@ window.auth = {
             return { success: false, error: error.message };
         }
     },
-    
-    // التحقق من المصادقة
+
+    // الحصول على المستخدم الحالي
+    getCurrentUser: function() {
+        try {
+            const userStr = localStorage.getItem('ta3lemi_user');
+            if (userStr) return JSON.parse(userStr);
+        } catch (e) {}
+        return null;
+    },
+
+    // التحقق من المصادقة للصفحات المحمية
     requireAuth: async function() {
         const user = this.getCurrentUser();
         if (!user) {
@@ -152,24 +136,23 @@ window.auth = {
         }
         return true;
     },
-    
-    // الحصول على الأحرف الأولى
+
+    // الحصول على الأحرف الأولى من الاسم
     getInitials: function(name) {
         if (!name) return 'م';
         const parts = name.split(' ');
         if (parts.length === 1) return parts[0].charAt(0);
         return (parts[0].charAt(0) + parts[parts.length-1].charAt(0)).toUpperCase();
     },
-    
+
     // إظهار إشعار
     showNotification: function(message, type = 'info') {
-        console.log(`[${type}] ${message}`);
         alert(message);
     }
 };
 
 // ============================================
-// نظام التنقل المتكامل
+// نظام التنقل المتكامل (يحل مشكلة اختفاء الصفحات)
 // ============================================
 window.navigateTo = function(page) {
     const paths = {
@@ -179,14 +162,14 @@ window.navigateTo = function(page) {
         'settings': '/pages/settings.html',
         'home': '/'
     };
-    
+
     const path = paths[page];
     if (path) {
         window.location.href = BASE_PATH + path;
     }
 };
 
-// دوال مختصرة
+// دوال مختصرة للاستخدام
 window.goToDashboard = () => navigateTo('dashboard');
 window.goToSignup = () => navigateTo('signup');
 window.goToCreateCourse = () => navigateTo('create-course');
@@ -194,33 +177,15 @@ window.goToSettings = () => navigateTo('settings');
 window.goHome = () => navigateTo('home');
 
 // ============================================
-// YouTube API المتكامل (بدون مفتاح)
+// YouTube API المبسط (بدون مفتاح)
 // ============================================
 window.YouTubeAPI = {
     extractVideoId: function(url) {
         if (!url) return null;
-        const patterns = [
-            /(?:youtube\.com\/watch\?v=)([^&]+)/,
-            /(?:youtu\.be\/)([^?]+)/,
-            /(?:youtube\.com\/embed\/)([^?]+)/
-        ];
-        for (const pattern of patterns) {
-            const match = url.match(pattern);
-            if (match && match[1]) return match[1];
-        }
-        return null;
+        const match = url.match(/(?:youtube\.com\/watch\?v=)([^&]+)/);
+        return match ? match[1] : null;
     },
-    
-    getVideoInfo: async function(videoId) {
-        // محاكاة الحصول على معلومات الفيديو
-        return {
-            title: 'فيديو تجريبي',
-            thumbnail: { url: `https://img.youtube.com/vi/${videoId}/0.jpg` },
-            channelTitle: 'قناة يوتيوب',
-            duration: 600
-        };
-    },
-    
+
     handleYouTubeUrlInput: function(url) {
         const videoId = this.extractVideoId(url);
         if (!videoId) {
@@ -233,7 +198,7 @@ window.YouTubeAPI = {
             thumbnailUrl: `https://img.youtube.com/vi/${videoId}/0.jpg`
         };
     },
-    
+
     formatDuration: function(seconds) {
         const mins = Math.floor(seconds / 60);
         const secs = seconds % 60;
@@ -252,29 +217,12 @@ window.Utils = {
             return date;
         }
     },
-    
+
     truncate: function(text, length = 100) {
         if (!text) return '';
         if (text.length <= length) return text;
         return text.substring(0, length) + '...';
-    },
-    
-    copyToClipboard: async function(text) {
-        try {
-            await navigator.clipboard.writeText(text);
-            return true;
-        } catch {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-            return true;
-        }
     }
 };
 
-// تهيئة Supabase
-initSupabase();
-console.log('✅ جميع الأنظمة جاهزة');
+console.log('✅ جميع الأنظمة جاهزة للعمل');
