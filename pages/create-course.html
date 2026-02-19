@@ -4,38 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إنشاء درس - تعليمي</title>
-    <link rel="stylesheet" href="/styles/main.css">
-    <link rel="stylesheet" href="/styles/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f3f4f6; direction: rtl; }
+        .dashboard-container { display: flex; min-height: 100vh; }
+        .sidebar { width: 250px; background: white; padding: 20px; }
+        .main-content { flex: 1; padding: 20px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 8px; }
+        .btn-primary { background: #4361ee; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; }
+        .video-preview { margin-top: 20px; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; }
+    </style>
 </head>
 <body>
     <div class="dashboard-container">
         <aside class="sidebar">
             <h2>تعليمي</h2>
             <nav>
-                <a href="#" onclick="parent.navigate('#dashboard'); return false;">لوحة التحكم</a>
-                <a href="#" onclick="parent.navigate('#create-course'); return false;">إنشاء درس</a>
-                <a href="#" onclick="parent.navigate('#settings'); return false;">الإعدادات</a>
+                <a href="#" onclick="goToDashboard(); return false;">لوحة التحكم</a>
+                <a href="#" onclick="goToCreateCourse(); return false;">إنشاء درس</a>
             </nav>
         </aside>
-        <main>
+
+        <main class="main-content">
             <h1>إنشاء درس جديد</h1>
-            <button onclick="parent.navigate('#dashboard'); return false;">رجوع</button>
             
-            <form id="courseForm">
-                <input type="text" id="title" placeholder="عنوان الدرس" required>
-                <input type="url" id="youtubeUrl" placeholder="رابط يوتيوب">
-                <button type="submit">حفظ الدرس</button>
-            </form>
+            <div class="form-group">
+                <label>عنوان الدرس</label>
+                <input type="text" id="courseTitle" placeholder="أدخل عنوان الدرس">
+            </div>
+            
+            <div class="form-group">
+                <label>رابط يوتيوب</label>
+                <input type="url" id="youtubeUrl" placeholder="https://youtube.com/watch?v=...">
+            </div>
+            
+            <button class="btn-primary" onclick="loadVideo()">تحميل الفيديو</button>
+            
+            <div id="videoPreview" class="video-preview" style="display:none">
+                <h3>معاينة الفيديو</h3>
+                <img id="videoThumbnail" src="" style="max-width:100%">
+                <p id="videoTitle"></p>
+            </div>
+            
+            <button class="btn-primary" onclick="saveCourse()" style="margin-top:20px">حفظ الدرس</button>
         </main>
     </div>
 
     <script>
-    document.getElementById('courseForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('تم حفظ الدرس بنجاح!');
-        window.parent.navigate('#dashboard');
-    });
+    const BASE_PATH = window.location.hostname.includes('github.io') ? '/adnk' : '';
+    
+    window.goToDashboard = function() { window.location.href = BASE_PATH + '/pages/dashboard.html'; };
+    window.goToCreateCourse = function() { window.location.href = BASE_PATH + '/pages/create-course.html'; };
+    
+    // دالة تحميل الفيديو (تعمل بدون API)
+    window.loadVideo = function() {
+        const url = document.getElementById('youtubeUrl').value;
+        const videoId = extractVideoId(url);
+        
+        if (!videoId) {
+            alert('❌ رابط يوتيوب غير صالح');
+            return;
+        }
+        
+        document.getElementById('videoThumbnail').src = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+        document.getElementById('videoTitle').textContent = 'تم تحميل الفيديو بنجاح';
+        document.getElementById('videoPreview').style.display = 'block';
+        
+        alert('✅ تم تحميل الفيديو');
+    };
+    
+    function extractVideoId(url) {
+        const match = url.match(/(?:youtube\.com\/watch\?v=)([^&]+)/);
+        return match ? match[1] : null;
+    }
+    
+    window.saveCourse = function() {
+        const title = document.getElementById('courseTitle').value;
+        if (!title) {
+            alert('❌ الرجاء إدخال عنوان الدرس');
+            return;
+        }
+        alert('✅ تم حفظ الدرس بنجاح');
+        goToDashboard();
+    };
     </script>
 </body>
 </html>
