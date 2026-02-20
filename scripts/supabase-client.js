@@ -20,7 +20,7 @@ console.log('🌐 البيئة:', window.location.hostname);
 console.log('📁 المسار الأساسي:', BASE_PATH);
 
 // ============================================
-// تهيئة Supabase مع معالجة الأخطاء
+// تهيئة Supabase
 // ============================================
 let supabaseClient = null;
 
@@ -37,6 +37,14 @@ try {
         console.log('✅ Supabase connected');
     } else {
         console.warn('⚠️ Supabase library not loaded');
+        // تحميل المكتبة ديناميكياً
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+        document.head.appendChild(script);
+        script.onload = () => {
+            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            console.log('✅ Supabase loaded dynamically');
+        };
     }
 } catch (error) {
     console.error('❌ Supabase error:', error);
@@ -177,13 +185,21 @@ window.goToSettings = () => navigateTo('settings');
 window.goHome = () => navigateTo('home');
 
 // ============================================
-// YouTube API المبسط (بدون مفتاح)
+// YouTube API المبسط (بدون مفتاح - يعمل مدى الحياة)
 // ============================================
 window.YouTubeAPI = {
     extractVideoId: function(url) {
         if (!url) return null;
-        const match = url.match(/(?:youtube\.com\/watch\?v=)([^&]+)/);
-        return match ? match[1] : null;
+        const patterns = [
+            /(?:youtube\.com\/watch\?v=)([^&]+)/,
+            /(?:youtu\.be\/)([^?]+)/,
+            /(?:youtube\.com\/embed\/)([^?]+)/
+        ];
+        for (const pattern of patterns) {
+            const match = url.match(pattern);
+            if (match && match[1]) return match[1];
+        }
+        return null;
     },
 
     handleYouTubeUrlInput: function(url) {
@@ -222,6 +238,21 @@ window.Utils = {
         if (!text) return '';
         if (text.length <= length) return text;
         return text.substring(0, length) + '...';
+    },
+
+    copyToClipboard: async function(text) {
+        try {
+            await navigator.clipboard.writeText(text);
+            return true;
+        } catch {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            return true;
+        }
     }
 };
 
