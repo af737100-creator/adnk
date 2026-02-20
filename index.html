@@ -4,334 +4,249 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تعليمي - منصة التعلم التفاعلي</title>
-    
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
     <style>
-        /* ===== CSS الأساسي ===== */
+        /* ===== CSS مباشر في الملف ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f9fafb; color: #1e293b; direction: rtl; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         
-        /* ===== شريط التنقل ===== */
-        .navbar { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 15px 0; position: sticky; top: 0; z-index: 1000; }
-        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
-        .nav-brand a { font-size: 1.8rem; font-weight: bold; color: #4361ee; text-decoration: none; }
-        .nav-menu { display: flex; list-style: none; gap: 20px; }
-        .nav-menu a { text-decoration: none; color: #1e293b; padding: 8px 12px; border-radius: 6px; transition: all 0.3s; }
-        .nav-menu a:hover { background: rgba(67,97,238,0.1); color: #4361ee; }
-        .btn-login { color: #4361ee !important; border: 2px solid #4361ee; }
-        .btn-signup { background: #4361ee; color: white !important; }
+        /* شريط التنقل */
+        .navbar { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .nav-brand { font-size: 1.8rem; font-weight: bold; color: #4361ee; }
+        .nav-menu { display: flex; gap: 15px; }
+        .btn-login, .btn-signup { padding: 8px 20px; border-radius: 8px; text-decoration: none; cursor: pointer; border: none; font-size: 1rem; }
+        .btn-login { background: white; color: #4361ee; border: 2px solid #4361ee; }
+        .btn-signup { background: #4361ee; color: white; }
         
-        /* ===== قسم البطل ===== */
-        .hero { padding: 100px 0; background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%); }
-        .hero .container { display: flex; align-items: center; gap: 40px; }
-        .hero-content { flex: 1; }
-        .hero h1 { font-size: 3rem; margin-bottom: 20px; color: #1e293b; }
-        .hero p { font-size: 1.2rem; color: #64748b; margin-bottom: 30px; }
-        .hero-buttons { display: flex; gap: 15px; }
-        .btn-primary { background: #4361ee; color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s; display: inline-block; border: none; cursor: pointer; }
-        .btn-primary:hover { background: #3a0ca3; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(67,97,238,0.3); }
-        .btn-secondary { background: white; color: #4361ee; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; border: 2px solid #4361ee; transition: all 0.3s; display: inline-block; cursor: pointer; }
-        .btn-secondary:hover { background: rgba(67,97,238,0.1); transform: translateY(-3px); }
+        /* قسم البطل */
+        .hero { padding: 50px; text-align: center; background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%); }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 20px; }
         
-        /* ===== قسم المميزات ===== */
-        .features { padding: 80px 0; background: white; }
-        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 20px; color: #1e293b; }
-        .section-subtitle { text-align: center; color: #64748b; margin-bottom: 50px; font-size: 1.2rem; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
-        .feature-card { background: white; border-radius: 16px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #e5e7eb; transition: all 0.3s; }
-        .feature-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(67,97,238,0.1); border-color: #4361ee; }
-        .feature-icon { width: 80px; height: 80px; background: linear-gradient(135deg, #4361ee, #4cc9f0); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 30px; color: white; font-size: 2rem; }
-        .feature-card h3 { font-size: 1.5rem; margin-bottom: 15px; }
-        .feature-card p { color: #64748b; line-height: 1.7; }
+        /* الأزرار */
+        .btn-primary { background: #4361ee; color: white; padding: 12px 30px; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; margin: 10px; }
         
-        /* ===== كيف تعمل ===== */
-        .how-it-works { padding: 80px 0; background: #f8fafc; }
-        .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 50px; }
-        .step { text-align: center; position: relative; }
-        .step-number { width: 60px; height: 60px; background: #4361ee; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; margin: 0 auto 20px; }
-        .step h3 { margin-bottom: 10px; }
-        .step p { color: #64748b; }
+        /* لوحة التحكم */
+        .dashboard { display: flex; min-height: 100vh; }
+        .sidebar { width: 250px; background: white; padding: 20px; }
+        .sidebar h2 { color: #4361ee; }
+        .sidebar button { display: block; width: 100%; padding: 12px; margin: 5px 0; border: none; background: none; text-align: right; cursor: pointer; }
+        .sidebar button:hover { background: #f0f4ff; }
+        .content { flex: 1; padding: 20px; }
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin: 20px 0; }
+        .stat-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
-        /* ===== خطط الأسعار ===== */
-        .pricing { padding: 80px 0; background: white; }
-        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 50px; }
-        .pricing-card { background: white; border-radius: 16px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid #e5e7eb; position: relative; }
-        .pricing-card.popular { border: 2px solid #4361ee; transform: scale(1.05); }
-        .popular-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #4361ee; color: white; padding: 5px 20px; border-radius: 20px; font-size: 0.9rem; }
-        .price { font-size: 3rem; font-weight: bold; margin: 20px 0; color: #1e293b; }
-        .pricing-features { list-style: none; margin: 30px 0; }
-        .pricing-features li { padding: 10px 0; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 10px; }
-        .pricing-features i.fa-check { color: #4ade80; }
-        .pricing-features i.fa-times { color: #ef4444; }
-        
-        /* ===== آراء المستخدمين ===== */
-        .testimonials { padding: 80px 0; background: #f8fafc; }
-        .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-        .testimonial-card { background: white; border-radius: 16px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .testimonial-rating { color: #f59e0b; margin-bottom: 15px; }
-        .testimonial-author { display: flex; align-items: center; gap: 15px; margin-top: 20px; }
-        .testimonial-author img { width: 50px; height: 50px; border-radius: 50%; background: #e5e7eb; }
-        
-        /* ===== تذييل ===== */
-        .footer { background: #1e293b; color: white; padding: 60px 0 20px; }
-        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
-        .footer-section h3 { margin-bottom: 20px; }
-        .footer-section ul { list-style: none; }
-        .footer-section ul li { margin-bottom: 10px; }
-        .footer-section a { color: #cbd5e1; text-decoration: none; }
-        .footer-section a:hover { color: #4cc9f0; }
-        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #334155; color: #94a3b8; }
-        
-        /* ===== استجابة للأجهزة ===== */
-        @media (max-width: 768px) {
-            .hero .container { flex-direction: column; }
-            .hero h1 { font-size: 2rem; }
-            .nav-menu { display: none; }
-            .steps { grid-template-columns: 1fr; }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .testimonials-grid { grid-template-columns: 1fr; }
-            .pricing-card.popular { transform: scale(1); }
-        }
+        /* النماذج */
+        .form-group { margin-bottom: 20px; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar">
-            <div class="container">
-                <div class="nav-brand">
-                    <a href="/">تعليمي</a>
-                </div>
-                <ul class="nav-menu" id="navMenu">
-                    <li><a href="#features">المميزات</a></li>
-                    <li><a href="#how-it-works">كيف تعمل</a></li>
-                    <li><a href="#pricing">الأسعار</a></li>
-                    <li><a href="#" onclick="goToDashboard(); return false;" class="btn-login">تسجيل الدخول</a></li>
-                    <li><a href="#" onclick="goToSignup(); return false;" class="btn-signup">إنشاء حساب</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
+    <div id="app">
+        <!-- سيتم تغيير المحتوى هنا عبر JavaScript -->
+    </div>
 
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
-                <p>أضف أسئلة، اختبارات، وشروحات تفاعلية على أي فيديو تعليمي بدون إعادة التسجيل. منصة متكاملة للمعلمين والطلاب.</p>
-                <div class="hero-buttons">
-                    <a href="#" onclick="goToSignup(); return false;" class="btn-primary">
-                        <i class="fas fa-rocket"></i> ابدأ مجاناً
-                    </a>
-                    <a href="#how-it-works" class="btn-secondary">
-                        <i class="fas fa-play-circle"></i> شاهد كيف تعمل
-                    </a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <i class="fas fa-chalkboard-teacher" style="font-size: 200px; color: #4361ee;"></i>
-            </div>
-        </div>
-    </section>
-
-    <section id="features" class="features">
-        <div class="container">
-            <h2 class="section-title">مميزات منصتنا الفريدة</h2>
-            <p class="section-subtitle">أدوات متكاملة وسهلة الاستخدام لتحويل أي فيديو يوتيوب إلى تجربة تعلم تفاعلية</p>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-question-circle"></i></div>
-                    <h3>أسئلة تفاعلية أثناء التشغيل</h3>
-                    <p>أضف أسئلة في أي نقطة من الفيديو مع تصحيح فوري وتغذية راجعة للطلاب</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-clipboard-check"></i></div>
-                    <h3>اختبارات قصيرة</h3>
-                    <p>أنشئ اختبارات متعددة الخيارات مع تصحيح آلي وإحصائيات دقيقة</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-lightbulb"></i></div>
-                    <h3>شروحات إضافية</h3>
-                    <p>قدم معلومات إضافية، روابط، وموارد تعليمية عند نقاط محددة</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
-                    <h3>تحليلات متقدمة</h3>
-                    <p>تتبع تقدم الطلاب، معدلات الإكمال، وأداء الأسئلة في الوقت الفعلي</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-users"></i></div>
-                    <h3>تعليم تعاوني</h3>
-                    <p>غرف دراسية افتراضية مع سبورة تفاعلية وميزة رفع الأيدي</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
-                    <h3>متوافق مع جميع الأجهزة</h3>
-                    <p>تصميم متجاوب يعمل على الحواسيب، الأجهزة اللوحية، والهواتف</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="how-it-works" class="how-it-works">
-        <div class="container">
-            <h2 class="section-title">كيف تعمل المنصة؟</h2>
-            <p class="section-subtitle">عملية بسيطة وسهلة تمكنك من تحويل أي فيديو لدرس تفاعلي في دقائق</p>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>أدخل رابط الفيديو</h3>
-                    <p>انسخ رابط أي فيديو تعليمي من يوتيوب والصقه في المنصة</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>أضف التفاعلات</h3>
-                    <p>ضع أسئلة، اختبارات، وشروحات في النقاط الزمنية المطلوبة</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>شارك الدرس</h3>
-                    <p>احصل على رابط فريد للمشاركة أو أدمجه في نظام إدارة التعلم</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3>تابع التقدم</h3>
-                    <p>راقب أداء طلابك وتحصل على تقارير وإحصائيات مفصلة</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="pricing" class="pricing">
-        <div class="container">
-            <h2 class="section-title">خطط مرنة تناسب احتياجاتك</h2>
-            <p class="section-subtitle">اختر الخطة المناسبة لك، مع ضمان استرداد الأموال خلال 30 يوماً</p>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <h3>مجاني</h3>
-                    <div class="price">$0</div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 3 دروس تفاعلية</li>
-                        <li><i class="fas fa-check"></i> 10 طلاب لكل درس</li>
-                        <li><i class="fas fa-check"></i> تفاعلات أساسية</li>
-                        <li class="disabled"><i class="fas fa-times"></i> تحليلات متقدمة</li>
-                        <li class="disabled"><i class="fas fa-times"></i> غرف تفاعلية</li>
-                    </ul>
-                    <a href="#" onclick="goToSignup(); return false;" class="btn-secondary">ابدأ مجاناً</a>
-                </div>
-                <div class="pricing-card popular">
-                    <div class="popular-badge">الأكثر شهرة</div>
-                    <h3>احترافي</h3>
-                    <div class="price">$29</div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> دروس غير محدودة</li>
-                        <li><i class="fas fa-check"></i> طلاب غير محدودين</li>
-                        <li><i class="fas fa-check"></i> جميع أنواع التفاعلات</li>
-                        <li><i class="fas fa-check"></i> تحليلات متقدمة</li>
-                        <li><i class="fas fa-check"></i> غرف تفاعلية</li>
-                    </ul>
-                    <a href="#" onclick="goToSignup(); return false;" class="btn-primary">اختر الخطة</a>
-                </div>
-                <div class="pricing-card">
-                    <h3>مؤسسات</h3>
-                    <div class="price">$99</div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> جميع ميزات الخطة الاحترافية</li>
-                        <li><i class="fas fa-check"></i> لوحة تحكم للمؤسسة</li>
-                        <li><i class="fas fa-check"></i> إدارة حسابات متعددة</li>
-                        <li><i class="fas fa-check"></i> تكامل مع LMS</li>
-                        <li><i class="fas fa-check"></i> تدريب ودعم مخصص</li>
-                    </ul>
-                    <a href="#" onclick="alert('اتصل بنا: support@ta3lemi.com'); return false;" class="btn-secondary">اتصل بنا</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="testimonials">
-        <div class="container">
-            <h2 class="section-title">آراء المستخدمين</h2>
-            <p class="section-subtitle">انضم إلى آلاف المعلمين والطلاب الذين يثقون في منصتنا</p>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+    <script>
+        // ============================================
+        // نظام التنقل البسيط - يعمل في كل مكان
+        // ============================================
+        
+        // الصفحات المتاحة
+        const PAGES = {
+            home: 'home',
+            dashboard: 'dashboard',
+            createCourse: 'createCourse',
+            settings: 'settings'
+        };
+        
+        // محتوى كل صفحة
+        const pageContent = {
+            [PAGES.home]: `
+                <nav class="navbar">
+                    <div class="nav-brand">تعليمي</div>
+                    <div class="nav-menu">
+                        <button class="btn-login" onclick="navigateTo('${PAGES.dashboard}')">تسجيل الدخول</button>
+                        <button class="btn-signup" onclick="navigateTo('${PAGES.dashboard}')">إنشاء حساب</button>
                     </div>
-                    <p>"منصة رائعة! ساعدتني في تحويل فيديوهاتي القديمة إلى دروس تفاعلية بدون إعادة تسجيل."</p>
-                    <div class="testimonial-author">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='25' fill='%234361ee'/%3E%3Ctext x='25' y='35' text-anchor='middle' fill='white' font-size='20'%3Eأ%3C/text%3E%3C/svg%3E" alt="أحمد">
-                        <div>
-                            <h4>أحمد محمد</h4>
-                            <p>معلم برمجة</p>
+                </nav>
+                
+                <div class="hero">
+                    <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
+                    <p>أضف أسئلة، اختبارات، وشروحات تفاعلية على أي فيديو تعليمي</p>
+                    <button class="btn-primary" onclick="navigateTo('${PAGES.dashboard}')">ابدأ مجاناً</button>
+                </div>
+                
+                <div style="padding: 40px; text-align: center;">
+                    <h2>مميزات المنصة</h2>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 30px;">
+                        <div style="padding: 20px;">
+                            <h3>أسئلة تفاعلية</h3>
+                            <p>أضف أسئلة في أي نقطة من الفيديو</p>
+                        </div>
+                        <div style="padding: 20px;">
+                            <h3>اختبارات قصيرة</h3>
+                            <p>اختبارات متعددة الخيارات</p>
+                        </div>
+                        <div style="padding: 20px;">
+                            <h3>شروحات إضافية</h3>
+                            <p>موارد تعليمية إضافية</p>
                         </div>
                     </div>
                 </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            `,
+            
+            [PAGES.dashboard]: `
+                <div class="dashboard">
+                    <div class="sidebar">
+                        <h2>تعليمي</h2>
+                        <button onclick="navigateTo('${PAGES.dashboard}')" style="background: #f0f4ff;">لوحة التحكم</button>
+                        <button onclick="navigateTo('${PAGES.createCourse}')">إنشاء درس</button>
+                        <button onclick="navigateTo('${PAGES.settings}')">الإعدادات</button>
                     </div>
-                    <p>"التحليلات والإحصائيات ساعدتني في فهم نقاط ضعف طلابي وتطوير طريقة تدريسي."</p>
-                    <div class="testimonial-author">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='25' fill='%23f59e0b'/%3E%3Ctext x='25' y='35' text-anchor='middle' fill='white' font-size='20'%3Eس%3C/text%3E%3C/svg%3E" alt="سارة">
-                        <div>
-                            <h4>سارة عبدالله</h4>
-                            <p>معلمة رياضيات</p>
+                    
+                    <div class="content">
+                        <div style="display: flex; justify-content: space-between;">
+                            <h1>لوحة التحكم</h1>
+                            <button class="btn-primary" onclick="navigateTo('${PAGES.createCourse}')">+ درس جديد</button>
+                        </div>
+                        
+                        <div class="stats">
+                            <div class="stat-card">
+                                <h3>إجمالي الدروس</h3>
+                                <p style="font-size: 2rem;">12</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3>الطلاب</h3>
+                                <p style="font-size: 2rem;">245</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3>معدل الإكمال</h3>
+                                <p style="font-size: 2rem;">78%</p>
+                            </div>
+                            <div class="stat-card">
+                                <h3>التفاعلات</h3>
+                                <p style="font-size: 2rem;">92%</p>
+                            </div>
+                        </div>
+                        
+                        <h2>الدروس الأخيرة</h2>
+                        <table style="width: 100%; background: white; border-radius: 10px;">
+                            <tr><th>العنوان</th><th>الطلاب</th><th>الحالة</th></tr>
+                            <tr><td>مقدمة في البرمجة</td><td>45</td><td>منشور</td></tr>
+                            <tr><td>تعلم JavaScript</td><td>78</td><td>منشور</td></tr>
+                            <tr><td>أساسيات HTML</td><td>32</td><td>مسودة</td></tr>
+                        </table>
+                    </div>
+                </div>
+            `,
+            
+            [PAGES.createCourse]: `
+                <div class="dashboard">
+                    <div class="sidebar">
+                        <h2>تعليمي</h2>
+                        <button onclick="navigateTo('${PAGES.dashboard}')">لوحة التحكم</button>
+                        <button onclick="navigateTo('${PAGES.createCourse}')" style="background: #f0f4ff;">إنشاء درس</button>
+                        <button onclick="navigateTo('${PAGES.settings}')">الإعدادات</button>
+                    </div>
+                    
+                    <div class="content">
+                        <div style="display: flex; justify-content: space-between;">
+                            <h1>إنشاء درس جديد</h1>
+                            <button class="btn-primary" onclick="navigateTo('${PAGES.dashboard}')">رجوع</button>
+                        </div>
+                        
+                        <div style="background: white; padding: 30px; border-radius: 10px; margin-top: 20px;">
+                            <div class="form-group">
+                                <label>عنوان الدرس</label>
+                                <input type="text" id="courseTitle" placeholder="أدخل عنوان الدرس">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>رابط يوتيوب</label>
+                                <input type="url" id="youtubeUrl" placeholder="https://youtube.com/watch?v=...">
+                                <button class="btn-primary" onclick="loadVideo()" style="margin-top: 10px;">تحميل الفيديو</button>
+                            </div>
+                            
+                            <div id="videoPreview" style="display: none; margin-top: 20px;">
+                                <img id="videoThumbnail" src="" style="max-width: 100%; border-radius: 10px;">
+                            </div>
+                            
+                            <button class="btn-primary" onclick="saveCourse()" style="margin-top: 20px;">حفظ الدرس</button>
                         </div>
                     </div>
                 </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+            `,
+            
+            [PAGES.settings]: `
+                <div class="dashboard">
+                    <div class="sidebar">
+                        <h2>تعليمي</h2>
+                        <button onclick="navigateTo('${PAGES.dashboard}')">لوحة التحكم</button>
+                        <button onclick="navigateTo('${PAGES.createCourse}')">إنشاء درس</button>
+                        <button onclick="navigateTo('${PAGES.settings}')" style="background: #f0f4ff;">الإعدادات</button>
                     </div>
-                    <p>"الغرف التفاعلية والسبورة غيّرت طريقة تدريسي تماماً. طلابي يشعرون وكأنهم في فصل حقيقي."</p>
-                    <div class="testimonial-author">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='25' fill='%234ade80'/%3E%3Ctext x='25' y='35' text-anchor='middle' fill='white' font-size='20'%3Eخ%3C/text%3E%3C/svg%3E" alt="خالد">
-                        <div>
-                            <h4>خالد العتيبي</h4>
-                            <p>معلم لغة إنجليزية</p>
+                    
+                    <div class="content">
+                        <h1>الإعدادات</h1>
+                        <div style="background: white; padding: 30px; border-radius: 10px; margin-top: 20px;">
+                            <div class="form-group">
+                                <label>الاسم</label>
+                                <input type="text" id="userName" value="مستخدم">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>البريد الإلكتروني</label>
+                                <input type="email" id="userEmail" value="user@example.com">
+                            </div>
+                            
+                            <button class="btn-primary" onclick="saveSettings()">حفظ الإعدادات</button>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>تعليمي</h3>
-                    <p>منصة التعلم التفاعلي الأولى التي تحول مقاطع اليوتيوب إلى تجارب تعليمية تفاعلية.</p>
-                </div>
-                <div class="footer-section">
-                    <h3>روابط سريعة</h3>
-                    <ul>
-                        <li><a href="#features">المميزات</a></li>
-                        <li><a href="#how-it-works">كيف تعمل</a></li>
-                        <li><a href="#pricing">الأسعار</a></li>
-                        <li><a href="#" onclick="goToDashboard(); return false;">لوحة التحكم</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h3>تواصل معنا</h3>
-                    <ul>
-                        <li><i class="fas fa-envelope"></i> support@ta3lemi.com</li>
-                        <li><i class="fas fa-phone"></i> +966 123 456 789</li>
-                        <li><i class="fas fa-map-marker-alt"></i> الرياض، السعودية</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 تعليمي. جميع الحقوق محفوظة.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- السكربت الرئيسي -->
-    <script src="scripts/supabase-client.js"></script>
+            `
+        };
+        
+        // دالة التنقل بين الصفحات
+        function navigateTo(page) {
+            console.log('الانتقال إلى:', page);
+            document.getElementById('app').innerHTML = pageContent[page];
+            window.scrollTo(0, 0);
+        }
+        
+        // دوال مساعدة
+        function loadVideo() {
+            const url = document.getElementById('youtubeUrl')?.value;
+            if (!url) {
+                alert('❌ الرجاء إدخال رابط يوتيوب');
+                return;
+            }
+            
+            // استخراج معرف الفيديو
+            const videoId = url.match(/(?:youtube\.com\/watch\?v=)([^&]+)/)?.[1];
+            if (!videoId) {
+                alert('❌ رابط غير صالح');
+                return;
+            }
+            
+            document.getElementById('videoThumbnail').src = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+            document.getElementById('videoPreview').style.display = 'block';
+            alert('✅ تم تحميل الفيديو');
+        }
+        
+        function saveCourse() {
+            const title = document.getElementById('courseTitle')?.value;
+            if (!title) {
+                alert('❌ الرجاء إدخال عنوان الدرس');
+                return;
+            }
+            alert('✅ تم حفظ الدرس بنجاح');
+            navigateTo(PAGES.dashboard);
+        }
+        
+        function saveSettings() {
+            alert('✅ تم حفظ الإعدادات بنجاح');
+        }
+        
+        // بدء التطبيق
+        navigateTo(PAGES.home);
+    </script>
 </body>
 </html>
