@@ -4,203 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم - تعليمي</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f3f4f6; color: #1e293b; direction: rtl; }
-        .dashboard-container { display: flex; min-height: 100vh; }
-        
-        .sidebar { width: 260px; background: white; box-shadow: 2px 0 10px rgba(0,0,0,0.1); padding: 20px; }
-        .sidebar h2 { color: #4361ee; margin-bottom: 30px; }
-        .sidebar nav a { display: block; padding: 12px 15px; color: #1e293b; text-decoration: none; border-radius: 8px; margin-bottom: 5px; transition: all 0.3s; }
-        .sidebar nav a:hover, .sidebar nav a.active { background: rgba(67,97,238,0.1); color: #4361ee; }
-        
-        .main-content { flex: 1; padding: 20px; }
-        .main-header { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-        .btn-primary { background: #4361ee; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
-        .btn-primary:hover { background: #3a0ca3; transform: translateY(-2px); }
-        
-        .stats-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 30px; }
-        .stat-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .stat-card h3 { color: #64748b; font-size: 0.9rem; margin-bottom: 10px; }
-        .stat-card p { font-size: 2rem; font-weight: bold; color: #1e293b; }
-        
-        .dashboard-section { background: white; border-radius: 12px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); margin-bottom: 20px; }
-        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 15px; text-align: right; border-bottom: 1px solid #e5e7eb; }
-        th { background: #f8fafc; color: #64748b; }
-        
-        .student-card { display: flex; align-items: center; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 10px; }
-        .student-avatar { width: 40px; height: 40px; background: #4361ee; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 10px; font-weight: bold; }
-        .student-info { flex: 1; }
-        .student-progress { margin-top: 10px; }
-        .progress-bar { height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden; width: 100%; }
-        .progress-fill { height: 100%; background: #4361ee; border-radius: 3px; }
-        
-        .notification-item { display: flex; gap: 15px; padding: 15px; border-bottom: 1px solid #e5e7eb; }
-        .notification-item:last-child { border-bottom: none; }
-        .notification-item.unread { background: rgba(67,97,238,0.05); }
-        .notification-icon { width: 40px; height: 40px; background: #4361ee; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; direction: rtl; }
+        .dashboard { display: flex; min-height: 100vh; }
+        .sidebar { width: 250px; background: white; padding: 20px; }
+        .sidebar button { display: block; width: 100%; padding: 12px; margin: 5px 0; border: none; background: none; cursor: pointer; text-align: right; }
+        .sidebar button:hover { background: #f0f4ff; }
+        .content { flex: 1; padding: 20px; }
+        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin: 20px 0; }
+        .stat-card { background: white; padding: 20px; border-radius: 8px; }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <aside class="sidebar">
-            <h2><i class="fas fa-graduation-cap"></i> تعليمي</h2>
-            <nav>
-                <a href="#" onclick="goToDashboard(); return false;" class="active">لوحة التحكم</a>
-                <a href="#" onclick="goToCreateCourse(); return false;">إنشاء درس جديد</a>
-                <a href="#" onclick="goToSettings(); return false;">الإعدادات</a>
-            </nav>
-        </aside>
-
-        <main class="main-content">
-            <header class="main-header">
-                <h1>لوحة التحكم</h1>
-                <button class="btn-primary" onclick="goToCreateCourse(); return false;">
-                    <i class="fas fa-plus"></i> درس جديد
-                </button>
-            </header>
-
-            <section class="stats-cards">
-                <div class="stat-card">
-                    <h3>إجمالي الدروس</h3>
-                    <p>12</p>
-                </div>
-                <div class="stat-card">
-                    <h3>الطلاب</h3>
-                    <p>245</p>
-                </div>
-                <div class="stat-card">
-                    <h3>معدل الإكمال</h3>
-                    <p>78%</p>
-                </div>
-                <div class="stat-card">
-                    <h3>التفاعلات</h3>
-                    <p>92%</p>
-                </div>
-            </section>
-
-            <section class="dashboard-section">
-                <div class="section-header">
-                    <h2>الدروس الأخيرة</h2>
-                    <button class="btn-primary" onclick="alert('عرض الكل')">عرض الكل</button>
-                </div>
-                
-                <table>
-                    <thead>
-                        <tr>
-                            <th>عنوان الدرس</th>
-                            <th>الطلاب</th>
-                            <th>آخر تحديث</th>
-                            <th>الحالة</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>مقدمة في البرمجة</td>
-                            <td>45</td>
-                            <td>2023-10-15</td>
-                            <td><span style="color:#4ade80;">منشور</span></td>
-                        </tr>
-                        <tr>
-                            <td>تعلم JavaScript</td>
-                            <td>78</td>
-                            <td>2023-10-10</td>
-                            <td><span style="color:#4ade80;">منشور</span></td>
-                        </tr>
-                        <tr>
-                            <td>أساسيات HTML</td>
-                            <td>32</td>
-                            <td>2023-10-05</td>
-                            <td><span style="color:#f59e0b;">مسودة</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-
-            <section class="dashboard-section">
-                <div class="section-header">
-                    <h2>الطلاب النشطين</h2>
-                    <button class="btn-primary" onclick="alert('عرض الكل')">عرض الكل</button>
-                </div>
-                
-                <div class="student-card">
-                    <div class="student-avatar">أ</div>
-                    <div class="student-info">
-                        <h4>أحمد محمد</h4>
-                        <p>ahmed@example.com</p>
-                        <div class="student-progress">
-                            <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="student-card">
-                    <div class="student-avatar">ف</div>
-                    <div class="student-info">
-                        <h4>فاطمة علي</h4>
-                        <p>fatima@example.com</p>
-                        <div class="student-progress">
-                            <div class="progress-bar"><div class="progress-fill" style="width:92%"></div></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="student-card">
-                    <div class="student-avatar">خ</div>
-                    <div class="student-info">
-                        <h4>خالد سعيد</h4>
-                        <p>khaled@example.com</p>
-                        <div class="student-progress">
-                            <div class="progress-bar"><div class="progress-fill" style="width:67%"></div></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section class="dashboard-section">
-                <div class="section-header">
-                    <h2>الإشعارات</h2>
-                    <button class="btn-primary" onclick="alert('تم تحديد الكل كمقروء')">تحديد الكل كمقروء</button>
-                </div>
-                
-                <div class="notification-item unread">
-                    <div class="notification-icon"><i class="fas fa-bell"></i></div>
-                    <div>
-                        <h4>طالب جديد</h4>
-                        <p>انضم أحمد محمد إلى دورة البرمجة</p>
-                        <small>منذ 5 دقائق</small>
-                    </div>
-                </div>
-                
-                <div class="notification-item unread">
-                    <div class="notification-icon"><i class="fas fa-check-circle"></i></div>
-                    <div>
-                        <h4>إكمال الدورة</h4>
-                        <p>أكملت فاطمة علي دورة JavaScript</p>
-                        <small>منذ ساعة</small>
-                    </div>
-                </div>
-            </section>
-        </main>
+    <div class="dashboard">
+        <div class="sidebar">
+            <h2 style="color: #4361ee;">تعليمي</h2>
+            <button onclick="navigateToDashboard()" style="background: #f0f4ff;">لوحة التحكم</button>
+            <button onclick="navigateToCreateCourse()">إنشاء درس</button>
+            <button onclick="navigateToSettings()">الإعدادات</button>
+        </div>
+        
+        <div class="content">
+            <h1>لوحة التحكم</h1>
+            <button onclick="navigateToCreateCourse()" style="background: #4361ee; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin: 20px 0;">+ درس جديد</button>
+            
+            <div class="stats">
+                <div class="stat-card"><h3>إجمالي الدروس</h3><p style="font-size: 2rem;">12</p></div>
+                <div class="stat-card"><h3>الطلاب</h3><p style="font-size: 2rem;">245</p></div>
+                <div class="stat-card"><h3>معدل الإكمال</h3><p style="font-size: 2rem;">78%</p></div>
+                <div class="stat-card"><h3>التفاعلات</h3><p style="font-size: 2rem;">92%</p></div>
+            </div>
+        </div>
     </div>
 
-    <script src="../scripts/supabase-client.js"></script>
     <script>
-    // التحقق من المصادقة عند تحميل الصفحة
-    document.addEventListener('DOMContentLoaded', async function() {
-        const isAuth = await auth.requireAuth();
-        if (!isAuth) return;
-        
-        // تحميل بيانات المستخدم
-        const user = auth.getCurrentUser();
-        if (user) {
-            console.log('👤 المستخدم:', user.email);
+    // ============================================
+    // نفس دوال المسارات من الصفحة الرئيسية
+    // ============================================
+    
+    function getBasePath() {
+        const hostname = window.location.hostname;
+        if (hostname.includes('github.io')) {
+            return '/adnk';
         }
-    });
+        return '';
+    }
+    
+    function navigateToDashboard() {
+        const basePath = getBasePath();
+        window.location.href = basePath + '/pages/dashboard.html';
+    }
+    
+    function navigateToCreateCourse() {
+        const basePath = getBasePath();
+        window.location.href = basePath + '/pages/create-course.html';
+    }
+    
+    function navigateToSettings() {
+        const basePath = getBasePath();
+        window.location.href = basePath + '/pages/settings.html';
+    }
     </script>
 </body>
 </html>
