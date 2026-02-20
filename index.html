@@ -6,17 +6,81 @@
     <title>تعليمي - منصة التعلم التفاعلي</title>
 </head>
 <body>
-    <div style="text-align: center; padding: 100px;">
-        <h1>تعليمي</h1>
-        <p>منصة التعلم التفاعلي</p>
+    <div id="app"></div>
+
+    <script>
+    // ============================================
+    // نظام كامل داخل ملف واحد
+    // ============================================
+    
+    const pages = {
+        home: `
+            <div style="text-align: center; padding: 50px;">
+                <h1>تعليمي</h1>
+                <p>منصة التعلم التفاعلي</p>
+                <button onclick="showPage('dashboard')">تسجيل الدخول</button>
+                <button onclick="showPage('dashboard')">إنشاء حساب</button>
+            </div>
+        `,
         
-        <button onclick="window.open('/pages/dashboard.html', '_blank')" style="padding: 15px 30px; margin: 10px;">
-            تسجيل الدخول (نافذة جديدة)
-        </button>
+        dashboard: `
+            <div style="display: flex;">
+                <div style="width: 200px; background: #f0f0f0; padding: 20px;">
+                    <h3>القائمة</h3>
+                    <button onclick="showPage('dashboard')">الرئيسية</button>
+                    <button onclick="showPage('createCourse')">إنشاء درس</button>
+                    <button onclick="showPage('settings')">الإعدادات</button>
+                </div>
+                <div style="flex: 1; padding: 20px;">
+                    <h1>لوحة التحكم</h1>
+                    <p>مرحباً بك في لوحة التحكم</p>
+                </div>
+            </div>
+        `,
         
-        <button onclick="window.open('/pages/dashboard.html?signup=true', '_blank')" style="padding: 15px 30px; margin: 10px;">
-            إنشاء حساب (نافذة جديدة)
-        </button>
-    </div>
+        createCourse: `
+            <div style="display: flex;">
+                <div style="width: 200px; background: #f0f0f0; padding: 20px;">
+                    <h3>القائمة</h3>
+                    <button onclick="showPage('dashboard')">الرئيسية</button>
+                    <button onclick="showPage('createCourse')">إنشاء درس</button>
+                    <button onclick="showPage('settings')">الإعدادات</button>
+                </div>
+                <div style="flex: 1; padding: 20px;">
+                    <h1>إنشاء درس جديد</h1>
+                    <input type="text" placeholder="عنوان الدرس" style="width: 100%; padding: 10px; margin: 10px 0;">
+                    <input type="url" placeholder="رابط يوتيوب" style="width: 100%; padding: 10px; margin: 10px 0;">
+                    <button onclick="alert('تم الحفظ')">حفظ الدرس</button>
+                </div>
+            </div>
+        `,
+        
+        settings: `
+            <div style="display: flex;">
+                <div style="width: 200px; background: #f0f0f0; padding: 20px;">
+                    <h3>القائمة</h3>
+                    <button onclick="showPage('dashboard')">الرئيسية</button>
+                    <button onclick="showPage('createCourse')">إنشاء درس</button>
+                    <button onclick="showPage('settings')">الإعدادات</button>
+                </div>
+                <div style="flex: 1; padding: 20px;">
+                    <h1>الإعدادات</h1>
+                    <input type="text" value="مستخدم" style="width: 100%; padding: 10px; margin: 10px 0;">
+                    <input type="email" value="user@example.com" style="width: 100%; padding: 10px; margin: 10px 0;">
+                    <button onclick="alert('تم الحفظ')">حفظ</button>
+                </div>
+            </div>
+        `
+    };
+    
+    function showPage(page) {
+        document.getElementById('app').innerHTML = pages[page];
+        localStorage.setItem('currentPage', page);
+    }
+    
+    // استعادة الصفحة الأخيرة
+    const lastPage = localStorage.getItem('currentPage') || 'home';
+    showPage(lastPage);
+    </script>
 </body>
 </html>
