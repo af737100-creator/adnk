@@ -3,112 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إنشاء درس جديد - تعليمي</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>إنشاء درس - تعليمي</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f3f4f6; color: #1e293b; direction: rtl; }
-        .dashboard-container { display: flex; min-height: 100vh; }
-        
-        .sidebar { width: 260px; background: white; box-shadow: 2px 0 10px rgba(0,0,0,0.1); padding: 20px; }
-        .sidebar h2 { color: #4361ee; margin-bottom: 30px; }
-        .sidebar nav a { display: block; padding: 12px 15px; color: #1e293b; text-decoration: none; border-radius: 8px; margin-bottom: 5px; }
-        .sidebar nav a:hover, .sidebar nav a.active { background: rgba(67,97,238,0.1); color: #4361ee; }
-        
-        .main-content { flex: 1; padding: 20px; }
-        .main-header { background: white; padding: 20px; border-radius: 12px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-        .btn-primary { background: #4361ee; color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; }
-        .btn-secondary { background: #e5e7eb; color: #1e293b; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; }
-        
-        .form-container { background: white; border-radius: 12px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .form-group { margin-bottom: 25px; }
-        label { display: block; margin-bottom: 8px; font-weight: 600; color: #1e293b; }
-        input, textarea, select { width: 100%; padding: 12px 15px; border: 1px solid #e5e7eb; border-radius: 8px; font-size: 1rem; transition: all 0.3s; }
-        input:focus, textarea:focus, select:focus { outline: none; border-color: #4361ee; box-shadow: 0 0 0 3px rgba(67,97,238,0.1); }
-        
-        .video-preview { margin-top: 30px; padding: 20px; border: 1px solid #e5e7eb; border-radius: 8px; background: #f8fafc; }
-        .video-thumbnail { width: 100%; max-width: 320px; border-radius: 8px; overflow: hidden; margin-bottom: 15px; }
-        .video-thumbnail img { width: 100%; display: block; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; direction: rtl; }
+        .dashboard { display: flex; min-height: 100vh; }
+        .sidebar { width: 250px; background: white; padding: 20px; }
+        .sidebar button { display: block; width: 100%; padding: 12px; margin: 5px 0; border: none; background: none; cursor: pointer; text-align: right; }
+        .content { flex: 1; padding: 20px; }
+        .form-group { margin-bottom: 20px; }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <aside class="sidebar">
-            <h2><i class="fas fa-graduation-cap"></i> تعليمي</h2>
-            <nav>
-                <a href="#" onclick="goToDashboard(); return false;">لوحة التحكم</a>
-                <a href="#" onclick="goToCreateCourse(); return false;" class="active">إنشاء درس جديد</a>
-                <a href="#" onclick="goToSettings(); return false;">الإعدادات</a>
-            </nav>
-        </aside>
-
-        <main class="main-content">
-            <header class="main-header">
-                <h1>إنشاء درس تفاعلي جديد</h1>
-                <button class="btn-secondary" onclick="goToDashboard(); return false;">رجوع</button>
-            </header>
-
-            <div class="form-container">
+    <div class="dashboard">
+        <div class="sidebar">
+            <h2 style="color: #4361ee;">تعليمي</h2>
+            <button onclick="navigateToDashboard()">لوحة التحكم</button>
+            <button onclick="navigateToCreateCourse()" style="background: #f0f4ff;">إنشاء درس</button>
+            <button onclick="navigateToSettings()">الإعدادات</button>
+        </div>
+        
+        <div class="content">
+            <h1>إنشاء درس جديد</h1>
+            <button onclick="navigateToDashboard()" style="background: #ddd; padding: 10px 20px; border: none; border-radius: 5px; margin: 20px 0;">رجوع</button>
+            
+            <div style="background: white; padding: 30px; border-radius: 8px;">
                 <div class="form-group">
-                    <label>عنوان الدرس *</label>
-                    <input type="text" id="courseTitle" placeholder="مثال: مقدمة في البرمجة">
+                    <label>عنوان الدرس</label>
+                    <input type="text" id="title" placeholder="أدخل عنوان الدرس">
                 </div>
-
+                
                 <div class="form-group">
-                    <label>وصف الدرس</label>
-                    <textarea id="courseDescription" rows="4" placeholder="صف محتوى الدرس والأهداف التعليمية..."></textarea>
+                    <label>رابط يوتيوب</label>
+                    <input type="url" id="url" placeholder="https://youtube.com/watch?v=...">
+                    <button onclick="loadVideo()" style="background: #4361ee; color: white; padding: 10px; border: none; border-radius: 5px; margin-top: 10px;">تحميل</button>
                 </div>
-
-                <div class="form-group">
-                    <label>رابط فيديو يوتيوب *</label>
-                    <div style="display: flex; gap: 10px;">
-                        <input type="url" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=..." style="flex: 1;">
-                        <button class="btn-primary" onclick="loadVideo()">تحميل</button>
-                    </div>
+                
+                <div id="preview" style="display: none; margin-top: 20px;">
+                    <img id="thumbnail" src="" style="max-width: 100%; border-radius: 8px;">
                 </div>
-
-                <div id="videoPreview" class="video-preview" style="display: none;">
-                    <h3>معاينة الفيديو</h3>
-                    <div class="video-thumbnail">
-                        <img id="videoThumbnail" src="" alt="صورة الفيديو">
-                    </div>
-                    <p id="videoTitle"></p>
-                </div>
-
-                <div style="display: flex; gap: 10px; margin-top: 30px;">
-                    <button class="btn-primary" onclick="saveCourse()" style="flex: 1;">حفظ الدرس</button>
-                </div>
+                
+                <button onclick="saveCourse()" style="background: #4361ee; color: white; padding: 15px; border: none; border-radius: 5px; margin-top: 20px; width: 100%;">حفظ الدرس</button>
             </div>
-        </main>
+        </div>
     </div>
 
-    <script src="../scripts/supabase-client.js"></script>
     <script>
+    function getBasePath() {
+        return window.location.hostname.includes('github.io') ? '/adnk' : '';
+    }
+    
+    function navigateToDashboard() {
+        window.location.href = getBasePath() + '/pages/dashboard.html';
+    }
+    
+    function navigateToCreateCourse() {
+        window.location.href = getBasePath() + '/pages/create-course.html';
+    }
+    
+    function navigateToSettings() {
+        window.location.href = getBasePath() + '/pages/settings.html';
+    }
+    
     function loadVideo() {
-        const url = document.getElementById('youtubeUrl').value;
-        const result = YouTubeAPI.handleYouTubeUrlInput(url);
+        const url = document.getElementById('url').value;
+        const videoId = url.match(/(?:youtube\.com\/watch\?v=)([^&]+)/)?.[1];
         
-        if (!result.success) {
-            alert(result.message);
+        if (!videoId) {
+            alert('❌ رابط غير صالح');
             return;
         }
         
-        document.getElementById('videoThumbnail').src = result.thumbnailUrl;
-        document.getElementById('videoTitle').textContent = 'تم تحميل الفيديو بنجاح';
-        document.getElementById('videoPreview').style.display = 'block';
-        
+        document.getElementById('thumbnail').src = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+        document.getElementById('preview').style.display = 'block';
         alert('✅ تم تحميل الفيديو');
     }
-
+    
     function saveCourse() {
-        const title = document.getElementById('courseTitle').value;
+        const title = document.getElementById('title').value;
         if (!title) {
             alert('❌ الرجاء إدخال عنوان الدرس');
             return;
         }
-        
-        alert('✅ تم حفظ الدرس بنجاح');
-        goToDashboard();
+        alert('✅ تم حفظ الدرس');
+        navigateToDashboard();
     }
     </script>
 </body>
