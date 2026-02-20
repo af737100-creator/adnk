@@ -4,47 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تعليمي - منصة التعلم التفاعلي</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f5f5f5; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .navbar { background: #4361ee; color: white; padding: 15px; }
-        .nav-menu { display: flex; gap: 20px; }
-        .nav-menu a { color: white; text-decoration: none; }
-        .hero { text-align: center; padding: 100px 20px; }
-        .btn { background: #4361ee; color: white; padding: 15px 40px; border: none; border-radius: 8px; cursor: pointer; font-size: 18px; text-decoration: none; display: inline-block; }
-    </style>
 </head>
 <body>
-    <div class="navbar">
-        <div class="container" style="display: flex; justify-content: space-between;">
-            <h2>تعليمي</h2>
-            <div class="nav-menu">
-                <a href="#" onclick="window.location.href='https://af737100-creator.github.io/adnk/pages/dashboard.html'">تسجيل الدخول</a>
-                <a href="#" onclick="window.location.href='https://af737100-creator.github.io/adnk/pages/dashboard.html?signup=true'">إنشاء حساب</a>
-            </div>
-        </div>
+    <div style="text-align: center; padding: 100px;">
+        <h1>تعليمي</h1>
+        <p>منصة التعلم التفاعلي</p>
+        
+        <button onclick="window.open('/pages/dashboard.html', '_blank')" style="padding: 15px 30px; margin: 10px;">
+            تسجيل الدخول (نافذة جديدة)
+        </button>
+        
+        <button onclick="window.open('/pages/dashboard.html?signup=true', '_blank')" style="padding: 15px 30px; margin: 10px;">
+            إنشاء حساب (نافذة جديدة)
+        </button>
     </div>
-
-    <div class="hero">
-        <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
-        <p style="margin: 30px 0;">أضف أسئلة، اختبارات، وشروحات تفاعلية على أي فيديو تعليمي</p>
-        <a href="#" onclick="window.location.href='https://af737100-creator.github.io/adnk/pages/dashboard.html?signup=true'" class="btn">ابدأ مجاناً</a>
-    </div>
-
-    <script>
-    // دوال التنقل المباشرة
-    window.goToDashboard = function() {
-        window.location.href = 'https://af737100-creator.github.io/adnk/pages/dashboard.html';
-    };
-    
-    window.goToCreateCourse = function() {
-        window.location.href = 'https://af737100-creator.github.io/adnk/pages/create-course.html';
-    };
-    
-    window.goToSettings = function() {
-        window.location.href = 'https://af737100-creator.github.io/adnk/pages/settings.html';
-    };
-    </script>
 </body>
 </html>
