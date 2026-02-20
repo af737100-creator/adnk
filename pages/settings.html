@@ -4,37 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الإعدادات - تعليمي</title>
-    <link rel="stylesheet" href="/styles/main.css">
-    <link rel="stylesheet" href="/styles/dashboard.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; direction: rtl; }
+        .dashboard { display: flex; min-height: 100vh; }
+        .sidebar { width: 250px; background: white; padding: 20px; }
+        .sidebar button { display: block; width: 100%; padding: 12px; margin: 5px 0; border: none; background: none; cursor: pointer; text-align: right; }
+        .content { flex: 1; padding: 20px; }
+        .form-group { margin-bottom: 20px; }
+        input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+    </style>
 </head>
 <body>
-    <div class="dashboard-container">
-        <aside class="sidebar">
-            <h2>تعليمي</h2>
-            <nav>
-                <a href="#" onclick="parent.navigate('#dashboard'); return false;">لوحة التحكم</a>
-                <a href="#" onclick="parent.navigate('#create-course'); return false;">إنشاء درس</a>
-                <a href="#" onclick="parent.navigate('#settings'); return false;">الإعدادات</a>
-            </nav>
-        </aside>
-        <main>
+    <div class="dashboard">
+        <div class="sidebar">
+            <h2 style="color: #4361ee;">تعليمي</h2>
+            <button onclick="navigateToDashboard()">لوحة التحكم</button>
+            <button onclick="navigateToCreateCourse()">إنشاء درس</button>
+            <button onclick="navigateToSettings()" style="background: #f0f4ff;">الإعدادات</button>
+        </div>
+        
+        <div class="content">
             <h1>الإعدادات</h1>
-            <button onclick="parent.navigate('#dashboard'); return false;">رجوع</button>
+            <button onclick="navigateToDashboard()" style="background: #ddd; padding: 10px 20px; border: none; border-radius: 5px; margin: 20px 0;">رجوع</button>
             
-            <form id="settingsForm">
-                <input type="text" id="name" value="مستخدم" placeholder="الاسم">
-                <input type="email" id="email" value="user@example.com" placeholder="البريد الإلكتروني">
-                <button type="submit">حفظ الإعدادات</button>
-            </form>
-        </main>
+            <div style="background: white; padding: 30px; border-radius: 8px;">
+                <div class="form-group">
+                    <label>الاسم</label>
+                    <input type="text" id="name" value="مستخدم">
+                </div>
+                
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" id="email" value="user@example.com">
+                </div>
+                
+                <button onclick="saveSettings()" style="background: #4361ee; color: white; padding: 15px; border: none; border-radius: 5px; width: 100%;">حفظ الإعدادات</button>
+            </div>
+        </div>
     </div>
 
     <script>
-    document.getElementById('settingsForm').addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('تم حفظ الإعدادات بنجاح!');
-    });
+    function getBasePath() {
+        return window.location.hostname.includes('github.io') ? '/adnk' : '';
+    }
+    
+    function navigateToDashboard() {
+        window.location.href = getBasePath() + '/pages/dashboard.html';
+    }
+    
+    function navigateToCreateCourse() {
+        window.location.href = getBasePath() + '/pages/create-course.html';
+    }
+    
+    function navigateToSettings() {
+        window.location.href = getBasePath() + '/pages/settings.html';
+    }
+    
+    function saveSettings() {
+        alert('✅ تم حفظ الإعدادات');
+    }
     </script>
 </body>
 </html>
