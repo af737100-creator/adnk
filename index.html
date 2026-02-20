@@ -5,248 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تعليمي - منصة التعلم التفاعلي</title>
     <style>
-        /* ===== CSS مباشر في الملف ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f9fafb; color: #1e293b; direction: rtl; }
-        
-        /* شريط التنقل */
-        .navbar { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); padding: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .nav-brand { font-size: 1.8rem; font-weight: bold; color: #4361ee; }
-        .nav-menu { display: flex; gap: 15px; }
-        .btn-login, .btn-signup { padding: 8px 20px; border-radius: 8px; text-decoration: none; cursor: pointer; border: none; font-size: 1rem; }
-        .btn-login { background: white; color: #4361ee; border: 2px solid #4361ee; }
-        .btn-signup { background: #4361ee; color: white; }
-        
-        /* قسم البطل */
-        .hero { padding: 50px; text-align: center; background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%); }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 20px; }
-        
-        /* الأزرار */
-        .btn-primary { background: #4361ee; color: white; padding: 12px 30px; border: none; border-radius: 8px; font-size: 1.1rem; cursor: pointer; margin: 10px; }
-        
-        /* لوحة التحكم */
-        .dashboard { display: flex; min-height: 100vh; }
-        .sidebar { width: 250px; background: white; padding: 20px; }
-        .sidebar h2 { color: #4361ee; }
-        .sidebar button { display: block; width: 100%; padding: 12px; margin: 5px 0; border: none; background: none; text-align: right; cursor: pointer; }
-        .sidebar button:hover { background: #f0f4ff; }
-        .content { flex: 1; padding: 20px; }
-        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin: 20px 0; }
-        .stat-card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        
-        /* النماذج */
-        .form-group { margin-bottom: 20px; }
-        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .navbar { background: #4361ee; color: white; padding: 15px; }
+        .nav-menu { display: flex; gap: 20px; }
+        .nav-menu a { color: white; text-decoration: none; }
+        .hero { text-align: center; padding: 100px 20px; }
+        .btn { background: #4361ee; color: white; padding: 15px 40px; border: none; border-radius: 8px; cursor: pointer; font-size: 18px; text-decoration: none; display: inline-block; }
     </style>
 </head>
 <body>
-    <div id="app">
-        <!-- سيتم تغيير المحتوى هنا عبر JavaScript -->
+    <div class="navbar">
+        <div class="container" style="display: flex; justify-content: space-between;">
+            <h2>تعليمي</h2>
+            <div class="nav-menu">
+                <a href="#" onclick="window.location.href='https://af737100-creator.github.io/adnk/pages/dashboard.html'">تسجيل الدخول</a>
+                <a href="#" onclick="window.location.href='https://af737100-creator.github.io/adnk/pages/dashboard.html?signup=true'">إنشاء حساب</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero">
+        <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
+        <p style="margin: 30px 0;">أضف أسئلة، اختبارات، وشروحات تفاعلية على أي فيديو تعليمي</p>
+        <a href="#" onclick="window.location.href='https://af737100-creator.github.io/adnk/pages/dashboard.html?signup=true'" class="btn">ابدأ مجاناً</a>
     </div>
 
     <script>
-        // ============================================
-        // نظام التنقل البسيط - يعمل في كل مكان
-        // ============================================
-        
-        // الصفحات المتاحة
-        const PAGES = {
-            home: 'home',
-            dashboard: 'dashboard',
-            createCourse: 'createCourse',
-            settings: 'settings'
-        };
-        
-        // محتوى كل صفحة
-        const pageContent = {
-            [PAGES.home]: `
-                <nav class="navbar">
-                    <div class="nav-brand">تعليمي</div>
-                    <div class="nav-menu">
-                        <button class="btn-login" onclick="navigateTo('${PAGES.dashboard}')">تسجيل الدخول</button>
-                        <button class="btn-signup" onclick="navigateTo('${PAGES.dashboard}')">إنشاء حساب</button>
-                    </div>
-                </nav>
-                
-                <div class="hero">
-                    <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
-                    <p>أضف أسئلة، اختبارات، وشروحات تفاعلية على أي فيديو تعليمي</p>
-                    <button class="btn-primary" onclick="navigateTo('${PAGES.dashboard}')">ابدأ مجاناً</button>
-                </div>
-                
-                <div style="padding: 40px; text-align: center;">
-                    <h2>مميزات المنصة</h2>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 30px;">
-                        <div style="padding: 20px;">
-                            <h3>أسئلة تفاعلية</h3>
-                            <p>أضف أسئلة في أي نقطة من الفيديو</p>
-                        </div>
-                        <div style="padding: 20px;">
-                            <h3>اختبارات قصيرة</h3>
-                            <p>اختبارات متعددة الخيارات</p>
-                        </div>
-                        <div style="padding: 20px;">
-                            <h3>شروحات إضافية</h3>
-                            <p>موارد تعليمية إضافية</p>
-                        </div>
-                    </div>
-                </div>
-            `,
-            
-            [PAGES.dashboard]: `
-                <div class="dashboard">
-                    <div class="sidebar">
-                        <h2>تعليمي</h2>
-                        <button onclick="navigateTo('${PAGES.dashboard}')" style="background: #f0f4ff;">لوحة التحكم</button>
-                        <button onclick="navigateTo('${PAGES.createCourse}')">إنشاء درس</button>
-                        <button onclick="navigateTo('${PAGES.settings}')">الإعدادات</button>
-                    </div>
-                    
-                    <div class="content">
-                        <div style="display: flex; justify-content: space-between;">
-                            <h1>لوحة التحكم</h1>
-                            <button class="btn-primary" onclick="navigateTo('${PAGES.createCourse}')">+ درس جديد</button>
-                        </div>
-                        
-                        <div class="stats">
-                            <div class="stat-card">
-                                <h3>إجمالي الدروس</h3>
-                                <p style="font-size: 2rem;">12</p>
-                            </div>
-                            <div class="stat-card">
-                                <h3>الطلاب</h3>
-                                <p style="font-size: 2rem;">245</p>
-                            </div>
-                            <div class="stat-card">
-                                <h3>معدل الإكمال</h3>
-                                <p style="font-size: 2rem;">78%</p>
-                            </div>
-                            <div class="stat-card">
-                                <h3>التفاعلات</h3>
-                                <p style="font-size: 2rem;">92%</p>
-                            </div>
-                        </div>
-                        
-                        <h2>الدروس الأخيرة</h2>
-                        <table style="width: 100%; background: white; border-radius: 10px;">
-                            <tr><th>العنوان</th><th>الطلاب</th><th>الحالة</th></tr>
-                            <tr><td>مقدمة في البرمجة</td><td>45</td><td>منشور</td></tr>
-                            <tr><td>تعلم JavaScript</td><td>78</td><td>منشور</td></tr>
-                            <tr><td>أساسيات HTML</td><td>32</td><td>مسودة</td></tr>
-                        </table>
-                    </div>
-                </div>
-            `,
-            
-            [PAGES.createCourse]: `
-                <div class="dashboard">
-                    <div class="sidebar">
-                        <h2>تعليمي</h2>
-                        <button onclick="navigateTo('${PAGES.dashboard}')">لوحة التحكم</button>
-                        <button onclick="navigateTo('${PAGES.createCourse}')" style="background: #f0f4ff;">إنشاء درس</button>
-                        <button onclick="navigateTo('${PAGES.settings}')">الإعدادات</button>
-                    </div>
-                    
-                    <div class="content">
-                        <div style="display: flex; justify-content: space-between;">
-                            <h1>إنشاء درس جديد</h1>
-                            <button class="btn-primary" onclick="navigateTo('${PAGES.dashboard}')">رجوع</button>
-                        </div>
-                        
-                        <div style="background: white; padding: 30px; border-radius: 10px; margin-top: 20px;">
-                            <div class="form-group">
-                                <label>عنوان الدرس</label>
-                                <input type="text" id="courseTitle" placeholder="أدخل عنوان الدرس">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>رابط يوتيوب</label>
-                                <input type="url" id="youtubeUrl" placeholder="https://youtube.com/watch?v=...">
-                                <button class="btn-primary" onclick="loadVideo()" style="margin-top: 10px;">تحميل الفيديو</button>
-                            </div>
-                            
-                            <div id="videoPreview" style="display: none; margin-top: 20px;">
-                                <img id="videoThumbnail" src="" style="max-width: 100%; border-radius: 10px;">
-                            </div>
-                            
-                            <button class="btn-primary" onclick="saveCourse()" style="margin-top: 20px;">حفظ الدرس</button>
-                        </div>
-                    </div>
-                </div>
-            `,
-            
-            [PAGES.settings]: `
-                <div class="dashboard">
-                    <div class="sidebar">
-                        <h2>تعليمي</h2>
-                        <button onclick="navigateTo('${PAGES.dashboard}')">لوحة التحكم</button>
-                        <button onclick="navigateTo('${PAGES.createCourse}')">إنشاء درس</button>
-                        <button onclick="navigateTo('${PAGES.settings}')" style="background: #f0f4ff;">الإعدادات</button>
-                    </div>
-                    
-                    <div class="content">
-                        <h1>الإعدادات</h1>
-                        <div style="background: white; padding: 30px; border-radius: 10px; margin-top: 20px;">
-                            <div class="form-group">
-                                <label>الاسم</label>
-                                <input type="text" id="userName" value="مستخدم">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>البريد الإلكتروني</label>
-                                <input type="email" id="userEmail" value="user@example.com">
-                            </div>
-                            
-                            <button class="btn-primary" onclick="saveSettings()">حفظ الإعدادات</button>
-                        </div>
-                    </div>
-                </div>
-            `
-        };
-        
-        // دالة التنقل بين الصفحات
-        function navigateTo(page) {
-            console.log('الانتقال إلى:', page);
-            document.getElementById('app').innerHTML = pageContent[page];
-            window.scrollTo(0, 0);
-        }
-        
-        // دوال مساعدة
-        function loadVideo() {
-            const url = document.getElementById('youtubeUrl')?.value;
-            if (!url) {
-                alert('❌ الرجاء إدخال رابط يوتيوب');
-                return;
-            }
-            
-            // استخراج معرف الفيديو
-            const videoId = url.match(/(?:youtube\.com\/watch\?v=)([^&]+)/)?.[1];
-            if (!videoId) {
-                alert('❌ رابط غير صالح');
-                return;
-            }
-            
-            document.getElementById('videoThumbnail').src = `https://img.youtube.com/vi/${videoId}/0.jpg`;
-            document.getElementById('videoPreview').style.display = 'block';
-            alert('✅ تم تحميل الفيديو');
-        }
-        
-        function saveCourse() {
-            const title = document.getElementById('courseTitle')?.value;
-            if (!title) {
-                alert('❌ الرجاء إدخال عنوان الدرس');
-                return;
-            }
-            alert('✅ تم حفظ الدرس بنجاح');
-            navigateTo(PAGES.dashboard);
-        }
-        
-        function saveSettings() {
-            alert('✅ تم حفظ الإعدادات بنجاح');
-        }
-        
-        // بدء التطبيق
-        navigateTo(PAGES.home);
+    // دوال التنقل المباشرة
+    window.goToDashboard = function() {
+        window.location.href = 'https://af737100-creator.github.io/adnk/pages/dashboard.html';
+    };
+    
+    window.goToCreateCourse = function() {
+        window.location.href = 'https://af737100-creator.github.io/adnk/pages/create-course.html';
+    };
+    
+    window.goToSettings = function() {
+        window.location.href = 'https://af737100-creator.github.io/adnk/pages/settings.html';
+    };
     </script>
 </body>
 </html>
