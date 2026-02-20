@@ -34,9 +34,9 @@
         .hero h1 { font-size: 3rem; margin-bottom: 20px; color: #1e293b; }
         .hero p { font-size: 1.2rem; color: #64748b; margin-bottom: 30px; }
         .hero-buttons { display: flex; gap: 15px; }
-        .btn-primary { background: #4361ee; color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s; }
+        .btn-primary { background: #4361ee; color: white; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.3s; display: inline-block; border: none; cursor: pointer; }
         .btn-primary:hover { background: #3a0ca3; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(67,97,238,0.3); }
-        .btn-secondary { background: white; color: #4361ee; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; border: 2px solid #4361ee; transition: all 0.3s; }
+        .btn-secondary { background: white; color: #4361ee; padding: 14px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; border: 2px solid #4361ee; transition: all 0.3s; display: inline-block; cursor: pointer; }
         .btn-secondary:hover { background: rgba(67,97,238,0.1); transform: translateY(-3px); }
         
         /* ===== قسم المميزات ===== */
@@ -70,6 +70,14 @@
         .pricing-features i.fa-check { color: #4ade80; }
         .pricing-features i.fa-times { color: #ef4444; }
         
+        /* ===== آراء المستخدمين ===== */
+        .testimonials { padding: 80px 0; background: #f8fafc; }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .testimonial-card { background: white; border-radius: 16px; padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .testimonial-rating { color: #f59e0b; margin-bottom: 15px; }
+        .testimonial-author { display: flex; align-items: center; gap: 15px; margin-top: 20px; }
+        .testimonial-author img { width: 50px; height: 50px; border-radius: 50%; background: #e5e7eb; }
+        
         /* ===== تذييل ===== */
         .footer { background: #1e293b; color: white; padding: 60px 0 20px; }
         .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
@@ -80,13 +88,15 @@
         .footer-section a:hover { color: #4cc9f0; }
         .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #334155; color: #94a3b8; }
         
-        /* ===== استجابة ===== */
+        /* ===== استجابة للأجهزة ===== */
         @media (max-width: 768px) {
             .hero .container { flex-direction: column; }
             .hero h1 { font-size: 2rem; }
             .nav-menu { display: none; }
             .steps { grid-template-columns: 1fr; }
             .pricing-grid { grid-template-columns: 1fr; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .pricing-card.popular { transform: scale(1); }
         }
     </style>
 </head>
@@ -237,6 +247,54 @@
                         <li><i class="fas fa-check"></i> تدريب ودعم مخصص</li>
                     </ul>
                     <a href="#" onclick="alert('اتصل بنا: support@ta3lemi.com'); return false;" class="btn-secondary">اتصل بنا</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">آراء المستخدمين</h2>
+            <p class="section-subtitle">انضم إلى آلاف المعلمين والطلاب الذين يثقون في منصتنا</p>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p>"منصة رائعة! ساعدتني في تحويل فيديوهاتي القديمة إلى دروس تفاعلية بدون إعادة تسجيل."</p>
+                    <div class="testimonial-author">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='25' fill='%234361ee'/%3E%3Ctext x='25' y='35' text-anchor='middle' fill='white' font-size='20'%3Eأ%3C/text%3E%3C/svg%3E" alt="أحمد">
+                        <div>
+                            <h4>أحمد محمد</h4>
+                            <p>معلم برمجة</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p>"التحليلات والإحصائيات ساعدتني في فهم نقاط ضعف طلابي وتطوير طريقة تدريسي."</p>
+                    <div class="testimonial-author">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='25' fill='%23f59e0b'/%3E%3Ctext x='25' y='35' text-anchor='middle' fill='white' font-size='20'%3Eس%3C/text%3E%3C/svg%3E" alt="سارة">
+                        <div>
+                            <h4>سارة عبدالله</h4>
+                            <p>معلمة رياضيات</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p>"الغرف التفاعلية والسبورة غيّرت طريقة تدريسي تماماً. طلابي يشعرون وكأنهم في فصل حقيقي."</p>
+                    <div class="testimonial-author">
+                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='50' height='50' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='25' fill='%234ade80'/%3E%3Ctext x='25' y='35' text-anchor='middle' fill='white' font-size='20'%3Eخ%3C/text%3E%3C/svg%3E" alt="خالد">
+                        <div>
+                            <h4>خالد العتيبي</h4>
+                            <p>معلم لغة إنجليزية</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
