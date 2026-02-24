@@ -4,107 +4,405 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تعليمي - منصة التعلم التفاعلي</title>
+    <!-- Font Awesome من CDN (آمن) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        *{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif;}
-        body{background:#f8fafc; color:#1e293b; direction:rtl;}
-        .container{max-width:1200px; margin:0 auto; padding:0 20px;}
-        .navbar{background:white; box-shadow:0 2px 10px rgba(0,0,0,0.05); padding:15px 0;}
-        .navbar .container{display:flex; justify-content:space-between; align-items:center;}
-        .logo{font-size:1.8rem; font-weight:bold; color:#4361ee; cursor:pointer; background:none; border:none;}
-        .nav-links{display:flex; gap:20px;}
-        .nav-links button{background:none; border:none; padding:8px 16px; border-radius:8px; cursor:pointer;}
-        .btn-login{border:2px solid #4361ee; color:#4361ee;}
-        .btn-signup{background:#4361ee; color:white;}
-        .btn{background:#4361ee; color:white; padding:12px 30px; border:none; border-radius:10px; cursor:pointer; font-size:1.1rem;}
-        .hero{padding:80px 0; background:linear-gradient(135deg,#eef2ff,#fff); text-align:center;}
-        .hero h1{font-size:2.8rem; margin-bottom:20px;}
-        .section-title{font-size:2.2rem; margin:60px 0 30px; text-align:center;}
-        .features-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px;}
-        .feature-card{background:white; padding:30px; border-radius:20px; border:1px solid #e2e8f0; text-align:center;}
-        .feature-card:hover{border-color:#4361ee;}
-        .feature-icon{font-size:2.5rem; color:#4361ee; margin-bottom:15px;}
-        .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
-        .step{text-align:center;}
-        .step-number{width:60px; height:60px; background:#4361ee; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.8rem; margin:0 auto 20px;}
-        .pricing-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:30px;}
-        .pricing-card{background:white; padding:40px 30px; border-radius:20px; border:1px solid #e2e8f0; position:relative;}
-        .pricing-card.popular{border:2px solid #4361ee; transform:scale(1.05);}
-        .popular-badge{position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:#4361ee; color:white; padding:5px 20px; border-radius:20px;}
-        .price{font-size:2.5rem; margin:20px 0;}
-        .pricing-features{list-style:none; margin:30px 0;}
-        .pricing-features li{padding:10px 0; border-bottom:1px solid #e2e8f0;}
-        .dashboard-layout{display:flex; gap:30px; margin:30px 0;}
-        .sidebar{width:280px; background:white; padding:25px; border-radius:20px;}
-        .sidebar button{display:block; width:100%; padding:15px; margin-bottom:8px; border:none; background:none; border-radius:12px; text-align:right; cursor:pointer;}
-        .sidebar button:hover{background:#eef2ff;}
-        .main-panel{flex:1; background:white; padding:30px; border-radius:20px;}
-        .stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin:30px 0;}
-        .stat-card{background:#f8fafc; padding:20px; border-radius:16px; text-align:center;}
-        .stat-card h2{font-size:2.2rem; color:#4361ee;}
-        .form-group{margin-bottom:20px;}
-        .form-group input,.form-group textarea{width:100%; padding:12px; border:2px solid #e2e8f0; border-radius:10px;}
-        .hamburger{display:none; flex-direction:column; cursor:pointer;}
-        .hamburger span{width:25px; height:3px; background:#1e293b; margin:3px 0;}
-        @media(max-width:768px){
-            .hero h1{font-size:2rem;}
-            .steps{grid-template-columns:1fr;}
-            .pricing-grid{grid-template-columns:1fr;}
-            .dashboard-layout{flex-direction:column;}
-            .sidebar{width:100%;}
-            .stats-grid{grid-template-columns:repeat(2,1fr);}
-            .hamburger{display:flex;}
-            .nav-links{display:none; flex-direction:column; position:absolute; top:70px; right:0; width:100%; background:white; padding:20px; box-shadow:0 5px 10px rgba(0,0,0,0.1);}
-            .nav-links.show{display:flex;}
+        /* ===== جميع التنسيقات في مكان واحد ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: #f8fafc;
+            color: #1e293b;
+            direction: rtl;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* شريط التنقل */
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4361ee;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .nav-links button {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+        .btn-login {
+            border: 2px solid #4361ee;
+            color: #4361ee;
+            background: white;
+        }
+        .btn-signup {
+            background: #4361ee;
+            color: white;
+        }
+        .btn-login:hover { background: #eef2ff; }
+        .btn-signup:hover { background: #3a0ca3; }
+        /* أزرار عامة */
+        .btn {
+            background: #4361ee;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-block;
+        }
+        .btn-outline {
+            background: white;
+            color: #4361ee;
+            border: 2px solid #4361ee;
+        }
+        .btn:hover, .btn-outline:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(67,97,238,0.2);
+        }
+        .btn-outline:hover { background: #eef2ff; }
+        /* قسم البطل */
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #eef2ff, #ffffff);
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: #475569;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        /* العناوين */
+        .section-title {
+            font-size: 2.2rem;
+            margin: 60px 0 30px;
+            text-align: center;
+        }
+        /* شبكة المميزات */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            transition: 0.2s;
+        }
+        .feature-card:hover {
+            border-color: #4361ee;
+            transform: translateY(-5px);
+        }
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #4361ee;
+            margin-bottom: 15px;
+        }
+        /* الخطوات */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+        .step {
+            text-align: center;
+        }
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #4361ee;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+        /* خطط الأسعار */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+        .pricing-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+            position: relative;
+            text-align: center;
+        }
+        .pricing-card.popular {
+            border: 2px solid #4361ee;
+            transform: scale(1.05);
+        }
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4361ee;
+            color: white;
+            padding: 5px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .price small {
+            font-size: 1rem;
+            color: #64748b;
+        }
+        .pricing-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: right;
+        }
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .pricing-features i.fa-check { color: #4ade80; }
+        .pricing-features i.fa-times { color: #ef4444; }
+        /* لوحة التحكم */
+        .dashboard-layout {
+            display: flex;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        .sidebar {
+            width: 280px;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+        }
+        .sidebar h3 {
+            margin-bottom: 20px;
+            color: #4361ee;
+        }
+        .sidebar button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 8px;
+            border: none;
+            background: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            text-align: right;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #334155;
+        }
+        .sidebar button:hover, .sidebar button.active {
+            background: #eef2ff;
+            color: #4361ee;
+            font-weight: 600;
+        }
+        .main-panel {
+            flex: 1;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .stat-card {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+        .stat-card h2 {
+            font-size: 2.2rem;
+            color: #4361ee;
+            margin-bottom: 5px;
+        }
+        /* النماذج */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #4361ee;
+            outline: none;
+        }
+        /* زر القائمة للجوال */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #1e293b;
+            margin: 3px 0;
+            border-radius: 3px;
+            transition: 0.2s;
+        }
+        /* استجابة للشاشات الصغيرة */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .steps { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .dashboard-layout { flex-direction: column; }
+            .sidebar { width: 100%; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .hamburger { display: flex; }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                right: 0;
+                width: 100%;
+                background: white;
+                padding: 20px;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+                z-index: 999;
+            }
+            .nav-links.show {
+                display: flex;
+            }
         }
     </style>
 </head>
 <body>
     <div id="app"></div>
+
     <script>
-        const DB={
-            user:{name:'محمد أحمد', email:'teacher@example.com'},
-            courses:[
-                {title:'مقدمة في البرمجة', students:45, status:'published', date:'2023-10-15'},
-                {title:'تعلم JavaScript', students:78, status:'published', date:'2023-10-10'},
-                {title:'أساسيات HTML', students:32, status:'draft', date:'2023-10-05'}
+        // ===== جميع أكواد JavaScript هنا =====
+        const DB = {
+            user: { name: 'محمد أحمد', email: 'teacher@example.com' },
+            courses: [
+                { title: 'مقدمة في البرمجة', students: 45, status: 'published', date: '2023-10-15' },
+                { title: 'تعلم JavaScript', students: 78, status: 'published', date: '2023-10-10' },
+                { title: 'أساسيات HTML', students: 32, status: 'draft', date: '2023-10-05' }
             ],
-            stats:{courses:12, students:245, completion:78, engagement:92}
+            students: [
+                { name: 'أحمد محمد', email: 'ahmed@example.com', progress: 85 },
+                { name: 'فاطمة علي', email: 'fatima@example.com', progress: 92 },
+                { name: 'خالد سعيد', email: 'khaled@example.com', progress: 67 }
+            ],
+            stats: { courses: 12, students: 245, completion: 78, engagement: 92 }
         };
-        function render(page){
-            let html='';
-            if(page==='home'){
-                html=`
+
+        function renderPage(page) {
+            const app = document.getElementById('app');
+            let html = '';
+
+            if (page === 'home') {
+                html = `
                     <nav class="navbar"><div class="container">
-                        <button class="logo" onclick="render('home')">تعليمي</button>
-                        <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('show')"><span></span><span></span><span></span></button>
+                        <button class="logo" onclick="renderPage('home')">تعليمي</button>
+                        <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('show')">
+                            <span></span><span></span><span></span>
+                        </button>
                         <div class="nav-links" id="navLinks">
-                            <button class="btn-login" onclick="render('dashboard')">تسجيل الدخول</button>
-                            <button class="btn-signup" onclick="render('dashboard')">إنشاء حساب</button>
+                            <button class="btn-login" onclick="renderPage('dashboard')">تسجيل الدخول</button>
+                            <button class="btn-signup" onclick="renderPage('dashboard')">إنشاء حساب</button>
                         </div>
                     </div></nav>
                     <div class="hero"><div class="container">
                         <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
                         <p>أضف أسئلة، اختبارات، وشروحات تفاعلية على أي فيديو تعليمي.</p>
-                        <button class="btn" onclick="render('dashboard')">ابدأ مجاناً</button>
+                        <button class="btn" onclick="renderPage('dashboard')">ابدأ مجاناً</button>
                     </div></div>
                     <div class="container">
                         <h2 class="section-title">مميزات المنصة</h2>
                         <div class="features-grid">
-                            ${['أسئلة تفاعلية','اختبارات قصيرة','شروحات إضافية','تحليلات متقدمة','تعليم تعاوني','متوافق مع الأجهزة'].map(t=>`
-                                <div class="feature-card"><i class="fas fa-star feature-icon"></i><h3>${t}</h3><p>وصف الميزة</p></div>
-                            `).join('')}
+                            <div class="feature-card"><i class="fas fa-question-circle feature-icon"></i><h3>أسئلة تفاعلية</h3><p>أضف أسئلة في أي نقطة.</p></div>
+                            <div class="feature-card"><i class="fas fa-clipboard-check feature-icon"></i><h3>اختبارات قصيرة</h3><p>اختبارات متعددة الخيارات.</p></div>
+                            <div class="feature-card"><i class="fas fa-lightbulb feature-icon"></i><h3>شروحات إضافية</h3><p>موارد وروابط تعليمية.</p></div>
+                            <div class="feature-card"><i class="fas fa-chart-line feature-icon"></i><h3>تحليلات متقدمة</h3><p>تتبع تقدم الطلاب.</p></div>
+                            <div class="feature-card"><i class="fas fa-users feature-icon"></i><h3>تعليم تعاوني</h3><p>غرف دراسية افتراضية.</p></div>
+                            <div class="feature-card"><i class="fas fa-mobile-alt feature-icon"></i><h3>متوافق مع الأجهزة</h3><p>تصميم متجاوب.</p></div>
                         </div>
                     </div>
                 `;
-            }else if(page==='dashboard'){
-                html=`
+            } else if (page === 'dashboard') {
+                html = `
                     <div class="dashboard-layout container">
                         <div class="sidebar">
                             <h3>تعليمي</h3>
-                            <button onclick="render('dashboard')">لوحة التحكم</button>
-                            <button onclick="render('create')">إنشاء درس</button>
-                            <button onclick="render('settings')">الإعدادات</button>
+                            <button onclick="renderPage('dashboard')">لوحة التحكم</button>
+                            <button onclick="renderPage('create')">إنشاء درس</button>
+                            <button onclick="renderPage('settings')">الإعدادات</button>
                         </div>
                         <div class="main-panel">
                             <h1>لوحة التحكم</h1>
@@ -115,40 +413,32 @@
                                 <div class="stat-card"><h2>${DB.stats.engagement}%</h2><p>معدل التفاعل</p></div>
                             </div>
                             <h2>الدروس الأخيرة</h2>
-                            <table style="width:100%"><tr><th>العنوان</th><th>الطلاب</th><th>الحالة</th></tr>
-                                ${DB.courses.map(c=>`<tr><td>${c.title}</td><td>${c.students}</td><td>${c.status}</td></tr>`).join('')}
+                            <table style="width:100%; border-collapse:collapse; margin-top:20px;">
+                                <tr><th>العنوان</th><th>الطلاب</th><th>الحالة</th></tr>
+                                ${DB.courses.map(c => `<tr><td>${c.title}</td><td>${c.students}</td><td>${c.status}</td></tr>`).join('')}
                             </table>
                         </div>
                     </div>
                 `;
-            }else if(page==='create'){
-                html=`
+            } else if (page === 'create') {
+                html = `
                     <div class="dashboard-layout container">
-                        <div class="sidebar">
-                            <h3>تعليمي</h3>
-                            <button onclick="render('dashboard')">لوحة التحكم</button>
-                            <button onclick="render('create')">إنشاء درس</button>
-                            <button onclick="render('settings')">الإعدادات</button>
-                        </div>
-                        <div class="main-panel">
-                            <h1>إنشاء درس</h1>
-                            <div class="form-group"><label>عنوان الدرس</label><input placeholder="أدخل العنوان"></div>
-                            <div class="form-group"><label>رابط يوتيوب</label><input placeholder="https://youtube.com/..."></div>
-                            <button class="btn">حفظ</button>
-                        </div>
+                        <div class="sidebar"><h3>تعليمي</h3><button onclick="renderPage('dashboard')">لوحة التحكم</button><button onclick="renderPage('create')">إنشاء درس</button><button onclick="renderPage('settings')">الإعدادات</button></div>
+                        <div class="main-panel"><h1>إنشاء درس</h1><div class="form-group"><label>عنوان الدرس</label><input placeholder="أدخل العنوان"></div><div class="form-group"><label>رابط يوتيوب</label><input placeholder="https://youtube.com/..."></div><button class="btn">حفظ</button></div>
                     </div>
                 `;
-            }else if(page==='settings'){
-                html=`
+            } else if (page === 'settings') {
+                html = `
                     <div class="dashboard-layout container">
-                        <div class="sidebar"><h3>تعليمي</h3><button onclick="render('dashboard')">لوحة التحكم</button><button onclick="render('create')">إنشاء درس</button><button onclick="render('settings')">الإعدادات</button></div>
-                        <div class="main-panel"><h1>الإعدادات</h1><p>جاري التطوير</p></div>
+                        <div class="sidebar"><h3>تعليمي</h3><button onclick="renderPage('dashboard')">لوحة التحكم</button><button onclick="renderPage('create')">إنشاء درس</button><button onclick="renderPage('settings')">الإعدادات</button></div>
+                        <div class="main-panel"><h1>الإعدادات</h1><div class="form-group"><label>الاسم</label><input value="${DB.user.name}"></div><div class="form-group"><label>البريد</label><input value="${DB.user.email}"></div><button class="btn">حفظ</button></div>
                     </div>
                 `;
             }
-            document.getElementById('app').innerHTML=html;
+            app.innerHTML = html;
         }
-        render('home');
+
+        renderPage('home');
     </script>
 </body>
 </html>
