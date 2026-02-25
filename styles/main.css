@@ -1,25 +1,12 @@
-/* ابحث عن قسم .hero واستبدله بهذا الكود */
 .hero {
-    padding: 100px 0;
-    /* بدلاً من الصورة المفقودة، نستخدم تدرج لوني احترافي */
+    padding: 80px 20px;
+    /* حذفنا url الصورة واستبدلناه بتدرج لوني */
     background: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%);
     color: white;
     text-align: center;
-    border-radius: 0 0 50px 50px;
 }
 
-.hero h1 {
-    color: white; /* تأكد أن النص أبيض ليظهر فوق الخلفية الزرقاء */
-    font-size: 3rem;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-.hero p {
-    color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 30px;
-}
-
-/* إخفاء حاوية الصورة إذا كانت فارغة لتجنب ظهور إطار الخطأ */
-.hero-image {
-    display: none; 
+/* لضمان عدم ظهور إطار الصورة المكسورة */
+.hero-image, img[src*="hero-dashboard"] {
+    display: none !important;
 }
