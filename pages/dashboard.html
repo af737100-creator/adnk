@@ -2,69 +2,12 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم - تعليمي</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: #f5f5f5; direction: rtl; }
-        .dashboard { display: flex; min-height: 100vh; }
-        .sidebar { width: 250px; background: white; padding: 20px; }
-        .sidebar button { display: block; width: 100%; padding: 12px; margin: 5px 0; border: none; background: none; cursor: pointer; text-align: right; }
-        .sidebar button:hover { background: #f0f4ff; }
-        .content { flex: 1; padding: 20px; }
-        .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin: 20px 0; }
-        .stat-card { background: white; padding: 20px; border-radius: 8px; }
-    </style>
+    <title>لوحة التحكم</title>
+    <link rel="stylesheet" href="../styles/main.css">
 </head>
 <body>
-    <div class="dashboard">
-        <div class="sidebar">
-            <h2 style="color: #4361ee;">تعليمي</h2>
-            <button onclick="navigateToDashboard()" style="background: #f0f4ff;">لوحة التحكم</button>
-            <button onclick="navigateToCreateCourse()">إنشاء درس</button>
-            <button onclick="navigateToSettings()">الإعدادات</button>
-        </div>
-        
-        <div class="content">
-            <h1>لوحة التحكم</h1>
-            <button onclick="navigateToCreateCourse()" style="background: #4361ee; color: white; padding: 10px 20px; border: none; border-radius: 5px; margin: 20px 0;">+ درس جديد</button>
-            
-            <div class="stats">
-                <div class="stat-card"><h3>إجمالي الدروس</h3><p style="font-size: 2rem;">12</p></div>
-                <div class="stat-card"><h3>الطلاب</h3><p style="font-size: 2rem;">245</p></div>
-                <div class="stat-card"><h3>معدل الإكمال</h3><p style="font-size: 2rem;">78%</p></div>
-                <div class="stat-card"><h3>التفاعلات</h3><p style="font-size: 2rem;">92%</p></div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-    // ============================================
-    // نفس دوال المسارات من الصفحة الرئيسية
-    // ============================================
-    
-    function getBasePath() {
-        const hostname = window.location.hostname;
-        if (hostname.includes('github.io')) {
-            return '/adnk';
-        }
-        return '';
-    }
-    
-    function navigateToDashboard() {
-        const basePath = getBasePath();
-        window.location.href = basePath + '/pages/dashboard.html';
-    }
-    
-    function navigateToCreateCourse() {
-        const basePath = getBasePath();
-        window.location.href = basePath + '/pages/create-course.html';
-    }
-    
-    function navigateToSettings() {
-        const basePath = getBasePath();
-        window.location.href = basePath + '/pages/settings.html';
-    }
-    </script>
+    <h1>أهلاً بك في لوحة التحكم</h1>
+    <a href="../index.html">العودة للرئيسية</a>
+    <script src="../scripts/main.js"></script>
 </body>
 </html>
