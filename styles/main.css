@@ -1,25 +1,22 @@
-/* قسم البطل المعدل - بدون صور خارجية */
-.hero {
-    padding: 80px 0;
-    /* استخدمنا تدرج لوني احترافي بدلاً من الصورة المفقودة */
-    background: linear-gradient(135deg, #4361ee 0%, #4cc9f0 100%);
+/* تنسيق عام */
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #f4f7fe;
+}
+
+/* قسم الـ Hero بدون صورة hero-dashboard.png */
+.hero-section {
+    height: 300px;
+    background: linear-gradient(135deg, #4361ee, #4cc9f0);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     color: white;
-    text-align: center;
 }
 
-.hero h1 {
-    color: white;
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-}
-
-.hero p {
-    color: rgba(255, 255, 255, 0.9);
-    max-width: 700px;
-    margin: 0 auto 30px;
-}
-
-/* إخفاء حاوية الصورة تماماً لضمان عدم ظهور علامة "صورة مكسورة" */
-.hero-image {
+/* حذف أي إشارة للصورة المفقودة لضمان اختفاء خطأ 404 */
+.hero-image, img {
     display: none !important;
 }
