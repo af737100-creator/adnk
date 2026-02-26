@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملف الشخصي - تعليمي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="index.html" class="logo">تعليمي</a>
+                <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+                <div class="nav-links" id="navLinks">
+                    <span id="userDisplay" style="color:#4361ee;"></span>
+                    <a href="dashboard.html">لوحة التحكم</a>
+                    <a href="profile.html" class="active">الملف الشخصي</a>
+                    <a href="#" id="logoutBtn">تسجيل خروج</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="dashboard-layout container">
+        <aside class="sidebar">
+            <h3>تعليمي</h3>
+            <a href="dashboard.html">لوحة التحكم</a>
+            <a href="profile.html" class="active">الملف الشخصي</a>
+        </aside>
+        <main class="main-panel">
+            <h1>الملف الشخصي</h1>
+            <div class="form-group">
+                <label>الاسم الكامل</label>
+                <input type="text" id="fullName">
+            </div>
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="email" readonly>
+            </div>
+            <div class="form-group">
+                <label>الدور</label>
+                <input type="text" id="role" readonly>
+            </div>
+            <button class="btn" onclick="updateProfile()">حفظ التغييرات</button>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        (async function() {
+            const user = await auth.requireAuth('index.html');
+            if (!user) return;
+
+            document.getElementById('userDisplay').textContent = user.profile?.full_name || user.email;
+            document.getElementById('fullName').value = user.profile?.full_name || '';
+            document.getElementById('email').value = user.email;
+            document.getElementById('role').value = user.profile?.role || '';
+
+            document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                auth.signOut();
+            });
+        })();
+
+        async function updateProfile() {
+            const newName = document.getElementById('fullName').value;
+            if (!newName) return;
+
+            const user = await auth.getCurrentUser();
+            if (!user) return;
+
+            const { error } = await supabase
+                .from('profiles')
+                .update({ full_name: newName })
+                .eq('id', user.id);
+
+            if (error) {
+                showNotification('❌ فشل التحديث', 'error');
+            } else {
+                showNotification('✅ تم تحديث الملف الشخصي', 'success');
+            }
+        }
+    </script>
+</body>
+</html>
