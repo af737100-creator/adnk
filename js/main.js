@@ -1,13 +1,12 @@
+// ============================================
+// دوال مساعدة عامة
+// ============================================
+function showNotification(message, type = 'info') {
+    alert(message); // يمكن استبدالها بنظام إشعارات متطور
+}
 
-// يمكن وضع دوال مساعدة عامة هنا
-// مثل التعامل مع القائمة المنسدلة، إلخ.
+// استخراج معرف فيديو يوتيوب (تستخدم دالة YouTubeAPI)
+window.extractYouTubeId = (url) => YouTubeAPI.extractVideoId(url);
+window.formatTime = (seconds) => YouTubeAPI.formatTime(seconds);
 
-// تفعيل القائمة للجوال
-document.addEventListener('DOMContentLoaded', function() {
-    const hamburger = document.querySelector('.hamburger');
-    if (hamburger) {
-        hamburger.addEventListener('click', function() {
-            document.querySelector('.nav-links').classList.toggle('show');
-        });
-    }
-});
+window.showNotification = showNotification;
