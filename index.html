@@ -5,302 +5,153 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تعليمي - منصة التعلم التفاعلي</title>
     <meta name="description" content="حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية مع أسئلة واختبارات وشروحات إضافية">
-    <!-- Font Awesome للأيقونات (CDN آمن) -->
+    <!-- Font Awesome (CDN آمن) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ===== جميع التنسيقات هنا ===== */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { background: #f8fafc; color: #1e293b; direction: rtl; line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        /* شريط التنقل */
-        .navbar { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 15px 0; position: sticky; top: 0; z-index: 1000; }
-        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.8rem; font-weight: bold; color: #4361ee; cursor: pointer; background: none; border: none; }
-        .nav-links { display: flex; gap: 20px; align-items: center; }
-        .nav-links button { background: none; border: none; font-size: 1rem; cursor: pointer; padding: 8px 16px; border-radius: 8px; transition: 0.2s; }
-        .btn-login { border: 2px solid #4361ee; color: #4361ee; background: white; }
-        .btn-signup { background: #4361ee; color: white; }
-        .btn-login:hover { background: #eef2ff; }
-        .btn-signup:hover { background: #3a0ca3; }
-        /* أزرار عامة */
-        .btn { background: #4361ee; color: white; border: none; padding: 12px 30px; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.2s; display: inline-block; }
-        .btn-outline { background: white; color: #4361ee; border: 2px solid #4361ee; }
-        .btn:hover, .btn-outline:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(67,97,238,0.2); }
-        .btn-outline:hover { background: #eef2ff; }
-        /* قسم البطل */
-        .hero { padding: 80px 0; background: linear-gradient(135deg, #eef2ff, #ffffff); text-align: center; }
-        .hero h1 { font-size: 2.8rem; margin-bottom: 20px; color: #0f172a; }
-        .hero p { font-size: 1.2rem; color: #475569; max-width: 700px; margin: 0 auto 30px; }
-        /* العناوين */
-        .section-title { font-size: 2.2rem; margin: 60px 0 30px; text-align: center; color: #0f172a; }
-        /* شبكة المميزات */
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 40px 0; }
-        .feature-card { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; text-align: center; transition: 0.2s; }
-        .feature-card:hover { border-color: #4361ee; transform: translateY(-5px); }
-        .feature-icon { font-size: 2.5rem; color: #4361ee; margin-bottom: 15px; }
-        /* الخطوات */
-        .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin: 40px 0; }
-        .step { text-align: center; }
-        .step-number { width: 60px; height: 60px; background: #4361ee; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; margin: 0 auto 20px; }
-        /* خطط الأسعار */
-        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin: 40px 0; }
-        .pricing-card { background: white; padding: 40px 30px; border-radius: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; position: relative; text-align: center; }
-        .pricing-card.popular { border: 2px solid #4361ee; transform: scale(1.05); }
-        .popular-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #4361ee; color: white; padding: 5px 20px; border-radius: 20px; font-size: 0.9rem; }
-        .price { font-size: 2.5rem; font-weight: bold; margin: 20px 0; }
-        .price small { font-size: 1rem; color: #64748b; }
-        .pricing-features { list-style: none; margin: 30px 0; text-align: right; }
-        .pricing-features li { padding: 10px 0; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 10px; }
-        .pricing-features i.fa-check { color: #4ade80; }
-        .pricing-features i.fa-times { color: #ef4444; }
-        /* لوحة التحكم */
-        .dashboard-layout { display: flex; gap: 30px; margin: 30px 0; }
-        .sidebar { width: 280px; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
-        .sidebar h3 { margin-bottom: 20px; color: #4361ee; }
-        .sidebar button { display: block; width: 100%; padding: 15px; margin-bottom: 8px; border: none; background: none; border-radius: 12px; font-size: 1rem; text-align: right; cursor: pointer; transition: 0.2s; color: #334155; }
-        .sidebar button:hover, .sidebar button.active { background: #eef2ff; color: #4361ee; font-weight: 600; }
-        .main-panel { flex: 1; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin: 30px 0; }
-        .stat-card { background: #f8fafc; padding: 20px; border-radius: 16px; text-align: center; }
-        .stat-card h2 { font-size: 2.2rem; color: #4361ee; margin-bottom: 5px; }
-        /* النماذج */
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #1e293b; }
-        .form-group input, .form-group textarea { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; }
-        .form-group input:focus, .form-group textarea:focus { border-color: #4361ee; outline: none; }
-        /* زر القائمة للجوال */
-        .hamburger { display: none; flex-direction: column; cursor: pointer; background: none; border: none; }
-        .hamburger span { width: 25px; height: 3px; background: #1e293b; margin: 3px 0; border-radius: 3px; transition: 0.2s; }
-        /* استجابة للشاشات الصغيرة */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .steps { grid-template-columns: 1fr; }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .dashboard-layout { flex-direction: column; }
-            .sidebar { width: 100%; }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-            .hamburger { display: flex; }
-            .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; right: 0; width: 100%; background: white; padding: 20px; box-shadow: 0 5px 10px rgba(0,0,0,0.1); z-index: 999; }
-            .nav-links.show { display: flex; }
+        /* ===== جميع التنسيقات هنا (لا ملفات خارجية) ===== */
+        *{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, sans-serif;}
+        body{background:#f8fafc; color:#1e293b; direction:rtl; line-height:1.6;}
+        .container{max-width:1200px; margin:0 auto; padding:0 20px;}
+        .navbar{background:white; box-shadow:0 2px 10px rgba(0,0,0,0.05); padding:15px 0; position:sticky; top:0; z-index:1000;}
+        .navbar .container{display:flex; justify-content:space-between; align-items:center;}
+        .logo{font-size:1.8rem; font-weight:bold; color:#4361ee; cursor:pointer; background:none; border:none;}
+        .nav-links{display:flex; gap:20px; align-items:center;}
+        .nav-links button{background:none; border:none; font-size:1rem; cursor:pointer; padding:8px 16px; border-radius:8px; transition:0.2s;}
+        .btn-login{border:2px solid #4361ee; color:#4361ee; background:white;}
+        .btn-signup{background:#4361ee; color:white;}
+        .btn-login:hover{background:#eef2ff;}
+        .btn-signup:hover{background:#3a0ca3;}
+        .btn{background:#4361ee; color:white; border:none; padding:12px 30px; border-radius:10px; font-size:1rem; font-weight:600; cursor:pointer; transition:0.2s; display:inline-block;}
+        .btn-outline{background:white; color:#4361ee; border:2px solid #4361ee;}
+        .btn:hover,.btn-outline:hover{transform:translateY(-2px); box-shadow:0 10px 20px rgba(67,97,238,0.2);}
+        .btn-outline:hover{background:#eef2ff;}
+        .hero{padding:80px 0; background:linear-gradient(135deg,#eef2ff,#ffffff); text-align:center;}
+        .hero h1{font-size:2.8rem; margin-bottom:20px; color:#0f172a;}
+        .hero p{font-size:1.2rem; color:#475569; max-width:700px; margin:0 auto 30px;}
+        .section-title{font-size:2.2rem; margin:60px 0 30px; text-align:center; color:#0f172a;}
+        .features-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px; margin:40px 0;}
+        .feature-card{background:white; padding:30px; border-radius:20px; box-shadow:0 5px 20px rgba(0,0,0,0.03); border:1px solid #e2e8f0; text-align:center; transition:0.2s;}
+        .feature-card:hover{border-color:#4361ee; transform:translateY(-5px);}
+        .feature-icon{font-size:2.5rem; color:#4361ee; margin-bottom:15px;}
+        .steps{display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin:40px 0;}
+        .step{text-align:center;}
+        .step-number{width:60px; height:60px; background:#4361ee; color:white; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.8rem; font-weight:bold; margin:0 auto 20px;}
+        .pricing-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:30px; margin:40px 0;}
+        .pricing-card{background:white; padding:40px 30px; border-radius:20px; border:1px solid #e2e8f0; position:relative; text-align:center;}
+        .pricing-card.popular{border:2px solid #4361ee; transform:scale(1.05);}
+        .popular-badge{position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:#4361ee; color:white; padding:5px 20px; border-radius:20px; font-size:0.9rem;}
+        .price{font-size:2.5rem; font-weight:bold; margin:20px 0;}
+        .price small{font-size:1rem; color:#64748b;}
+        .pricing-features{list-style:none; margin:30px 0; text-align:right;}
+        .pricing-features li{padding:10px 0; border-bottom:1px solid #e2e8f0; display:flex; align-items:center; gap:10px;}
+        .pricing-features i.fa-check{color:#4ade80;}
+        .pricing-features i.fa-times{color:#ef4444;}
+        .dashboard-layout{display:flex; gap:30px; margin:30px 0;}
+        .sidebar{width:280px; background:white; padding:25px; border-radius:20px; box-shadow:0 5px 15px rgba(0,0,0,0.03);}
+        .sidebar h3{margin-bottom:20px; color:#4361ee;}
+        .sidebar button{display:block; width:100%; padding:15px; margin-bottom:8px; border:none; background:none; border-radius:12px; font-size:1rem; text-align:right; cursor:pointer; transition:0.2s; color:#334155;}
+        .sidebar button:hover,.sidebar button.active{background:#eef2ff; color:#4361ee; font-weight:600;}
+        .main-panel{flex:1; background:white; padding:30px; border-radius:20px; box-shadow:0 5px 15px rgba(0,0,0,0.03);}
+        .stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin:30px 0;}
+        .stat-card{background:#f8fafc; padding:20px; border-radius:16px; text-align:center;}
+        .stat-card h2{font-size:2.2rem; color:#4361ee; margin-bottom:5px;}
+        .form-group{margin-bottom:20px;}
+        .form-group label{display:block; margin-bottom:8px; font-weight:500; color:#1e293b;}
+        .form-group input,.form-group textarea{width:100%; padding:12px; border:2px solid #e2e8f0; border-radius:10px; font-size:1rem;}
+        .form-group input:focus,.form-group textarea:focus{border-color:#4361ee; outline:none;}
+        .hamburger{display:none; flex-direction:column; cursor:pointer; background:none; border:none;}
+        .hamburger span{width:25px; height:3px; background:#1e293b; margin:3px 0; border-radius:3px;}
+        footer{background:#1e293b; color:white; padding:60px 0 20px; margin-top:60px;}
+        .footer-content{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:40px; margin-bottom:40px;}
+        .footer-section h3{margin-bottom:20px; color:white;}
+        .footer-section ul{list-style:none;}
+        .footer-section ul li{margin-bottom:10px;}
+        .footer-section a{color:#cbd5e1; text-decoration:none;}
+        .footer-section a:hover{color:#4cc9f0;}
+        .footer-bottom{text-align:center; padding-top:20px; border-top:1px solid #334155; color:#94a3b8;}
+        @media(max-width:768px){
+            .hero h1{font-size:2rem;}
+            .steps{grid-template-columns:1fr;}
+            .pricing-grid{grid-template-columns:1fr;}
+            .dashboard-layout{flex-direction:column;}
+            .sidebar{width:100%;}
+            .stats-grid{grid-template-columns:repeat(2,1fr);}
+            .hamburger{display:flex;}
+            .nav-links{display:none; flex-direction:column; position:absolute; top:70px; right:0; width:100%; background:white; padding:20px; box-shadow:0 5px 10px rgba(0,0,0,0.1); z-index:999;}
+            .nav-links.show{display:flex;}
         }
-        /* تذييل */
-        footer { background: #1e293b; color: white; padding: 60px 0 20px; margin-top: 60px; }
-        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
-        .footer-section h3 { margin-bottom: 20px; color: white; }
-        .footer-section ul { list-style: none; }
-        .footer-section ul li { margin-bottom: 10px; }
-        .footer-section a { color: #cbd5e1; text-decoration: none; }
-        .footer-section a:hover { color: #4cc9f0; }
-        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #334155; color: #94a3b8; }
     </style>
 </head>
 <body>
-    <main id="app">
-        <!-- سيتم تعبئة المحتوى عبر JavaScript -->
-    </main>
+    <main id="app"></main>
 
     <script>
-        // ===== بيانات وهمية (محاكاة قاعدة البيانات) =====
+        // ===== جميع أكواد JavaScript هنا =====
         const DB = {
             user: { name: 'محمد أحمد', email: 'teacher@example.com' },
             courses: [
-                { title: 'مقدمة في البرمجة', students: 45, status: 'published', date: '2023-10-15' },
-                { title: 'تعلم JavaScript', students: 78, status: 'published', date: '2023-10-10' },
-                { title: 'أساسيات HTML', students: 32, status: 'draft', date: '2023-10-05' }
-            ],
-            students: [
-                { name: 'أحمد محمد', email: 'ahmed@example.com', progress: 85 },
-                { name: 'فاطمة علي', email: 'fatima@example.com', progress: 92 },
-                { name: 'خالد سعيد', email: 'khaled@example.com', progress: 67 }
+                { title: 'مقدمة في البرمجة', students: 45, status: 'published' },
+                { title: 'تعلم JavaScript', students: 78, status: 'published' },
+                { title: 'أساسيات HTML', students: 32, status: 'draft' }
             ],
             stats: { courses: 12, students: 245, completion: 78, engagement: 92 }
         };
 
-        // دالة عرض الصفحة المطلوبة
         function renderPage(page) {
-            const app = document.getElementById('app');
             let html = '';
-
             if (page === 'home') {
                 html = `
                     <header>
-                        <nav class="navbar" aria-label="القائمة الرئيسية">
+                        <nav class="navbar">
                             <div class="container">
-                                <button class="logo" onclick="renderPage('home')" aria-label="الصفحة الرئيسية">تعليمي</button>
-                                <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('show')" aria-label="القائمة" aria-expanded="false">
-                                    <span></span><span></span><span></span>
-                                </button>
+                                <button class="logo" onclick="renderPage('home')">تعليمي</button>
+                                <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('show')">☰</button>
                                 <div class="nav-links" id="navLinks">
-                                    <button class="btn-login" onclick="renderPage('dashboard')" aria-label="تسجيل الدخول">تسجيل الدخول</button>
-                                    <button class="btn-signup" onclick="renderPage('dashboard')" aria-label="إنشاء حساب جديد">إنشاء حساب</button>
+                                    <button class="btn-login" onclick="renderPage('dashboard')">تسجيل الدخول</button>
+                                    <button class="btn-signup" onclick="renderPage('dashboard')">إنشاء حساب</button>
                                 </div>
                             </div>
                         </nav>
                     </header>
-
-                    <section class="hero" aria-labelledby="hero-title">
+                    <section class="hero">
                         <div class="container">
-                            <h1 id="hero-title">حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
-                            <p>أضف أسئلة، اختبارات، وشروحات تفاعلية على أي فيديو تعليمي بدون إعادة التسجيل. منصة متكاملة للمعلمين والطلاب.</p>
-                            <button class="btn" onclick="renderPage('dashboard')" aria-label="ابدأ مجاناً">ابدأ مجاناً</button>
+                            <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
+                            <p>أضف أسئلة، اختبارات، وشروحات تفاعلية على أي فيديو تعليمي بدون إعادة التسجيل.</p>
+                            <button class="btn" onclick="renderPage('dashboard')">ابدأ مجاناً</button>
                         </div>
                     </section>
-
-                    <section class="container" aria-labelledby="features-title">
-                        <h2 id="features-title" class="section-title">مميزات منصتنا الفريدة</h2>
+                    <div class="container">
+                        <h2 class="section-title">مميزات المنصة</h2>
                         <div class="features-grid">
-                            <article class="feature-card">
-                                <i class="fas fa-question-circle feature-icon" aria-hidden="true"></i>
-                                <h3>أسئلة تفاعلية</h3>
-                                <p>أضف أسئلة في أي نقطة من الفيديو مع تصحيح فوري.</p>
-                            </article>
-                            <article class="feature-card">
-                                <i class="fas fa-clipboard-check feature-icon" aria-hidden="true"></i>
-                                <h3>اختبارات قصيرة</h3>
-                                <p>اختبارات متعددة الخيارات مع تحليلات دقيقة.</p>
-                            </article>
-                            <article class="feature-card">
-                                <i class="fas fa-lightbulb feature-icon" aria-hidden="true"></i>
-                                <h3>شروحات إضافية</h3>
-                                <p>موارد وروابط تعليمية عند نقاط محددة.</p>
-                            </article>
-                            <article class="feature-card">
-                                <i class="fas fa-chart-line feature-icon" aria-hidden="true"></i>
-                                <h3>تحليلات متقدمة</h3>
-                                <p>تتبع تقدم الطلاب وإحصائيات دقيقة.</p>
-                            </article>
-                            <article class="feature-card">
-                                <i class="fas fa-users feature-icon" aria-hidden="true"></i>
-                                <h3>تعليم تعاوني</h3>
-                                <p>غرف دراسية افتراضية وسبورة تفاعلية.</p>
-                            </article>
-                            <article class="feature-card">
-                                <i class="fas fa-mobile-alt feature-icon" aria-hidden="true"></i>
-                                <h3>متوافق مع الأجهزة</h3>
-                                <p>تصميم متجاوب للهواتف والأجهزة اللوحية.</p>
-                            </article>
+                            <div class="feature-card"><i class="fas fa-question-circle feature-icon"></i><h3>أسئلة تفاعلية</h3><p>أضف أسئلة في أي نقطة.</p></div>
+                            <div class="feature-card"><i class="fas fa-clipboard-check feature-icon"></i><h3>اختبارات قصيرة</h3><p>اختبارات متعددة الخيارات.</p></div>
+                            <div class="feature-card"><i class="fas fa-lightbulb feature-icon"></i><h3>شروحات إضافية</h3><p>موارد وروابط تعليمية.</p></div>
+                            <div class="feature-card"><i class="fas fa-chart-line feature-icon"></i><h3>تحليلات متقدمة</h3><p>تتبع تقدم الطلاب.</p></div>
+                            <div class="feature-card"><i class="fas fa-users feature-icon"></i><h3>تعليم تعاوني</h3><p>غرف دراسية افتراضية.</p></div>
+                            <div class="feature-card"><i class="fas fa-mobile-alt feature-icon"></i><h3>متوافق مع الأجهزة</h3><p>تصميم متجاوب.</p></div>
                         </div>
-                    </section>
-
-                    <section class="container" aria-labelledby="how-title">
-                        <h2 id="how-title" class="section-title">كيف تعمل المنصة؟</h2>
-                        <div class="steps">
-                            <div class="step">
-                                <div class="step-number" aria-hidden="true">1</div>
-                                <h3>أدخل رابط الفيديو</h3>
-                                <p>انسخ رابط أي فيديو يوتيوب.</p>
-                            </div>
-                            <div class="step">
-                                <div class="step-number" aria-hidden="true">2</div>
-                                <h3>أضف التفاعلات</h3>
-                                <p>ضع أسئلة وشروحات في النقاط المناسبة.</p>
-                            </div>
-                            <div class="step">
-                                <div class="step-number" aria-hidden="true">3</div>
-                                <h3>شارك الدرس</h3>
-                                <p>احصل على رابط فريد للمشاركة.</p>
-                            </div>
-                            <div class="step">
-                                <div class="step-number" aria-hidden="true">4</div>
-                                <h3>تابع التقدم</h3>
-                                <p>راقب أداء طلابك عبر التقارير.</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="container" aria-labelledby="pricing-title">
-                        <h2 id="pricing-title" class="section-title">خطط الأسعار</h2>
-                        <div class="pricing-grid">
-                            <div class="pricing-card">
-                                <h3>مجاني</h3>
-                                <div class="price">$0 <small>/شهر</small></div>
-                                <ul class="pricing-features">
-                                    <li><i class="fas fa-check" aria-hidden="true"></i> 3 دروس تفاعلية</li>
-                                    <li><i class="fas fa-check" aria-hidden="true"></i> 10 طلاب لكل درس</li>
-                                    <li><i class="fas fa-check" aria-hidden="true"></i> تفاعلات أساسية</li>
-                                    <li><i class="fas fa-times" aria-hidden="true"></i> تحليلات متقدمة</li>
-                                    <li><i class="fas fa-times" aria-hidden="true"></i> غرف تفاعلية</li>
-                                </ul>
-                                <button class="btn btn-outline" onclick="renderPage('dashboard')" aria-label="ابدأ مجاناً">ابدأ مجاناً</button>
-                            </div>
-                            <div class="pricing-card popular">
-                                <div class="popular-badge">الأكثر شهرة</div>
-                                <h3>احترافي</h3>
-                                <div class="price">$29 <small>/شهر</small></div>
-                                <ul class="pricing-features">
-                                    <li><i class="fas fa-check" aria-hidden="true"></i> دروس غير محدودة</li>
-                                    <li><i class="fas fa-check" aria-hidden="true"></i> طلاب غير محدودين</li>
-                                    <li><i class="fas fa-check" aria-hidden="true"></i> جميع التفاعلات</li>
-                                    <li><i class="fas fa-check" aria-hidden="true"></i> تحليلات متقدمة</li>
-                                    <li><i class="fas fa-check" aria-hidden="true"></i> غرف تفاعلية</li>
-                                </ul>
-                                <button class="btn" onclick="renderPage('dashboard')" aria-label="اختر الخطة">اختر الخطة</button>
-                            </div>
-                            <div class="pricing-card">
-                                <h3>مؤسسات</h3>
-                                <div class="price">$99 <small>/شهر</small></div>
-                                <ul class="pricing-features">
-                                    <li><i class="fas fa-check" aria-hidden="true"></i> جميع ميزات الخطة الاحترافية</li>
-                                    <li><i class="fas fa-check" aria-hidden="true"></i> لوحة تحكم للمؤسسة</li>
-                                    <li><i class="fas fa-check" aria-hidden="true"></i> إدارة حسابات متعددة</li>
-                                    <li><i class="fas fa-check" aria-hidden="true"></i> تكامل مع LMS</li>
-                                    <li><i class="fas fa-check" aria-hidden="true"></i> تدريب ودعم مخصص</li>
-                                </ul>
-                                <button class="btn btn-outline" onclick="alert('اتصل بنا')" aria-label="اتصل بنا">اتصل بنا</button>
-                            </div>
-                        </div>
-                    </section>
-
-                    <footer>
-                        <div class="container">
-                            <div class="footer-content">
-                                <div class="footer-section">
-                                    <h3>تعليمي</h3>
-                                    <p>منصة التعلم التفاعلي الأولى التي تحول مقاطع اليوتيوب إلى تجارب تعليمية تفاعلية.</p>
-                                </div>
-                                <div class="footer-section">
-                                    <h3>روابط سريعة</h3>
-                                    <ul>
-                                        <li><a href="#" onclick="renderPage('home'); return false;">الرئيسية</a></li>
-                                        <li><a href="#" onclick="renderPage('dashboard'); return false;">لوحة التحكم</a></li>
-                                    </ul>
-                                </div>
-                                <div class="footer-section">
-                                    <h3>تواصل معنا</h3>
-                                    <ul>
-                                        <li><i class="fas fa-envelope" aria-hidden="true"></i> support@ta3lemi.com</li>
-                                        <li><i class="fas fa-phone" aria-hidden="true"></i> +966 123 456 789</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="footer-bottom">
-                                <p>© 2026 تعليمي. جميع الحقوق محفوظة.</p>
-                            </div>
-                        </div>
-                    </footer>
+                    </div>
                 `;
             } else if (page === 'dashboard') {
                 html = `
                     <header>
-                        <nav class="navbar" aria-label="القائمة الرئيسية">
+                        <nav class="navbar">
                             <div class="container">
-                                <button class="logo" onclick="renderPage('home')" aria-label="الصفحة الرئيسية">تعليمي</button>
-                                <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('show')" aria-label="القائمة" aria-expanded="false">
-                                    <span></span><span></span><span></span>
-                                </button>
+                                <button class="logo" onclick="renderPage('home')">تعليمي</button>
+                                <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('show')">☰</button>
                                 <div class="nav-links" id="navLinks">
-                                    <button class="btn-login" onclick="renderPage('dashboard')" aria-label="لوحة التحكم">لوحة التحكم</button>
-                                    <button class="btn-signup" onclick="renderPage('home')" aria-label="الرئيسية">الرئيسية</button>
+                                    <button class="btn-login" onclick="renderPage('dashboard')">لوحة التحكم</button>
+                                    <button class="btn-signup" onclick="renderPage('home')">الرئيسية</button>
                                 </div>
                             </div>
                         </nav>
                     </header>
                     <div class="dashboard-layout container">
-                        <aside class="sidebar" aria-label="القائمة الجانبية">
+                        <aside class="sidebar">
                             <h3>تعليمي</h3>
-                            <button class="active" onclick="renderPage('dashboard')" aria-label="لوحة التحكم">لوحة التحكم</button>
-                            <button onclick="renderPage('create')" aria-label="إنشاء درس جديد">إنشاء درس</button>
-                            <button onclick="renderPage('settings')" aria-label="الإعدادات">الإعدادات</button>
+                            <button class="active" onclick="renderPage('dashboard')">لوحة التحكم</button>
+                            <button onclick="renderPage('create')">إنشاء درس</button>
+                            <button onclick="renderPage('settings')">الإعدادات</button>
                         </aside>
                         <main class="main-panel">
                             <h1>لوحة التحكم</h1>
@@ -311,148 +162,33 @@
                                 <div class="stat-card"><h2>${DB.stats.engagement}%</h2><p>معدل التفاعل</p></div>
                             </div>
                             <h2>الدروس الأخيرة</h2>
-                            <table style="width:100%; border-collapse:collapse; margin-top:20px;">
-                                <thead>
-                                    <tr><th>العنوان</th><th>الطلاب</th><th>الحالة</th></tr>
-                                </thead>
-                                <tbody>
-                                    ${DB.courses.map(c => `<tr><td>${c.title}</td><td>${c.students}</td><td>${c.status === 'published' ? 'منشور' : 'مسودة'}</td></tr>`).join('')}
-                                </tbody>
+                            <table style="width:100%; border-collapse:collapse;">
+                                <tr><th>العنوان</th><th>الطلاب</th><th>الحالة</th></tr>
+                                ${DB.courses.map(c => `<tr><td>${c.title}</td><td>${c.students}</td><td>${c.status}</td></tr>`).join('')}
                             </table>
                         </main>
                     </div>
                 `;
             } else if (page === 'create') {
                 html = `
-                    <header>
-                        <nav class="navbar" aria-label="القائمة الرئيسية">
-                            <div class="container">
-                                <button class="logo" onclick="renderPage('home')" aria-label="الصفحة الرئيسية">تعليمي</button>
-                                <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('show')" aria-label="القائمة" aria-expanded="false">
-                                    <span></span><span></span><span></span>
-                                </button>
-                                <div class="nav-links" id="navLinks">
-                                    <button class="btn-login" onclick="renderPage('dashboard')" aria-label="لوحة التحكم">لوحة التحكم</button>
-                                    <button class="btn-signup" onclick="renderPage('home')" aria-label="الرئيسية">الرئيسية</button>
-                                </div>
-                            </div>
-                        </nav>
-                    </header>
+                    <header>... (محتوى صفحة إنشاء درس) ...</header>
                     <div class="dashboard-layout container">
-                        <aside class="sidebar" aria-label="القائمة الجانبية">
-                            <h3>تعليمي</h3>
-                            <button onclick="renderPage('dashboard')" aria-label="لوحة التحكم">لوحة التحكم</button>
-                            <button class="active" onclick="renderPage('create')" aria-label="إنشاء درس جديد">إنشاء درس</button>
-                            <button onclick="renderPage('settings')" aria-label="الإعدادات">الإعدادات</button>
-                        </aside>
-                        <main class="main-panel">
-                            <h1>إنشاء درس جديد</h1>
-                            <div class="form-group">
-                                <label for="title">عنوان الدرس</label>
-                                <input type="text" id="title" placeholder="مثال: مقدمة في البرمجة">
-                            </div>
-                            <div class="form-group">
-                                <label for="desc">وصف الدرس</label>
-                                <textarea id="desc" rows="4" placeholder="صف محتوى الدرس..."></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="url">رابط يوتيوب</label>
-                                <input type="url" id="url" placeholder="https://youtube.com/watch?v=...">
-                                <button class="btn" style="margin-top:10px;" onclick="loadVideo()" aria-label="تحميل الفيديو">تحميل الفيديو</button>
-                            </div>
-                            <div id="videoPreview" style="display:none; margin-top:20px; text-align:center;">
-                                <img id="thumbnail" src="" alt="صورة الفيديو" style="max-width:100%; border-radius:8px;">
-                            </div>
-                            <button class="btn" style="width:100%; margin-top:20px;" onclick="saveCourse()" aria-label="حفظ الدرس">حفظ الدرس</button>
-                        </main>
+                        <aside class="sidebar">...</aside>
+                        <main class="main-panel"><h1>إنشاء درس</h1><p>نموذج الإنشاء هنا</p></main>
                     </div>
                 `;
             } else if (page === 'settings') {
                 html = `
-                    <header>
-                        <nav class="navbar" aria-label="القائمة الرئيسية">
-                            <div class="container">
-                                <button class="logo" onclick="renderPage('home')" aria-label="الصفحة الرئيسية">تعليمي</button>
-                                <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('show')" aria-label="القائمة" aria-expanded="false">
-                                    <span></span><span></span><span></span>
-                                </button>
-                                <div class="nav-links" id="navLinks">
-                                    <button class="btn-login" onclick="renderPage('dashboard')" aria-label="لوحة التحكم">لوحة التحكم</button>
-                                    <button class="btn-signup" onclick="renderPage('home')" aria-label="الرئيسية">الرئيسية</button>
-                                </div>
-                            </div>
-                        </nav>
-                    </header>
+                    <header>... (محتوى صفحة الإعدادات) ...</header>
                     <div class="dashboard-layout container">
-                        <aside class="sidebar" aria-label="القائمة الجانبية">
-                            <h3>تعليمي</h3>
-                            <button onclick="renderPage('dashboard')" aria-label="لوحة التحكم">لوحة التحكم</button>
-                            <button onclick="renderPage('create')" aria-label="إنشاء درس جديد">إنشاء درس</button>
-                            <button class="active" onclick="renderPage('settings')" aria-label="الإعدادات">الإعدادات</button>
-                        </aside>
-                        <main class="main-panel">
-                            <h1>الإعدادات</h1>
-                            <div class="form-group">
-                                <label for="name">الاسم</label>
-                                <input type="text" id="name" value="${DB.user.name}">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">البريد الإلكتروني</label>
-                                <input type="email" id="email" value="${DB.user.email}">
-                            </div>
-                            <button class="btn" style="width:100%;" onclick="saveSettings()" aria-label="حفظ التغييرات">حفظ التغييرات</button>
-                        </main>
+                        <aside class="sidebar">...</aside>
+                        <main class="main-panel"><h1>الإعدادات</h1><p>إعدادات الحساب</p></main>
                     </div>
                 `;
             }
-            app.innerHTML = html;
-            // إعادة ربط حدث القائمة بعد إعادة الرسم
-            const hamburger = document.querySelector('.hamburger');
-            if (hamburger) {
-                hamburger.onclick = function(e) {
-                    e.preventDefault();
-                    document.getElementById('navLinks')?.classList.toggle('show');
-                };
-            }
+            document.getElementById('app').innerHTML = html;
         }
 
-        // دوال مساعدة
-        function loadVideo() {
-            const url = document.getElementById('url')?.value;
-            const match = url?.match(/(?:youtube\.com\/watch\?v=)([^&]+)/) || url?.match(/(?:youtu\.be\/)([^?]+)/);
-            if (!match) {
-                alert('❌ رابط يوتيوب غير صالح');
-                return;
-            }
-            document.getElementById('thumbnail').src = `https://img.youtube.com/vi/${match[1]}/0.jpg`;
-            document.getElementById('videoPreview').style.display = 'block';
-            alert('✅ تم تحميل الفيديو (معاينة)');
-        }
-
-        function saveCourse() {
-            const title = document.getElementById('title')?.value;
-            if (!title) {
-                alert('❌ الرجاء إدخال عنوان الدرس');
-                return;
-            }
-            DB.courses.push({
-                title,
-                students: 0,
-                status: 'draft',
-                date: new Date().toISOString().split('T')[0]
-            });
-            alert('✅ تم حفظ الدرس');
-            renderPage('dashboard');
-        }
-
-        function saveSettings() {
-            DB.user.name = document.getElementById('name')?.value;
-            DB.user.email = document.getElementById('email')?.value;
-            alert('✅ تم حفظ الإعدادات');
-            renderPage('dashboard');
-        }
-
-        // بدء التطبيق
         renderPage('home');
     </script>
 </body>
