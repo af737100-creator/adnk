@@ -11,14 +11,160 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="app"></div>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="index.html" class="logo">تعليمي</a>
+                <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+                <div class="nav-links">
+                    <a href="index.html">الرئيسية</a>
+                    <a href="dashboard.html" class="btn-login">تسجيل الدخول</a>
+                    <a href="dashboard.html" class="btn-signup">إنشاء حساب</a>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-    <!-- Supabase -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <!-- ملفات المشروع -->
+    <section class="hero">
+        <div class="container">
+            <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
+            <p>أضف أسئلة، اختبارات، وشروحات تفاعلية على أي فيديو تعليمي بدون إعادة التسجيل. منصة متكاملة للمعلمين والطلاب.</p>
+            <a href="dashboard.html" class="btn">ابدأ مجاناً</a>
+        </div>
+    </section>
+
+    <div class="container">
+        <h2 class="section-title">مميزات منصتنا الفريدة</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <i class="fas fa-question-circle feature-icon"></i>
+                <h3>أسئلة تفاعلية</h3>
+                <p>أضف أسئلة في أي نقطة من الفيديو مع تصحيح فوري وتغذية راجعة للطلاب.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-clipboard-check feature-icon"></i>
+                <h3>اختبارات قصيرة</h3>
+                <p>اختبارات متعددة الخيارات مع تصحيح آلي وتحليلات دقيقة.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-lightbulb feature-icon"></i>
+                <h3>شروحات إضافية</h3>
+                <p>موارد وروابط تعليمية عند نقاط محددة لتعميق الفهم.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chart-line feature-icon"></i>
+                <h3>تحليلات متقدمة</h3>
+                <p>تتبع تقدم الطلاب، معدلات الإكمال، وأداء الأسئلة في الوقت الفعلي.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-users feature-icon"></i>
+                <h3>تعليم تعاوني</h3>
+                <p>غرف دراسية افتراضية مع سبورة تفاعلية وميزة رفع الأيدي.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-mobile-alt feature-icon"></i>
+                <h3>متوافق مع جميع الأجهزة</h3>
+                <p>تصميم متجاوب يعمل على الحواسيب والأجهزة اللوحية والهواتف.</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">كيف تعمل المنصة؟</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>أدخل رابط الفيديو</h3>
+                <p>انسخ رابط أي فيديو تعليمي على يوتيوب والصقه في المنصة.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>أضف التفاعلات</h3>
+                <p>ضع أسئلة، اختبارات، وشروحات في النقاط الزمنية المطلوبة.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>شارك الدرس</h3>
+                <p>احصل على رابط فريد للمشاركة مع طلابك.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>تابع التقدم</h3>
+                <p>راقب أداء طلابك من خلال تقارير مفصلة.</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">خطط الأسعار</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>مجاني</h3>
+                <div class="price">$0 <small>/شهر</small></div>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> 3 دروس تفاعلية</li>
+                    <li><i class="fas fa-check"></i> 10 طلاب لكل درس</li>
+                    <li><i class="fas fa-check"></i> تفاعلات أساسية</li>
+                    <li class="disabled"><i class="fas fa-times"></i> تحليلات متقدمة</li>
+                    <li class="disabled"><i class="fas fa-times"></i> غرف تفاعلية</li>
+                </ul>
+                <a href="dashboard.html" class="btn btn-outline">ابدأ مجاناً</a>
+            </div>
+            <div class="pricing-card popular">
+                <div class="popular-badge">الأكثر شهرة</div>
+                <h3>احترافي</h3>
+                <div class="price">$29 <small>/شهر</small></div>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> دروس غير محدودة</li>
+                    <li><i class="fas fa-check"></i> طلاب غير محدودين</li>
+                    <li><i class="fas fa-check"></i> جميع التفاعلات</li>
+                    <li><i class="fas fa-check"></i> تحليلات متقدمة</li>
+                    <li><i class="fas fa-check"></i> غرف تفاعلية</li>
+                </ul>
+                <a href="dashboard.html" class="btn">اختر الخطة</a>
+            </div>
+            <div class="pricing-card">
+                <h3>مؤسسات</h3>
+                <div class="price">$99 <small>/شهر</small></div>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> جميع ميزات الخطة الاحترافية</li>
+                    <li><i class="fas fa-check"></i> لوحة تحكم للمؤسسة</li>
+                    <li><i class="fas fa-check"></i> إدارة حسابات متعددة</li>
+                    <li><i class="fas fa-check"></i> تكامل مع LMS</li>
+                    <li><i class="fas fa-check"></i> تدريب ودعم مخصص</li>
+                </ul>
+                <a href="#" class="btn btn-outline" onclick="alert('اتصل بنا')">اتصل بنا</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>تعليمي</h3>
+                    <p>منصة التعلم التفاعلي الأولى التي تحول مقاطع اليوتيوب إلى تجارب تعليمية تفاعلية.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="dashboard.html">لوحة التحكم</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>تواصل معنا</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@ta3lemi.com</li>
+                        <li><i class="fas fa-phone"></i> +966 123 456 789</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 تعليمي. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- السكربتات -->
     <script src="js/supabase.js"></script>
     <script src="js/auth.js"></script>
-    <script src="js/youtube.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
