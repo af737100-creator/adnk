@@ -13,9 +13,12 @@
             <div class="container">
                 <a href="index.html" class="logo">تعليمي</a>
                 <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
-                <div class="nav-links">
-                    <span id="userNameDisplay" style="color:#4361ee;"></span>
-                    <a href="#" id="logoutBtn" class="btn-login">تسجيل خروج</a>
+                <div class="nav-links" id="navLinks">
+                    <span id="userDisplay" style="color:#4361ee;"></span>
+                    <a href="dashboard.html" class="active">لوحة التحكم</a>
+                    <a href="create-course.html">إنشاء درس</a>
+                    <a href="profile.html">الملف الشخصي</a>
+                    <a href="#" id="logoutBtn">تسجيل خروج</a>
                 </div>
             </div>
         </nav>
@@ -26,65 +29,75 @@
             <h3>تعليمي</h3>
             <a href="dashboard.html" class="active">لوحة التحكم</a>
             <a href="create-course.html">إنشاء درس جديد</a>
-            <a href="settings.html">الإعدادات</a>
+            <a href="profile.html">الملف الشخصي</a>
         </aside>
         <main class="main-panel">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
                 <h1>لوحة التحكم</h1>
-                <a href="create-course.html" class="btn">+ درس جديد</a>
+                <a href="create-course.html" class="btn btn-sm">+ درس جديد</a>
             </div>
-            <div class="stats-grid" id="statsGrid">
-                <!-- ستضاف الإحصائيات عبر JavaScript -->
-            </div>
-            <h2>الدروس الأخيرة</h2>
-            <table class="courses-table" id="coursesTable">
+            <div class="stats-grid" id="statsGrid"></div>
+            <h2>الدروس الخاصة بك</h2>
+            <table class="table" id="coursesTable">
                 <thead>
-                    <tr><th>العنوان</th><th>الطلاب</th><th>التفاعلات</th><th>الحالة</th></tr>
+                    <tr><th>العنوان</th><th>التفاعلات</th><th>الطلاب</th><th>الحالة</th><th>الإجراءات</th></tr>
                 </thead>
-                <tbody id="coursesList">
-                    <!-- تملأ بـ JS -->
-                </tbody>
+                <tbody id="coursesList"></tbody>
             </table>
         </main>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/courses.js"></script>
+    <script src="js/interactions.js"></script>
     <script src="js/main.js"></script>
     <script>
-        // التحقق من تسجيل الدخول
-        auth.requireAuth('index.html').then(() => {
-            const user = auth.getCurrentUser();
-            document.getElementById('userNameDisplay').textContent = user?.user_metadata?.full_name || 'مستخدم';
-        });
+        (async function() {
+            const user = await auth.requireRole('teacher', 'index.html');
+            if (!user) return;
 
-        document.getElementById('logoutBtn').addEventListener('click', (e) => {
-            e.preventDefault();
-            auth.signOut().then(() => window.location.href = 'index.html');
-        });
+            document.getElementById('userDisplay').textContent = user.profile?.full_name || 'معلم';
 
-        // عرض إحصائيات وهمية (سيتم استبدالها بـ Supabase لاحقاً)
-        document.getElementById('statsGrid').innerHTML = `
-            <div class="stat-card"><h2>12</h2><p>إجمالي الدروس</p></div>
-            <div class="stat-card"><h2>245</h2><p>الطلاب</p></div>
-            <div class="stat-card"><h2>78%</h2><p>معدل الإكمال</p></div>
-            <div class="stat-card"><h2>92%</h2><p>معدل التفاعل</p></div>
-        `;
+            const courses = await coursesAPI.getMyCourses();
+            const tbody = document.getElementById('coursesList');
+            if (courses.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5">لا توجد دروس بعد. <a href="create-course.html">أنشئ أول درس الآن</a></td></tr>';
+            } else {
+                tbody.innerHTML = courses.map(c => `
+                    <tr>
+                        <td><a href="course.html?id=${c.id}">${c.title}</a></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>${c.is_published ? 'منشور' : 'مسودة'}</td>
+                        <td>
+                            <a href="create-course.html?edit=${c.id}" class="btn-sm">تعديل</a>
+                            <button onclick="deleteCourse('${c.id}')" class="btn-sm" style="background:#ef4444;">حذف</button>
+                        </td>
+                    </tr>
+                `).join('');
+            }
 
-        // قائمة دروس وهمية
-        const courses = [
-            { title: 'مقدمة في البرمجة', students: 45, interactions: 12, status: 'published' },
-            { title: 'تعلم JavaScript', students: 78, interactions: 18, status: 'published' },
-            { title: 'أساسيات HTML', students: 32, interactions: 8, status: 'draft' }
-        ];
-        document.getElementById('coursesList').innerHTML = courses.map(c => `
-            <tr>
-                <td><a href="viewer.html?course=1">${c.title}</a></td>
-                <td>${c.students}</td>
-                <td>${c.interactions}</td>
-                <td><span style="color:${c.status==='published'?'#4ade80':'#f59e0b'};">${c.status==='published'?'منشور':'مسودة'}</span></td>
-            </tr>
-        `).join('');
+            document.getElementById('statsGrid').innerHTML = `
+                <div class="stat-card"><h2>${courses.length}</h2><p>إجمالي الدروس</p></div>
+                <div class="stat-card"><h2>0</h2><p>الطلاب</p></div>
+                <div class="stat-card"><h2>0%</h2><p>معدل الإكمال</p></div>
+                <div class="stat-card"><h2>0%</h2><p>معدل التفاعل</p></div>
+            `;
+
+            document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                auth.signOut();
+            });
+        })();
+
+        async function deleteCourse(id) {
+            if (confirm('هل أنت متأكد من حذف هذه الدورة؟')) {
+                await coursesAPI.delete(id);
+                window.location.reload();
+            }
+        }
     </script>
 </body>
 </html>
