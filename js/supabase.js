@@ -1,6 +1,8 @@
-// إعدادات Supabase (استبدل القيم بمفاتيح مشروعك)
+// ============================================
+// إعدادات Supabase (المفتاح العام فقط)
+// ============================================
 const SUPABASE_URL = 'https://ollwqisezqkawrulahqq.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_HnNvDq3tgZa1GBODyM8FxA_Z2mMyqDF';
+const SUPABASE_ANON_KEY = 'sb_publishable_eq_PjuSiAbWvxNAD6QHThw_v_x-jVSI';
 
 // تهيئة عميل Supabase
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
@@ -12,7 +14,5 @@ const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
     }
 });
 
-// تخزين في المتغير العام
-window.supabaseClient = supabaseClient;
-
-console.log('✅ Supabase client initialized');
+window.supabase = supabaseClient;
+console.log('✅ Supabase client initialized with anon key');
