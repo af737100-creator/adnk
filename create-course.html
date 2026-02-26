@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء درس - تعليمي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="index.html" class="logo">تعليمي</a>
+                <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+                <div class="nav-links" id="navLinks">
+                    <span id="userDisplay" style="color:#4361ee;"></span>
+                    <a href="dashboard.html">لوحة التحكم</a>
+                    <a href="create-course.html" class="active">إنشاء درس</a>
+                    <a href="profile.html">الملف الشخصي</a>
+                    <a href="#" id="logoutBtn">تسجيل خروج</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="dashboard-layout container">
+        <aside class="sidebar">
+            <h3>تعليمي</h3>
+            <a href="dashboard.html">لوحة التحكم</a>
+            <a href="create-course.html" class="active">إنشاء درس جديد</a>
+            <a href="profile.html">الملف الشخصي</a>
+        </aside>
+        <main class="main-panel">
+            <a href="dashboard.html" class="btn-outline btn-sm" style="margin-bottom:20px; display:inline-block;">← رجوع</a>
+            <h1>إنشاء درس جديد</h1>
+            
+            <div class="form-group">
+                <label>عنوان الدرس</label>
+                <input type="text" id="courseTitle" placeholder="مثال: مقدمة في البرمجة">
+            </div>
+            <div class="form-group">
+                <label>وصف الدرس</label>
+                <textarea id="courseDesc" rows="3" placeholder="صف محتوى الدرس..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>رابط فيديو يوتيوب</label>
+                <div style="display:flex; gap:10px;">
+                    <input type="url" id="youtubeUrl" placeholder="https://youtube.com/watch?v=..." style="flex:1;">
+                    <button class="btn btn-sm" onclick="previewVideo()">معاينة</button>
+                </div>
+            </div>
+            <div id="videoPreview" style="display:none; margin:20px 0; padding:20px; background:#f8fafc; border-radius:12px; text-align:center;">
+                <img id="thumbnail" src="" alt="صورة الفيديو" style="max-width:100%; border-radius:8px;">
+                <p id="videoTitle" style="margin-top:10px;"></p>
+            </div>
+
+            <h2 style="margin-top:40px;">التفاعلات</h2>
+            <div style="display:flex; gap:10px; margin-bottom:20px;">
+                <button class="btn-outline btn-sm" onclick="showInteractionModal('question')">+ إضافة سؤال</button>
+                <button class="btn-outline btn-sm" onclick="showInteractionModal('quiz')">+ إضافة اختبار</button>
+                <button class="btn-outline btn-sm" onclick="showInteractionModal('explanation')">+ إضافة شرح</button>
+            </div>
+
+            <div id="interactionsList" class="interactions-list">
+                <p>لا توجد تفاعلات بعد. أضف أول تفاعل!</p>
+            </div>
+
+            <button class="btn" style="width:100%; margin-top:30px;" onclick="saveCourse()">حفظ الدرس</button>
+        </main>
+    </div>
+
+    <!-- نافذة إضافة تفاعل -->
+    <div class="modal" id="interactionModal">
+        <div class="modal-content">
+            <h3 id="modalTitle">إضافة سؤال</h3>
+            <div class="form-group">
+                <label>الوقت (بالثواني)</label>
+                <input type="number" id="interactionTime" min="0" value="0">
+            </div>
+            <div id="modalFields"></div>
+            <div style="display:flex; gap:10px; justify-content:flex-end; margin-top:20px;">
+                <button class="btn-outline btn-sm" onclick="closeModal()">إلغاء</button>
+                <button class="btn btn-sm" onclick="saveInteraction()">حفظ</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/youtube.js"></script>
+    <script src="js/courses.js"></script>
+    <script src="js/interactions.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        let tempInteractions = [];
+        let currentModalType = 'question';
+
+        (async function() {
+            const user = await auth.requireRole('teacher', 'index.html');
+            if (!user) return;
+            document.getElementById('userDisplay').textContent = user.profile?.full_name || 'معلم';
+
+            document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                auth.signOut();
+            });
+        })();
+
+        async function previewVideo() {
+            const url = document.getElementById('youtubeUrl').value;
+            const videoId = extractYouTubeId(url);
+            if (!videoId) {
+                showNotification('❌ رابط يوتيوب غير صالح', 'error');
+                return;
+            }
+            document.getElementById('thumbnail').src = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+            document.getElementById('videoPreview').style.display = 'block';
+
+            // جلب معلومات إضافية من YouTube API
+            const info = await YouTubeAPI.getVideoInfo(videoId);
+            if (info) {
+                document.getElementById('videoTitle').textContent = `العنوان: ${info.title}`;
+            }
+        }
+
+        function showInteractionModal(type) {
+            currentModalType = type;
+            const modal = document.getElementById('interactionModal');
+            const title = document.getElementById('modalTitle');
+            const fields = document.getElementById('modalFields');
+
+            if (type === 'question') {
+                title.textContent = 'إضافة سؤال';
+                fields.innerHTML = `
+                    <div class="form-group"><label>نص السؤال</label><textarea id="qText" rows="2" placeholder="أدخل السؤال..."></textarea></div>
+                    <div class="form-group"><label>الخيارات (افصل بفاصلة)</label><input type="text" id="qOptions" placeholder="خيار1, خيار2, خيار3"></div>
+                    <div class="form-group"><label>رقم الإجابة الصحيحة (0-...)</label><input type="number" id="qCorrect" min="0" value="0"></div>
+                `;
+            } else if (type === 'quiz') {
+                title.textContent = 'إضافة اختبار قصير';
+                fields.innerHTML = `
+                    <div class="form-group"><label>عنوان الاختبار</label><input type="text" id="quizTitle" placeholder="مثال: اختبار الفصل الأول"></div>
+                    <div class="form-group"><label>عدد الأسئلة</label><input type="number" id="quizCount" min="1" value="3"></div>
+                `;
+            } else if (type === 'explanation') {
+                title.textContent = 'إضافة شرح إضافي';
+                fields.innerHTML = `
+                    <div class="form-group"><label>نص الشرح</label><textarea id="expText" rows="3" placeholder="أدخل الشرح..."></textarea></div>
+                    <div class="form-group"><label>رابط إضافي (اختياري)</label><input type="url" id="expUrl" placeholder="https://example.com"></div>
+                `;
+            }
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('interactionModal').classList.remove('active');
+        }
+
+        function saveInteraction() {
+            const time = parseInt(document.getElementById('interactionTime').value) || 0;
+            let interaction = { id: Date.now(), time };
+
+            if (currentModalType === 'question') {
+                const text = document.getElementById('qText').value;
+                const options = document.getElementById('qOptions').value.split(',').map(s => s.trim());
+                const correct = parseInt(document.getElementById('qCorrect').value);
+                if (!text || options.length < 2) {
+                    showNotification('❌ يرجى ملء جميع الحقول', 'error');
+                    return;
+                }
+                interaction.type = 'question';
+                interaction.content = { text, options, correct };
+            } else if (currentModalType === 'quiz') {
+                const title = document.getElementById('quizTitle').value;
+                const count = parseInt(document.getElementById('quizCount').value);
+                if (!title) {
+                    showNotification('❌ يرجى إدخال عنوان الاختبار', 'error');
+                    return;
+                }
+                interaction.type = 'quiz';
+                interaction.title = title;
+                interaction.question_count = count;
+            } else if (currentModalType === 'explanation') {
+                const text = document.getElementById('expText').value;
+                const url = document.getElementById('expUrl').value;
+                if (!text) {
+                    showNotification('❌ يرجى إدخال نص الشرح', 'error');
+                    return;
+                }
+                interaction.type = 'explanation';
+                interaction.content = { text, url };
+            }
+
+            tempInteractions.push(interaction);
+            updateInteractionsList();
+            closeModal();
+        }
+
+        function updateInteractionsList() {
+            const list = document.getElementById('interactionsList');
+            if (tempInteractions.length === 0) {
+                list.innerHTML = '<p>لا توجد تفاعلات بعد. أضف أول تفاعل!</p>';
+                return;
+            }
+            list.innerHTML = tempInteractions.map(i => {
+                const timeStr = formatTime(i.time);
+                let icon = 'fa-question-circle';
+                let color = '#4361ee';
+                if (i.type === 'quiz') { icon = 'fa-clipboard-check'; color = '#4ade80'; }
+                else if (i.type === 'explanation') { icon = 'fa-lightbulb'; color = '#f59e0b'; }
+                return `
+                    <div class="interaction-item">
+                        <div class="interaction-icon"><i class="fas ${icon}" style="color:${color};"></i></div>
+                        <div>
+                            <strong>${i.type === 'question' ? 'سؤال' : i.type === 'quiz' ? 'اختبار' : 'شرح'}</strong>
+                            <p style="font-size:0.9rem; color:#666;">الوقت: ${timeStr}</p>
+                        </div>
+                        <div class="interaction-actions">
+                            <button onclick="deleteTempInteraction(${i.id})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function deleteTempInteraction(id) {
+            tempInteractions = tempInteractions.filter(i => i.id !== id);
+            updateInteractionsList();
+        }
+
+        async function saveCourse() {
+            const title = document.getElementById('courseTitle').value;
+            const description = document.getElementById('courseDesc').value;
+            const youtubeUrl = document.getElementById('youtubeUrl').value;
+            const videoId = extractYouTubeId(youtubeUrl);
+
+            if (!title || !youtubeUrl || !videoId) {
+                showNotification('❌ يرجى ملء جميع الحقول بشكل صحيح', 'error');
+                return;
+            }
+
+            try {
+                const course = await coursesAPI.create({
+                    title,
+                    description,
+                    youtube_url: youtubeUrl,
+                    youtube_video_id: videoId,
+                    is_published: true
+                });
+
+                for (const inter of tempInteractions) {
+                    await interactionsAPI.add({
+                        course_id: course.id,
+                        type: inter.type,
+                        title: inter.type === 'quiz' ? inter.title : '',
+                        content: inter.content || null,
+                        time_seconds: inter.time
+                    });
+                }
+
+                showNotification('✅ تم حفظ الدرس بنجاح', 'success');
+                window.location.href = 'dashboard.html';
+            } catch (error) {
+                showNotification('❌ حدث خطأ: ' + error.message, 'error');
+            }
+        }
+    </script>
+</body>
+</html>
