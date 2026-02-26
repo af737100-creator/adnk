@@ -6,14 +6,14 @@ CREATE TABLE IF NOT EXISTS profiles (
     id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
     full_name TEXT,
     avatar_url TEXT,
-    role TEXT DEFAULT 'teacher',
+    role TEXT DEFAULT 'student' CHECK (role IN ('teacher', 'student')),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 -- جدول الدورات
 CREATE TABLE IF NOT EXISTS courses (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
+    teacher_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
     title TEXT NOT NULL,
     description TEXT,
     youtube_url TEXT NOT NULL,
@@ -30,12 +30,12 @@ CREATE TABLE IF NOT EXISTS interactions (
     course_id UUID REFERENCES courses(id) ON DELETE CASCADE,
     type TEXT CHECK (type IN ('question', 'quiz', 'explanation')),
     title TEXT,
-    content JSONB, -- يخزن نص السؤال، الخيارات، الإجابة الصحيحة، إلخ
+    content JSONB,
     time_seconds INTEGER NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- جدول التسجيلات (الطلاب المسجلين في الدورات)
+-- جدول تسجيل الطلاب في الدورات
 CREATE TABLE IF NOT EXISTS enrollments (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     course_id UUID REFERENCES courses(id) ON DELETE CASCADE,
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS enrollments (
     UNIQUE(course_id, student_id)
 );
 
--- جدول إجابات الطلاب
+-- جدول إجابات الطلاب على التفاعلات
 CREATE TABLE IF NOT EXISTS student_responses (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     interaction_id UUID REFERENCES interactions(id) ON DELETE CASCADE,
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS student_responses (
     responded_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- تفعيل RLS
+-- تفعيل أمان الصفوف (RLS)
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE courses ENABLE ROW LEVEL SECURITY;
 ALTER TABLE interactions ENABLE ROW LEVEL SECURITY;
@@ -72,27 +72,44 @@ CREATE POLICY "Users can update their own profile" ON profiles
     FOR UPDATE USING (auth.uid() = id);
 
 CREATE POLICY "Teachers can CRUD their own courses" ON courses
-    FOR ALL USING (auth.uid() = user_id);
+    FOR ALL USING (auth.uid() = teacher_id);
 
 CREATE POLICY "Students can view published courses" ON courses
     FOR SELECT USING (is_published = true);
+
+CREATE POLICY "Teachers can manage interactions of their courses" ON interactions
+    FOR ALL USING (EXISTS (
+        SELECT 1 FROM courses WHERE courses.id = interactions.course_id AND courses.teacher_id = auth.uid()
+    ));
+
+CREATE POLICY "Students can view interactions of enrolled courses" ON interactions
+    FOR SELECT USING (EXISTS (
+        SELECT 1 FROM enrollments WHERE enrollments.course_id = interactions.course_id AND enrollments.student_id = auth.uid()
+    ));
+
+CREATE POLICY "Students can enroll in courses" ON enrollments
+    FOR INSERT WITH CHECK (auth.uid() = student_id);
+
+CREATE POLICY "Users can view their own enrollments" ON enrollments
+    FOR SELECT USING (auth.uid() = student_id OR EXISTS (
+        SELECT 1 FROM courses WHERE courses.id = enrollments.course_id AND courses.teacher_id = auth.uid()
+    ));
 
 -- دالة لإنشاء ملف تعريفي تلقائياً عند تسجيل مستخدم جديد
 CREATE OR REPLACE FUNCTION handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-    INSERT INTO public.profiles (id, full_name, avatar_url, role)
+    INSERT INTO public.profiles (id, full_name, role)
     VALUES (
         NEW.id,
         NEW.raw_user_meta_data->>'full_name',
-        NEW.raw_user_meta_data->>'avatar_url',
-        COALESCE(NEW.raw_user_meta_data->>'role', 'teacher')
+        COALESCE(NEW.raw_user_meta_data->>'role', 'student')
     );
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Trigger لإنشاء الملف التعريفي
+-- Trigger
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
     AFTER INSERT ON auth.users
