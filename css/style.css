@@ -1,5 +1,3 @@
-
-/* ===== المتغيرات العامة ===== */
 :root {
     --primary: #4361ee;
     --primary-dark: #3a0ca3;
@@ -85,9 +83,6 @@ body {
     color: white !important;
 }
 
-.btn-login:hover { background: #eef2ff; }
-.btn-signup:hover { background: var(--primary-dark); }
-
 .hamburger {
     display: none;
     background: none;
@@ -118,14 +113,17 @@ body {
     border: 2px solid var(--primary);
 }
 
-.btn:hover, .btn-outline:hover {
+.btn-sm {
+    padding: 8px 20px;
+    font-size: 0.9rem;
+}
+
+.btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(67,97,238,0.2);
 }
 
-.btn-outline:hover { background: #eef2ff; }
-
-/* ===== قسم البطل ===== */
+/* ===== أقسام الصفحة الرئيسية ===== */
 .hero {
     padding: 80px 0;
     background: linear-gradient(135deg, #eef2ff, white);
@@ -135,7 +133,6 @@ body {
 .hero h1 {
     font-size: 2.8rem;
     margin-bottom: 20px;
-    color: var(--dark);
 }
 
 .hero p {
@@ -145,15 +142,12 @@ body {
     margin: 0 auto 30px;
 }
 
-/* ===== العناوين ===== */
 .section-title {
     font-size: 2.2rem;
     margin: 60px 0 30px;
     text-align: center;
-    color: var(--dark);
 }
 
-/* ===== شبكة المميزات ===== */
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -182,7 +176,6 @@ body {
     margin-bottom: 15px;
 }
 
-/* ===== الخطوات ===== */
 .steps {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -208,7 +201,6 @@ body {
     margin: 0 auto 20px;
 }
 
-/* ===== خطط الأسعار ===== */
 .pricing-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -220,7 +212,6 @@ body {
     background: white;
     padding: 40px 30px;
     border-radius: 20px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.03);
     border: 1px solid var(--border);
     position: relative;
     text-align: center;
@@ -337,25 +328,26 @@ body {
     margin-bottom: 5px;
 }
 
-.courses-table {
+/* ===== الجداول ===== */
+.table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.courses-table th,
-.courses-table td {
+.table th,
+.table td {
     padding: 12px;
     text-align: right;
     border-bottom: 1px solid var(--border);
 }
 
-.courses-table th {
+.table th {
     background: #f8fafc;
     color: var(--gray);
 }
 
-/* ===== نماذج ===== */
+/* ===== النماذج ===== */
 .form-group {
     margin-bottom: 20px;
 }
@@ -364,7 +356,6 @@ body {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
-    color: var(--dark);
 }
 
 .form-group input,
@@ -382,6 +373,65 @@ body {
 .form-group select:focus {
     border-color: var(--primary);
     outline: none;
+}
+
+/* ===== مشغل الفيديو ===== */
+.video-container {
+    position: relative;
+    width: 100%;
+    background: #000;
+    border-radius: 16px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.video-wrapper {
+    position: relative;
+    padding-top: 56.25%; /* 16:9 */
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.interaction-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.interaction-point {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: rgba(67,97,238,0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    pointer-events: auto;
+    animation: pulse 2s infinite;
+}
+
+.interaction-point:hover {
+    background: var(--primary);
+    transform: scale(1.1);
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(67,97,238,0.7); }
+    50% { box-shadow: 0 0 0 10px rgba(67,97,238,0); }
 }
 
 /* ===== قائمة التفاعلات ===== */
@@ -432,64 +482,32 @@ body {
     color: var(--primary);
 }
 
-/* ===== مشغل الفيديو ===== */
-.video-container {
-    position: relative;
-    width: 100%;
-    background: #000;
-    border-radius: 16px;
-    overflow: hidden;
-    margin: 20px 0;
-}
-
-.video-wrapper {
-    position: relative;
-    padding-top: 56.25%; /* 16:9 */
-}
-
-.video-wrapper iframe {
-    position: absolute;
+/* ===== النوافذ المنبثقة ===== */
+.modal {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    border: none;
-}
-
-.interaction-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-.interaction-point {
-    position: absolute;
-    width: 40px;
-    height: 40px;
-    background: rgba(67,97,238,0.8);
-    border-radius: 50%;
-    display: flex;
+    background: rgba(0,0,0,0.7);
+    display: none;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
-    pointer-events: auto;
-    transition: 0.2s;
-    animation: pulse 2s infinite;
+    z-index: 2000;
 }
 
-.interaction-point:hover {
-    background: var(--primary);
-    transform: scale(1.1);
+.modal.active {
+    display: flex;
 }
 
-@keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(67,97,238,0.7); }
-    50% { box-shadow: 0 0 0 10px rgba(67,97,238,0); }
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 /* ===== تذييل ===== */
@@ -536,7 +554,7 @@ footer {
     color: #94a3b8;
 }
 
-/* ===== استجابة للشاشات الصغيرة ===== */
+/* ===== استجابة ===== */
 @media (max-width: 768px) {
     .hero h1 { font-size: 2rem; }
     .steps { grid-template-columns: 1fr; }
