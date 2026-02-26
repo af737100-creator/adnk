@@ -1,57 +1,61 @@
-// إدارة فيديوهات يوتيوب والتفاعلات
-const YouTubeManager = {
+// ============================================
+// YouTube API Configuration
+// ============================================
+const YOUTUBE_API_KEY = 'AIzaSyCh9scasVWUK4AktfSUE5NlCcMyvCmGs2o';
+
+const YouTubeAPI = {
     // استخراج معرف الفيديو من الرابط
     extractVideoId(url) {
-        if (!url) return null;
         const patterns = [
             /(?:youtube\.com\/watch\?v=)([^&]+)/,
             /(?:youtu\.be\/)([^?]+)/,
-            /(?:youtube\.com\/embed\/)([^?]+)/,
-            /(?:youtube\.com\/shorts\/)([^?]+)/
+            /(?:youtube\.com\/embed\/)([^?]+)/
         ];
         for (const pattern of patterns) {
             const match = url.match(pattern);
-            if (match && match[1]) return match[1];
+            if (match) return match[1];
         }
         return null;
     },
 
-    // التحقق من صحة الرابط
-    isValidYouTubeUrl(url) {
-        return this.extractVideoId(url) !== null;
-    },
-
-    // إنشاء iframe للمشغل
-    createPlayerUrl(videoId) {
-        return `https://www.youtube.com/embed/${videoId}?enablejsapi=1&origin=${window.location.origin}`;
-    },
-
-    // تخزين التفاعلات مؤقتاً (سيتم حفظها في Supabase لاحقاً)
-    interactions: [],
-
-    // إضافة تفاعل جديد
-    addInteraction(interaction) {
-        this.interactions.push({
-            id: Date.now(),
-            ...interaction
-        });
-        return this.interactions;
-    },
-
-    // حذف تفاعل
-    deleteInteraction(id) {
-        this.interactions = this.interactions.filter(i => i.id !== id);
-        return this.interactions;
-    },
-
-    // تحديث تفاعل
-    updateInteraction(id, newData) {
-        const index = this.interactions.findIndex(i => i.id === id);
-        if (index !== -1) {
-            this.interactions[index] = { ...this.interactions[index], ...newData };
+    // جلب معلومات الفيديو (العنوان، المدة، الصورة)
+    async getVideoInfo(videoId) {
+        try {
+            const response = await fetch(
+                `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails&id=${videoId}&key=${YOUTUBE_API_KEY}`
+            );
+            const data = await response.json();
+            if (data.items && data.items.length > 0) {
+                const item = data.items[0];
+                return {
+                    title: item.snippet.title,
+                    description: item.snippet.description,
+                    thumbnail: item.snippet.thumbnails.medium.url,
+                    duration: this.parseDuration(item.contentDetails.duration)
+                };
+            }
+            return null;
+        } catch (error) {
+            console.error('YouTube API error:', error);
+            return null;
         }
-        return this.interactions;
+    },
+
+    // تحويل مدة الفيديو (ISO 8601) إلى ثواني
+    parseDuration(duration) {
+        const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+        const hours = (match[1] ? parseInt(match[1]) : 0);
+        const minutes = (match[2] ? parseInt(match[2]) : 0);
+        const seconds = (match[3] ? parseInt(match[3]) : 0);
+        return hours * 3600 + minutes * 60 + seconds;
+    },
+
+    // تنسيق الوقت (ثواني إلى mm:ss)
+    formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
     }
 };
 
-window.YouTubeManager = YouTubeManager;
+window.YouTubeAPI = YouTubeAPI;
