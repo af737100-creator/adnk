@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - تعليمي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <a href="index.html" class="logo">تعليمي</a>
+                <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+                <div class="nav-links">
+                    <span id="userNameDisplay" style="color:#4361ee;"></span>
+                    <a href="#" id="logoutBtn" class="btn-login">تسجيل خروج</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="dashboard-layout container">
+        <aside class="sidebar">
+            <h3>تعليمي</h3>
+            <a href="dashboard.html" class="active">لوحة التحكم</a>
+            <a href="create-course.html">إنشاء درس جديد</a>
+            <a href="settings.html">الإعدادات</a>
+        </aside>
+        <main class="main-panel">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h1>لوحة التحكم</h1>
+                <a href="create-course.html" class="btn">+ درس جديد</a>
+            </div>
+            <div class="stats-grid" id="statsGrid">
+                <!-- ستضاف الإحصائيات عبر JavaScript -->
+            </div>
+            <h2>الدروس الأخيرة</h2>
+            <table class="courses-table" id="coursesTable">
+                <thead>
+                    <tr><th>العنوان</th><th>الطلاب</th><th>التفاعلات</th><th>الحالة</th></tr>
+                </thead>
+                <tbody id="coursesList">
+                    <!-- تملأ بـ JS -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <script src="js/supabase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // التحقق من تسجيل الدخول
+        auth.requireAuth('index.html').then(() => {
+            const user = auth.getCurrentUser();
+            document.getElementById('userNameDisplay').textContent = user?.user_metadata?.full_name || 'مستخدم';
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            auth.signOut().then(() => window.location.href = 'index.html');
+        });
+
+        // عرض إحصائيات وهمية (سيتم استبدالها بـ Supabase لاحقاً)
+        document.getElementById('statsGrid').innerHTML = `
+            <div class="stat-card"><h2>12</h2><p>إجمالي الدروس</p></div>
+            <div class="stat-card"><h2>245</h2><p>الطلاب</p></div>
+            <div class="stat-card"><h2>78%</h2><p>معدل الإكمال</p></div>
+            <div class="stat-card"><h2>92%</h2><p>معدل التفاعل</p></div>
+        `;
+
+        // قائمة دروس وهمية
+        const courses = [
+            { title: 'مقدمة في البرمجة', students: 45, interactions: 12, status: 'published' },
+            { title: 'تعلم JavaScript', students: 78, interactions: 18, status: 'published' },
+            { title: 'أساسيات HTML', students: 32, interactions: 8, status: 'draft' }
+        ];
+        document.getElementById('coursesList').innerHTML = courses.map(c => `
+            <tr>
+                <td><a href="viewer.html?course=1">${c.title}</a></td>
+                <td>${c.students}</td>
+                <td>${c.interactions}</td>
+                <td><span style="color:${c.status==='published'?'#4ade80':'#f59e0b'};">${c.status==='published'?'منشور':'مسودة'}</span></td>
+            </tr>
+        `).join('');
+    </script>
+</body>
+</html>
