@@ -4,21 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تعليمي - منصة التعلم التفاعلي</title>
-    <meta name="description" content="حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية">
+    <meta name="description" content="حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية مع أسئلة واختبارات وشروحات إضافية">
+    
+    <!-- Font Awesome (أيقونات) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- التنسيقات الأساسية (يمكن تعديلها لاحقاً) -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Supabase library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="container">
                 <a href="index.html" class="logo">تعليمي</a>
-                <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
+                <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="القائمة">☰</button>
                 <div class="nav-links" id="navLinks">
                     <a href="index.html">الرئيسية</a>
                     <a href="#" id="loginBtn" class="btn-login">تسجيل الدخول</a>
                     <a href="#" id="signupBtn" class="btn-signup">إنشاء حساب</a>
-                    <a href="#" id="dashboardLink" style="display:none;">لوحة التحكم</a>
+                    <a href="dashboard.html" id="dashboardLink" style="display:none;">لوحة التحكم</a>
                     <a href="#" id="logoutLink" style="display:none;">تسجيل خروج</a>
                 </div>
             </div>
@@ -28,7 +35,7 @@
     <section class="hero">
         <div class="container">
             <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
-            <p>أضف أسئلة، اختبارات، وشروحات تفاعلية على أي فيديو تعليمي بدون إعادة التسجيل.</p>
+            <p>أضف أسئلة، اختبارات، وشروحات تفاعلية على أي فيديو تعليمي بدون إعادة التسجيل. منصة متكاملة للمعلمين والطلاب.</p>
             <a href="#" id="heroSignup" class="btn">ابدأ مجاناً</a>
         </div>
     </section>
@@ -36,12 +43,36 @@
     <div class="container">
         <h2 class="section-title">مميزات منصتنا الفريدة</h2>
         <div class="features-grid">
-            <div class="feature-card"><i class="fas fa-question-circle feature-icon"></i><h3>أسئلة تفاعلية</h3><p>أضف أسئلة في أي نقطة مع تصحيح فوري.</p></div>
-            <div class="feature-card"><i class="fas fa-clipboard-check feature-icon"></i><h3>اختبارات قصيرة</h3><p>اختبارات متعددة الخيارات مع تحليلات.</p></div>
-            <div class="feature-card"><i class="fas fa-lightbulb feature-icon"></i><h3>شروحات إضافية</h3><p>موارد وروابط عند نقاط محددة.</p></div>
-            <div class="feature-card"><i class="fas fa-chart-line feature-icon"></i><h3>تحليلات متقدمة</h3><p>تتبع تقدم الطلاب.</p></div>
-            <div class="feature-card"><i class="fas fa-users feature-icon"></i><h3>تعليم تعاوني</h3><p>غرف دراسية وسبورة تفاعلية.</p></div>
-            <div class="feature-card"><i class="fas fa-mobile-alt feature-icon"></i><h3>متوافق مع الأجهزة</h3><p>تصميم متجاوب.</p></div>
+            <div class="feature-card">
+                <i class="fas fa-question-circle feature-icon"></i>
+                <h3>أسئلة تفاعلية</h3>
+                <p>أضف أسئلة في أي نقطة من الفيديو مع تصحيح فوري وتغذية راجعة.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-clipboard-check feature-icon"></i>
+                <h3>اختبارات قصيرة</h3>
+                <p>اختبارات متعددة الخيارات مع تحليلات دقيقة.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-lightbulb feature-icon"></i>
+                <h3>شروحات إضافية</h3>
+                <p>موارد وروابط تعليمية عند نقاط محددة.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-chart-line feature-icon"></i>
+                <h3>تحليلات متقدمة</h3>
+                <p>تتبع تقدم الطلاب وإحصائيات دقيقة.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-users feature-icon"></i>
+                <h3>تعليم تعاوني</h3>
+                <p>غرف دراسية افتراضية وسبورة تفاعلية.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-mobile-alt feature-icon"></i>
+                <h3>متوافق مع جميع الأجهزة</h3>
+                <p>تصميم متجاوب للهواتف والأجهزة اللوحية.</p>
+            </div>
         </div>
 
         <h2 class="section-title">كيف تعمل المنصة؟</h2>
@@ -49,26 +80,45 @@
             <div class="step"><div class="step-number">1</div><h3>أدخل رابط الفيديو</h3><p>انسخ رابط أي فيديو يوتيوب.</p></div>
             <div class="step"><div class="step-number">2</div><h3>أضف التفاعلات</h3><p>ضع أسئلة وشروحات في النقاط المناسبة.</p></div>
             <div class="step"><div class="step-number">3</div><h3>شارك الدرس</h3><p>احصل على رابط فريد للمشاركة.</p></div>
-            <div class="step"><div class="step-number">4</div><h3>تابع التقدم</h3><p>راقب أداء طلابك.</p></div>
+            <div class="step"><div class="step-number">4</div><h3>تابع التقدم</h3><p>راقب أداء طلابك عبر التقارير.</p></div>
         </div>
     </div>
 
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section"><h3>تعليمي</h3><p>منصة التعلم التفاعلي الأولى.</p></div>
-                <div class="footer-section"><h3>روابط سريعة</h3><ul><li><a href="index.html">الرئيسية</a></li><li><a href="dashboard.html">لوحة التحكم</a></li></ul></div>
-                <div class="footer-section"><h3>تواصل معنا</h3><ul><li><i class="fas fa-envelope"></i> support@ta3lemi.com</li><li><i class="fas fa-phone"></i> +966 123 456 789</li></ul></div>
+                <div class="footer-section">
+                    <h3>تعليمي</h3>
+                    <p>منصة التعلم التفاعلي الأولى التي تحول مقاطع اليوتيوب إلى تجارب تعليمية تفاعلية.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>روابط سريعة</h3>
+                    <ul>
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="dashboard.html">لوحة التحكم</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>تواصل معنا</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> support@ta3lemi.com</li>
+                        <li><i class="fas fa-phone"></i> +966 123 456 789</li>
+                    </ul>
+                </div>
             </div>
-            <div class="footer-bottom"><p>© 2026 تعليمي. جميع الحقوق محفوظة.</p></div>
+            <div class="footer-bottom">
+                <p>© 2026 تعليمي. جميع الحقوق محفوظة.</p>
+            </div>
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- ملفات JavaScript الخاصة بالمشروع -->
     <script src="js/supabase.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/youtube.js"></script>
     <script src="js/main.js"></script>
     <script>
+        // كود إضافي للتحكم في حالة تسجيل الدخول
         (async function() {
             const user = await auth.getCurrentUser();
             const loginBtn = document.getElementById('loginBtn');
@@ -78,6 +128,7 @@
             const heroSignup = document.getElementById('heroSignup');
 
             if (user) {
+                // مستخدم مسجل الدخول
                 loginBtn.style.display = 'none';
                 signupBtn.style.display = 'none';
                 dashboardLink.style.display = 'inline-block';
@@ -85,6 +136,7 @@
                 heroSignup.href = 'dashboard.html';
                 heroSignup.textContent = 'لوحة التحكم';
             } else {
+                // زائر
                 loginBtn.style.display = 'inline-block';
                 signupBtn.style.display = 'inline-block';
                 dashboardLink.style.display = 'none';
@@ -96,6 +148,7 @@
                 };
             }
 
+            // ربط أحداث الأزرار
             loginBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 showLoginModal();
@@ -112,6 +165,7 @@
             });
         })();
 
+        // دوال النوافذ المنبثقة لتسجيل الدخول وإنشاء حساب
         function showLoginModal() {
             const email = prompt('البريد الإلكتروني:');
             const password = prompt('كلمة المرور:');
