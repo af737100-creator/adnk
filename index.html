@@ -6,410 +6,74 @@
     <title>تعليمي - منصة التعلم التفاعلي</title>
     <!-- Font Awesome للأيقونات -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        body {
-            background: #f8fafc;
-            color: #1e293b;
-            direction: rtl;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        /* شريط التنقل */
-        .navbar {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .navbar .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: #4361ee;
-            cursor: pointer;
-            background: none;
-            border: none;
-            text-decoration: none;
-        }
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-        .nav-links a, .nav-links button {
-            text-decoration: none;
-            color: #1e293b;
-            padding: 8px 16px;
-            border-radius: 8px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        .btn-login {
-            border: 2px solid #4361ee;
-            color: #4361ee !important;
-        }
-        .btn-signup {
-            background: #4361ee;
-            color: white !important;
-        }
-        .hamburger {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        /* أزرار عامة */
-        .btn {
-            background: #4361ee;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            display: inline-block;
-            text-decoration: none;
-        }
-        .btn-outline {
-            background: white;
-            color: #4361ee;
-            border: 2px solid #4361ee;
-        }
-        .btn-sm {
-            padding: 8px 20px;
-            font-size: 0.9rem;
-        }
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(67,97,238,0.2);
-        }
-        /* قسم البطل */
-        .hero {
-            padding: 80px 0;
-            background: linear-gradient(135deg, #eef2ff, white);
-            text-align: center;
-        }
-        .hero h1 {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            color: #64748b;
-            max-width: 700px;
-            margin: 0 auto 30px;
-        }
-        .section-title {
-            font-size: 2.2rem;
-            margin: 60px 0 30px;
-            text-align: center;
-        }
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
-        }
-        .feature-card {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid #e2e8f0;
-            text-align: center;
-        }
-        .feature-icon {
-            font-size: 2.5rem;
-            color: #4361ee;
-            margin-bottom: 15px;
-        }
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin: 40px 0;
-        }
-        .step {
-            text-align: center;
-        }
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background: #4361ee;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin: 0 auto 20px;
-        }
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin: 40px 0;
-        }
-        .pricing-card {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 20px;
-            border: 1px solid #e2e8f0;
-            position: relative;
-            text-align: center;
-        }
-        .pricing-card.popular {
-            border: 2px solid #4361ee;
-            transform: scale(1.05);
-        }
-        .popular-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #4361ee;
-            color: white;
-            padding: 5px 20px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-        }
-        .price {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-        .pricing-features {
-            list-style: none;
-            margin: 30px 0;
-            text-align: right;
-        }
-        .pricing-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        /* جميع التنسيقات السابقة (نفسها) - احتفظ بها */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background: #f8fafc; color: #1e293b; direction: rtl; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .navbar { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.05); padding: 15px 0; position: sticky; top: 0; z-index: 1000; }
+        .navbar .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: bold; color: #4361ee; cursor: pointer; background: none; border: none; text-decoration: none; }
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-links a, .nav-links button { text-decoration: none; color: #1e293b; padding: 8px 16px; border-radius: 8px; background: none; border: none; cursor: pointer; font-size: 1rem; }
+        .btn-login { border: 2px solid #4361ee; color: #4361ee !important; }
+        .btn-signup { background: #4361ee; color: white !important; }
+        .hamburger { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
+        .btn { background: #4361ee; color: white; border: none; padding: 12px 30px; border-radius: 10px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.2s; display: inline-block; text-decoration: none; }
+        .btn-outline { background: white; color: #4361ee; border: 2px solid #4361ee; }
+        .btn-sm { padding: 8px 20px; font-size: 0.9rem; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(67,97,238,0.2); }
+        .hero { padding: 80px 0; background: linear-gradient(135deg, #eef2ff, white); text-align: center; }
+        .hero h1 { font-size: 2.8rem; margin-bottom: 20px; }
+        .hero p { font-size: 1.2rem; color: #64748b; max-width: 700px; margin: 0 auto 30px; }
+        .section-title { font-size: 2.2rem; margin: 60px 0 30px; text-align: center; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 40px 0; }
+        .feature-card { background: white; padding: 30px; border-radius: 20px; border: 1px solid #e2e8f0; text-align: center; }
+        .feature-icon { font-size: 2.5rem; color: #4361ee; margin-bottom: 15px; }
+        .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin: 40px 0; }
+        .step { text-align: center; }
+        .step-number { width: 60px; height: 60px; background: #4361ee; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; margin: 0 auto 20px; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin: 40px 0; }
+        .pricing-card { background: white; padding: 40px 30px; border-radius: 20px; border: 1px solid #e2e8f0; position: relative; text-align: center; }
+        .pricing-card.popular { border: 2px solid #4361ee; transform: scale(1.05); }
+        .popular-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #4361ee; color: white; padding: 5px 20px; border-radius: 20px; font-size: 0.9rem; }
+        .price { font-size: 2.5rem; font-weight: bold; margin: 20px 0; }
+        .pricing-features { list-style: none; margin: 30px 0; text-align: right; }
+        .pricing-features li { padding: 10px 0; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 10px; }
         .pricing-features i.fa-check { color: #4ade80; }
         .pricing-features i.fa-times { color: #ef4444; }
-        .dashboard-layout {
-            display: flex;
-            gap: 30px;
-            margin: 30px 0;
-        }
-        .sidebar {
-            width: 280px;
-            background: white;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-        }
-        .sidebar h3 {
-            margin-bottom: 20px;
-            color: #4361ee;
-        }
-        .sidebar button {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 8px;
-            border: none;
-            background: none;
-            border-radius: 12px;
-            text-align: right;
-            cursor: pointer;
-            font-size: 1rem;
-            color: #334155;
-        }
-        .sidebar button:hover, .sidebar button.active {
-            background: #eef2ff;
-            color: #4361ee;
-            font-weight: 600;
-        }
-        .main-panel {
-            flex: 1;
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin: 30px 0;
-        }
-        .stat-card {
-            background: #f8fafc;
-            padding: 20px;
-            border-radius: 16px;
-            text-align: center;
-        }
-        .stat-card h2 {
-            font-size: 2.2rem;
-            color: #4361ee;
-            margin-bottom: 5px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 1rem;
-        }
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            border-color: #4361ee;
-            outline: none;
-        }
-        .video-container {
-            position: relative;
-            width: 100%;
-            background: #000;
-            border-radius: 16px;
-            overflow: hidden;
-            margin: 20px 0;
-        }
-        .video-wrapper {
-            position: relative;
-            padding-top: 56.25%;
-        }
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .interaction-point {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: rgba(67,97,238,0.8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%,100%{box-shadow:0 0 0 0 rgba(67,97,238,0.7);}
-            50%{box-shadow:0 0 0 10px rgba(67,97,238,0);}
-        }
-        .interactions-list {
-            margin-top: 30px;
-            background: #f8fafc;
-            border-radius: 16px;
-            padding: 20px;
-        }
-        .interaction-item {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            background: white;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            border: 1px solid #e2e8f0;
-        }
-        .interaction-icon {
-            width: 40px;
-            height: 40px;
-            background: #eef2ff;
-            color: #4361ee;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-        }
-        .modal.active {
-            display: flex;
-        }
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-        footer {
-            background: #1e293b;
-            color: white;
-            padding: 60px 0 20px;
-            margin-top: 60px;
-        }
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        .footer-section h3 {
-            margin-bottom: 20px;
-            color: white;
-        }
-        .footer-section ul {
-            list-style: none;
-        }
-        .footer-section a {
-            color: #cbd5e1;
-            text-decoration: none;
-        }
-        .footer-bottom {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #334155;
-        }
+        .dashboard-layout { display: flex; gap: 30px; margin: 30px 0; }
+        .sidebar { width: 280px; background: white; padding: 25px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .sidebar h3 { margin-bottom: 20px; color: #4361ee; }
+        .sidebar button { display: block; width: 100%; padding: 15px; margin-bottom: 8px; border: none; background: none; border-radius: 12px; text-align: right; cursor: pointer; font-size: 1rem; color: #334155; }
+        .sidebar button:hover, .sidebar button.active { background: #eef2ff; color: #4361ee; font-weight: 600; }
+        .main-panel { flex: 1; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin: 30px 0; }
+        .stat-card { background: #f8fafc; padding: 20px; border-radius: 16px; text-align: center; }
+        .stat-card h2 { font-size: 2.2rem; color: #4361ee; margin-bottom: 5px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 1rem; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: #4361ee; outline: none; }
+        .video-container { position: relative; width: 100%; background: #000; border-radius: 16px; overflow: hidden; margin: 20px 0; }
+        .video-wrapper { position: relative; padding-top: 56.25%; }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .interaction-point { position: absolute; width: 40px; height: 40px; background: rgba(67,97,238,0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem; cursor: pointer; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(67,97,238,0.7);} 50%{box-shadow:0 0 0 10px rgba(67,97,238,0);} }
+        .interactions-list { margin-top: 30px; background: #f8fafc; border-radius: 16px; padding: 20px; }
+        .interaction-item { display: flex; align-items: center; gap: 15px; padding: 15px; background: white; border-radius: 12px; margin-bottom: 10px; border: 1px solid #e2e8f0; }
+        .interaction-icon { width: 40px; height: 40px; background: #eef2ff; color: #4361ee; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal.active { display: flex; }
+        .modal-content { background: white; border-radius: 20px; padding: 30px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; }
+        footer { background: #1e293b; color: white; padding: 60px 0 20px; margin-top: 60px; }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 40px; }
+        .footer-section h3 { margin-bottom: 20px; color: white; }
+        .footer-section ul { list-style: none; }
+        .footer-section a { color: #cbd5e1; text-decoration: none; }
+        .footer-bottom { text-align: center; padding-top: 20px; border-top: 1px solid #334155; }
         @media (max-width: 768px) {
             .hero h1 { font-size: 2rem; }
             .steps { grid-template-columns: 1fr; }
@@ -418,18 +82,7 @@
             .sidebar { width: 100%; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .hamburger { display: block; }
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 70px;
-                right: 0;
-                width: 100%;
-                background: white;
-                padding: 20px;
-                box-shadow: 0 5px 10px rgba(0,0,0,0.1);
-                z-index: 999;
-            }
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; right: 0; width: 100%; background: white; padding: 20px; box-shadow: 0 5px 10px rgba(0,0,0,0.1); z-index: 999; }
             .nav-links.show { display: flex; }
         }
     </style>
@@ -439,29 +92,195 @@
 
     <script>
         // ============================================
-        // البيانات الأساسية (محاكاة قاعدة البيانات)
+        // تهيئة Supabase (باستخدام بياناتك)
         // ============================================
-        const DB = {
-            users: JSON.parse(localStorage.getItem('ta3lemi_users')) || [
-                { id: 1, email: 'teacher@example.com', password: '123456', name: 'محمد المعلم', role: 'teacher' }
-            ],
-            courses: JSON.parse(localStorage.getItem('ta3lemi_courses')) || [],
-            interactions: JSON.parse(localStorage.getItem('ta3lemi_interactions')) || [],
-            currentUser: null
-        };
+        const SUPABASE_URL = 'https://ollwqisezqkawrulahqq.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_eq_PjuSiAbWvxNAD6QHThw_v_x-jVSI';
+        
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+            auth: {
+                autoRefreshToken: true,
+                persistSession: true,
+                detectSessionInUrl: true,
+                storage: window.localStorage
+            }
+        });
 
-        // حفظ البيانات في localStorage
-        function saveDB() {
-            localStorage.setItem('ta3lemi_users', JSON.stringify(DB.users));
-            localStorage.setItem('ta3lemi_courses', JSON.stringify(DB.courses));
-            localStorage.setItem('ta3lemi_interactions', JSON.stringify(DB.interactions));
+        // ============================================
+        // متغيرات عامة
+        // ============================================
+        let currentPage = 'home';
+        let currentUser = null;
+        let tempInteractions = [];
+
+        // ============================================
+        // دوال المصادقة
+        // ============================================
+        async function handleLogin() {
+            const email = document.getElementById('loginEmail')?.value;
+            const password = document.getElementById('loginPassword')?.value;
+            
+            if (!email || !password) {
+                alert('الرجاء إدخال البريد الإلكتروني وكلمة المرور');
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email,
+                    password
+                });
+
+                if (error) throw error;
+
+                currentUser = data.user;
+                localStorage.setItem('ta3lemi_user', JSON.stringify(currentUser));
+                
+                alert('✅ تم تسجيل الدخول بنجاح');
+                renderPage('dashboard');
+            } catch (error) {
+                alert('❌ خطأ في تسجيل الدخول: ' + error.message);
+            }
+        }
+
+        async function handleSignup() {
+            const name = document.getElementById('signupName')?.value;
+            const email = document.getElementById('signupEmail')?.value;
+            const password = document.getElementById('signupPassword')?.value;
+            const role = document.getElementById('signupRole')?.value;
+
+            if (!name || !email || !password) {
+                alert('الرجاء ملء جميع الحقول');
+                return;
+            }
+
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email,
+                    password,
+                    options: {
+                        data: {
+                            full_name: name,
+                            role: role
+                        }
+                    }
+                });
+
+                if (error) throw error;
+
+                alert('✅ تم إنشاء الحساب بنجاح! يرجى تأكيد بريدك الإلكتروني.');
+                renderPage('login');
+            } catch (error) {
+                alert('❌ خطأ في إنشاء الحساب: ' + error.message);
+            }
+        }
+
+        async function logout() {
+            await supabase.auth.signOut();
+            currentUser = null;
+            localStorage.removeItem('ta3lemi_user');
+            renderPage('home');
+        }
+
+        async function getCurrentUser() {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                const { data: profile } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', user.id)
+                    .single();
+                currentUser = { ...user, profile };
+            } else {
+                currentUser = null;
+            }
+            return currentUser;
         }
 
         // ============================================
-        // الصفحة الحالية
+        // دوال جلب البيانات من Supabase
         // ============================================
-        let currentPage = 'home';
+        async function getMyCourses() {
+            if (!currentUser) return [];
+            const { data, error } = await supabase
+                .from('courses')
+                .select('*')
+                .eq('teacher_id', currentUser.id)
+                .order('created_at', { ascending: false });
+            if (error) {
+                console.error(error);
+                return [];
+            }
+            return data;
+        }
 
+        async function getCourseWithInteractions(courseId) {
+            const { data: course, error: courseError } = await supabase
+                .from('courses')
+                .select('*')
+                .eq('id', courseId)
+                .single();
+            if (courseError) {
+                console.error(courseError);
+                return null;
+            }
+
+            const { data: interactions, error: intError } = await supabase
+                .from('interactions')
+                .select('*')
+                .eq('course_id', courseId)
+                .order('time_seconds', { ascending: true });
+            if (intError) {
+                console.error(intError);
+                return course;
+            }
+
+            return { ...course, interactions };
+        }
+
+        async function saveCourseToSupabase(courseData, interactions) {
+            if (!currentUser) return null;
+
+            // إدراج الدورة
+            const { data: course, error: courseError } = await supabase
+                .from('courses')
+                .insert([{
+                    teacher_id: currentUser.id,
+                    title: courseData.title,
+                    description: courseData.description,
+                    youtube_url: courseData.youtubeUrl,
+                    youtube_video_id: courseData.youtubeId,
+                    thumbnail_url: courseData.thumbnail,
+                    is_published: true
+                }])
+                .select()
+                .single();
+
+            if (courseError) {
+                console.error(courseError);
+                alert('❌ فشل حفظ الدورة: ' + courseError.message);
+                return null;
+            }
+
+            // إدراج التفاعلات
+            for (const inter of interactions) {
+                await supabase
+                    .from('interactions')
+                    .insert([{
+                        course_id: course.id,
+                        type: inter.type,
+                        title: inter.title || null,
+                        content: inter.content || null,
+                        time_seconds: inter.time
+                    }]);
+            }
+
+            return course;
+        }
+
+        // ============================================
+        // دوال عرض الصفحات
+        // ============================================
         function renderPage(page, params = {}) {
             currentPage = page;
             const app = document.getElementById('app');
@@ -478,11 +297,7 @@
             window.scrollTo(0, 0);
         }
 
-        // ============================================
-        // الصفحة الرئيسية
-        // ============================================
         function renderHome() {
-            const user = DB.currentUser;
             return `
                 <header>
                     <nav class="navbar">
@@ -491,8 +306,8 @@
                             <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
                             <div class="nav-links" id="navLinks">
                                 <a href="#" onclick="renderPage('home'); return false;">الرئيسية</a>
-                                ${user ? `
-                                    <span style="color:#4361ee;">${user.name}</span>
+                                ${currentUser ? `
+                                    <span style="color:#4361ee;">${currentUser.user_metadata?.full_name || ''}</span>
                                     <button class="btn-login" onclick="logout()">تسجيل خروج</button>
                                     <button class="btn-signup" onclick="renderPage('dashboard')">لوحة التحكم</button>
                                 ` : `
@@ -541,9 +356,6 @@
             `;
         }
 
-        // ============================================
-        // صفحة تسجيل الدخول
-        // ============================================
         function renderLogin() {
             return `
                 <div style="min-height:80vh; display:flex; align-items:center; justify-content:center; padding:20px;">
@@ -566,9 +378,6 @@
             `;
         }
 
-        // ============================================
-        // صفحة إنشاء حساب
-        // ============================================
         function renderSignup() {
             return `
                 <div style="min-height:80vh; display:flex; align-items:center; justify-content:center; padding:20px;">
@@ -602,17 +411,13 @@
             `;
         }
 
-        // ============================================
-        // لوحة التحكم
-        // ============================================
-        function renderDashboard() {
-            if (!DB.currentUser || DB.currentUser.role !== 'teacher') {
-                alert('يجب تسجيل الدخول كمعلم');
+        async function renderDashboard() {
+            if (!currentUser) {
                 renderPage('login');
                 return '';
             }
 
-            const myCourses = DB.courses.filter(c => c.teacherId === DB.currentUser.id);
+            const courses = await getMyCourses();
 
             return `
                 <header>
@@ -621,7 +426,7 @@
                             <button class="logo" onclick="renderPage('home')">تعليمي</button>
                             <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
                             <div class="nav-links">
-                                <span style="color:#4361ee;">${DB.currentUser.name}</span>
+                                <span style="color:#4361ee;">${currentUser.user_metadata?.full_name || ''}</span>
                                 <button class="btn-login" onclick="logout()">تسجيل خروج</button>
                             </div>
                         </div>
@@ -639,7 +444,7 @@
                             <button class="btn btn-sm" onclick="renderPage('create-course')">+ درس جديد</button>
                         </div>
                         <div class="stats-grid">
-                            <div class="stat-card"><h2>${myCourses.length}</h2><p>إجمالي الدروس</p></div>
+                            <div class="stat-card"><h2>${courses.length}</h2><p>إجمالي الدروس</p></div>
                             <div class="stat-card"><h2>0</h2><p>الطلاب</p></div>
                             <div class="stat-card"><h2>0%</h2><p>معدل الإكمال</p></div>
                             <div class="stat-card"><h2>0%</h2><p>معدل التفاعل</p></div>
@@ -650,12 +455,12 @@
                                 <tr><th>العنوان</th><th>التفاعلات</th><th>الحالة</th><th></th></tr>
                             </thead>
                             <tbody>
-                                ${myCourses.length === 0 ? '<tr><td colspan="4">لا توجد دروس بعد. <a href="#" onclick="renderPage(\'create-course\'); return false;">أنشئ أول درس</a></td></tr>' : ''}
-                                ${myCourses.map(c => `
+                                ${courses.length === 0 ? '<tr><td colspan="4">لا توجد دروس بعد. <a href="#" onclick="renderPage(\'create-course\'); return false;">أنشئ أول درس</a></td></tr>' : ''}
+                                ${courses.map(c => `
                                     <tr>
                                         <td>${c.title}</td>
-                                        <td>${DB.interactions.filter(i => i.courseId === c.id).length}</td>
-                                        <td>${c.published ? 'منشور' : 'مسودة'}</td>
+                                        <td>0</td>
+                                        <td>${c.is_published ? 'منشور' : 'مسودة'}</td>
                                         <td>
                                             <button class="btn-sm" onclick="renderPage('course', {id: '${c.id}'})">عرض</button>
                                         </td>
@@ -668,14 +473,8 @@
             `;
         }
 
-        // ============================================
-        // إنشاء درس جديد
-        // ============================================
-        let tempInteractions = [];
-
         function renderCreateCourse() {
-            if (!DB.currentUser || DB.currentUser.role !== 'teacher') {
-                alert('يجب تسجيل الدخول كمعلم');
+            if (!currentUser) {
                 renderPage('login');
                 return '';
             }
@@ -687,7 +486,7 @@
                             <button class="logo" onclick="renderPage('home')">تعليمي</button>
                             <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
                             <div class="nav-links">
-                                <span style="color:#4361ee;">${DB.currentUser.name}</span>
+                                <span style="color:#4361ee;">${currentUser.user_metadata?.full_name || ''}</span>
                                 <button class="btn-login" onclick="logout()">تسجيل خروج</button>
                             </div>
                         </div>
@@ -754,18 +553,13 @@
             `;
         }
 
-        // ============================================
-        // صفحة مشاهدة الدرس
-        // ============================================
-        function renderCourse(courseId) {
-            const course = DB.courses.find(c => c.id === courseId);
+        async function renderCourse(courseId) {
+            const course = await getCourseWithInteractions(courseId);
             if (!course) {
                 alert('الدورة غير موجودة');
                 renderPage('home');
                 return '';
             }
-
-            const interactions = DB.interactions.filter(i => i.courseId === courseId).sort((a,b) => a.time - b.time);
 
             return `
                 <header>
@@ -774,8 +568,8 @@
                             <button class="logo" onclick="renderPage('home')">تعليمي</button>
                             <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
                             <div class="nav-links">
-                                ${DB.currentUser ? `<span style="color:#4361ee;">${DB.currentUser.name}</span>` : ''}
-                                ${DB.currentUser ? `<button class="btn-login" onclick="logout()">تسجيل خروج</button>` : `<button class="btn-login" onclick="renderPage('login')">تسجيل الدخول</button>`}
+                                ${currentUser ? `<span style="color:#4361ee;">${currentUser.user_metadata?.full_name || ''}</span>` : ''}
+                                ${currentUser ? `<button class="btn-login" onclick="logout()">تسجيل خروج</button>` : `<button class="btn-login" onclick="renderPage('login')">تسجيل الدخول</button>`}
                             </div>
                         </div>
                     </nav>
@@ -787,25 +581,25 @@
 
                     <div class="video-container">
                         <div class="video-wrapper">
-                            <iframe id="player" src="https://www.youtube.com/embed/${course.youtubeId}?enablejsapi=1" frameborder="0" allowfullscreen></iframe>
+                            <iframe id="player" src="https://www.youtube.com/embed/${course.youtube_video_id}?enablejsapi=1" frameborder="0" allowfullscreen></iframe>
                         </div>
                         <div id="interactionOverlay" style="position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none;">
-                            ${interactions.map(inter => `
-                                <div class="interaction-point" style="top:50%; right:${(inter.time / 600) * 100}%;" onclick="showInteractionDetail('${inter.id}')">
+                            ${course.interactions ? course.interactions.map(inter => `
+                                <div class="interaction-point" style="top:50%; right:${(inter.time_seconds / 600) * 100}%;" onclick="alert('تفاعل: ' + '${inter.type}')">
                                     <i class="fas ${inter.type === 'question' ? 'fa-question' : inter.type === 'quiz' ? 'fa-clipboard-list' : 'fa-info'}"></i>
                                 </div>
-                            `).join('')}
+                            `).join('') : ''}
                         </div>
                     </div>
 
                     <div style="margin-top:30px;">
                         <h2>تفاعلات الدرس</h2>
                         <div class="interactions-list">
-                            ${interactions.length === 0 ? '<p>لا توجد تفاعلات في هذا الدرس.</p>' : ''}
-                            ${interactions.map(inter => {
-                                const time = formatTime(inter.time);
+                            ${!course.interactions || course.interactions.length === 0 ? '<p>لا توجد تفاعلات في هذا الدرس.</p>' : ''}
+                            ${course.interactions ? course.interactions.map(inter => {
+                                const time = formatTime(inter.time_seconds);
                                 return `
-                                    <div class="interaction-item" onclick="showInteractionDetail('${inter.id}')">
+                                    <div class="interaction-item" onclick="alert('تفاصيل التفاعل: ' + JSON.stringify(inter))">
                                         <div class="interaction-icon"><i class="fas ${inter.type === 'question' ? 'fa-question' : inter.type === 'quiz' ? 'fa-clipboard-list' : 'fa-info'}"></i></div>
                                         <div>
                                             <strong>${inter.type === 'question' ? 'سؤال' : inter.type === 'quiz' ? 'اختبار' : 'شرح'}</strong>
@@ -813,7 +607,7 @@
                                         </div>
                                     </div>
                                 `;
-                            }).join('')}
+                            }).join('') : ''}
                         </div>
                     </div>
                 </div>
@@ -852,6 +646,7 @@
             document.getElementById('videoPreview').style.display = 'block';
         }
 
+        let currentModalType = 'question';
         function showInteractionModal(type) {
             currentModalType = type;
             const modal = document.getElementById('interactionModal');
@@ -950,7 +745,7 @@
             }).join('');
         }
 
-        function saveCourse() {
+        async function saveCourse() {
             const title = document.getElementById('courseTitle').value;
             const description = document.getElementById('courseDesc').value;
             const url = document.getElementById('youtubeUrl').value;
@@ -961,105 +756,27 @@
                 return;
             }
 
-            const newCourse = {
-                id: Date.now().toString(),
-                teacherId: DB.currentUser.id,
+            const courseData = {
                 title,
                 description,
                 youtubeUrl: url,
                 youtubeId: videoId,
-                published: true,
-                createdAt: new Date().toISOString()
+                thumbnail: `https://img.youtube.com/vi/${videoId}/0.jpg`
             };
 
-            DB.courses.push(newCourse);
-            tempInteractions.forEach(inter => {
-                DB.interactions.push({
-                    ...inter,
-                    courseId: newCourse.id
-                });
-            });
-            tempInteractions = [];
-            saveDB();
-            alert('✅ تم حفظ الدرس بنجاح');
-            renderPage('dashboard');
-        }
-
-        function handleLogin() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            const user = DB.users.find(u => u.email === email && u.password === password);
-            if (user) {
-                DB.currentUser = user;
-                saveDB();
+            const savedCourse = await saveCourseToSupabase(courseData, tempInteractions);
+            if (savedCourse) {
+                tempInteractions = [];
+                alert('✅ تم حفظ الدرس بنجاح');
                 renderPage('dashboard');
-            } else {
-                alert('❌ بريد إلكتروني أو كلمة مرور غير صحيحة');
             }
         }
 
-        function handleSignup() {
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            const role = document.getElementById('signupRole').value;
-
-            if (!name || !email || !password) {
-                alert('❌ يرجى ملء جميع الحقول');
-                return;
-            }
-
-            if (DB.users.find(u => u.email === email)) {
-                alert('❌ البريد الإلكتروني مستخدم بالفعل');
-                return;
-            }
-
-            const newUser = {
-                id: Date.now().toString(),
-                email,
-                password,
-                name,
-                role
-            };
-            DB.users.push(newUser);
-            DB.currentUser = newUser;
-            saveDB();
-            alert('✅ تم إنشاء الحساب بنجاح');
-            renderPage('dashboard');
-        }
-
-        function logout() {
-            DB.currentUser = null;
-            renderPage('home');
-        }
-
-        function showInteractionDetail(interactionId) {
-            const interaction = DB.interactions.find(i => i.id === interactionId);
-            if (!interaction) return;
-
-            let message = '';
-            if (interaction.type === 'question') {
-                message = `سؤال: ${interaction.content.text}\n`;
-                interaction.content.options.forEach((opt, i) => {
-                    message += `  ${i}: ${opt}\n`;
-                });
-                message += `(الإجابة الصحيحة: ${interaction.content.correct})`;
-            } else if (interaction.type === 'quiz') {
-                message = `اختبار: ${interaction.title}\nعدد الأسئلة: ${interaction.questionCount}`;
-            } else {
-                message = `شرح: ${interaction.content.text}`;
-                if (interaction.content.url) message += `\nرابط: ${interaction.content.url}`;
-            }
-            alert(message);
-        }
-
+        // ============================================
         // بدء التطبيق
-        (function init() {
-            // استرجاع المستخدم الحالي من localStorage
-            const savedUser = localStorage.getItem('ta3lemi_currentUser');
-            if (savedUser) {
-                DB.currentUser = JSON.parse(savedUser);
-            }
+        // ============================================
+        (async function init() {
+            await getCurrentUser();
             renderPage('home');
         })();
     </script>
