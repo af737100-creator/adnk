@@ -5,7 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>تعليمي - منصة التعلم التفاعلي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
+        /* (نفس التنسيقات السابقة - احتفظ بها كلها) */
         *{margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, sans-serif;}
         body{background:#f8fafc; color:#1e293b; direction:rtl; line-height:1.6;}
         .container{max-width:1200px; margin:0 auto; padding:0 20px;}
@@ -37,6 +40,14 @@
             .nav-links{display:none; flex-direction:column; position:absolute; top:70px; right:0; width:100%; background:white; padding:20px;}
             .nav-links.show{display:flex;}
         }
+        /* تنسيقات إضافية للنوافذ المنبثقة */
+        .modal{position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); display:none; align-items:center; justify-content:center; z-index:2000;}
+        .modal.active{display:flex;}
+        .modal-content{background:white; border-radius:20px; padding:30px; max-width:400px; width:90%;}
+        .form-group{margin-bottom:20px;}
+        .form-group label{display:block; margin-bottom:8px; font-weight:500;}
+        .form-group input{width:100%; padding:12px; border:2px solid #e2e8f0; border-radius:10px; font-size:1rem;}
+        .form-group input:focus{border-color:#4361ee; outline:none;}
     </style>
 </head>
 <body>
@@ -44,21 +55,103 @@
 
     <script>
         // ============================================
-        // نسخة مبسطة وآمنة - للتأكد من ظهور الصفحة
+        // إعدادات Supabase (بياناتك)
         // ============================================
-        console.log('✅ بدء التطبيق');
+        const SUPABASE_URL = 'https://ollwqisezqkawrulahqq.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_eq_PjuSiAbWvxNAD6QHThw_v_x-jVSI';
+        
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+            auth: {
+                autoRefreshToken: true,
+                persistSession: true,
+                detectSessionInUrl: true,
+                storage: window.localStorage
+            }
+        });
 
-        // الصفحة الرئيسية البسيطة (بدون أي تعقيدات)
-        function showHome() {
-            document.getElementById('app').innerHTML = `
+        // ============================================
+        // متغيرات عامة
+        // ============================================
+        let currentUser = null;
+
+        // ============================================
+        // دوال المصادقة
+        // ============================================
+        async function checkUser() {
+            const { data: { user } } = await supabase.auth.getUser();
+            currentUser = user;
+            render();
+        }
+
+        async function handleLogin(email, password) {
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+                currentUser = data.user;
+                closeModal('loginModal');
+                render();
+            } catch (error) {
+                alert('❌ خطأ في تسجيل الدخول: ' + error.message);
+            }
+        }
+
+        async function handleSignup(email, password, fullName) {
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email, password,
+                    options: { data: { full_name: fullName } }
+                });
+                if (error) throw error;
+                alert('✅ تم إنشاء الحساب. يرجى تأكيد بريدك الإلكتروني.');
+                closeModal('signupModal');
+            } catch (error) {
+                alert('❌ خطأ في إنشاء الحساب: ' + error.message);
+            }
+        }
+
+        async function logout() {
+            await supabase.auth.signOut();
+            currentUser = null;
+            render();
+        }
+
+        // ============================================
+        // دوال النوافذ المنبثقة
+        // ============================================
+        function showLoginModal() {
+            document.getElementById('loginModal').classList.add('active');
+        }
+
+        function showSignupModal() {
+            document.getElementById('signupModal').classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        // ============================================
+        // عرض الصفحة الرئيسية
+        // ============================================
+        function render() {
+            const app = document.getElementById('app');
+            const userName = currentUser?.user_metadata?.full_name || '';
+
+            app.innerHTML = `
                 <header>
                     <nav class="navbar">
                         <div class="container">
-                            <a href="#" class="logo" onclick="showHome()">تعليمي</a>
+                            <a href="#" class="logo" onclick="render()">تعليمي</a>
                             <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('show')">☰</button>
                             <div class="nav-links">
-                                <a href="#" class="btn-login" onclick="alert('واجهة تسجيل دخول بسيطة')">تسجيل الدخول</a>
-                                <a href="#" class="btn-signup" onclick="alert('واجهة إنشاء حساب بسيطة')">إنشاء حساب</a>
+                                ${currentUser ? `
+                                    <span style="color:#4361ee;">مرحباً، ${userName}</span>
+                                    <button class="btn-login" onclick="logout()">تسجيل خروج</button>
+                                    <button class="btn-signup" onclick="alert('لوحة التحكم (قيد التطوير)')">لوحة التحكم</button>
+                                ` : `
+                                    <button class="btn-login" onclick="showLoginModal()">تسجيل الدخول</button>
+                                    <button class="btn-signup" onclick="showSignupModal()">إنشاء حساب</button>
+                                `}
                             </div>
                         </div>
                     </nav>
@@ -67,7 +160,7 @@
                     <div class="container">
                         <h1>حوّل مقاطع اليوتيوب التعليمية إلى تجربة تعلم تفاعلية</h1>
                         <p>أضف أسئلة، اختبارات، وشروحات تفاعلية على أي فيديو تعليمي بدون إعادة التسجيل.</p>
-                        <button class="btn" onclick="alert('ابدأ مجاناً')">ابدأ مجاناً</button>
+                        <button class="btn" onclick="${currentUser ? 'alert("لوحة التحكم")' : 'showSignupModal()'}">ابدأ مجاناً</button>
                     </div>
                 </section>
                 <div class="container">
@@ -92,18 +185,61 @@
                     <div class="container">
                         <div class="footer-content">
                             <div class="footer-section"><h3>تعليمي</h3><p>منصة التعلم التفاعلي الأولى.</p></div>
-                            <div class="footer-section"><h3>روابط سريعة</h3><ul><li><a href="#" onclick="showHome()">الرئيسية</a></li></ul></div>
+                            <div class="footer-section"><h3>روابط سريعة</h3><ul><li><a href="#" onclick="render()">الرئيسية</a></li></ul></div>
                             <div class="footer-section"><h3>تواصل معنا</h3><ul><li>support@ta3lemi.com</li></ul></div>
                         </div>
                         <div style="text-align:center; padding-top:20px; border-top:1px solid #334155;">© 2026 تعليمي</div>
                     </div>
                 </footer>
+
+                <!-- نافذة تسجيل الدخول -->
+                <div class="modal" id="loginModal">
+                    <div class="modal-content">
+                        <h2 style="margin-bottom:20px;">تسجيل الدخول</h2>
+                        <div class="form-group">
+                            <label>البريد الإلكتروني</label>
+                            <input type="email" id="loginEmail">
+                        </div>
+                        <div class="form-group">
+                            <label>كلمة المرور</label>
+                            <input type="password" id="loginPassword">
+                        </div>
+                        <div style="display:flex; gap:10px; justify-content:flex-end;">
+                            <button class="btn" onclick="closeModal('loginModal')">إلغاء</button>
+                            <button class="btn" onclick="handleLogin(document.getElementById('loginEmail').value, document.getElementById('loginPassword').value)">دخول</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- نافذة إنشاء حساب -->
+                <div class="modal" id="signupModal">
+                    <div class="modal-content">
+                        <h2 style="margin-bottom:20px;">إنشاء حساب جديد</h2>
+                        <div class="form-group">
+                            <label>الاسم الكامل</label>
+                            <input type="text" id="signupName">
+                        </div>
+                        <div class="form-group">
+                            <label>البريد الإلكتروني</label>
+                            <input type="email" id="signupEmail">
+                        </div>
+                        <div class="form-group">
+                            <label>كلمة المرور</label>
+                            <input type="password" id="signupPassword">
+                        </div>
+                        <div style="display:flex; gap:10px; justify-content:flex-end;">
+                            <button class="btn" onclick="closeModal('signupModal')">إلغاء</button>
+                            <button class="btn" onclick="handleSignup(document.getElementById('signupEmail').value, document.getElementById('signupPassword').value, document.getElementById('signupName').value)">تسجيل</button>
+                        </div>
+                    </div>
+                </div>
             `;
         }
 
+        // ============================================
         // بدء التطبيق
-        showHome();
-        console.log('✅ الصفحة الرئيسية معروضة');
+        // ============================================
+        checkUser();
     </script>
 </body>
 </html>
