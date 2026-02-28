@@ -1,10 +1,6 @@
-// ============================================
-// YouTube API Configuration
-// ============================================
 const YOUTUBE_API_KEY = 'AIzaSyCh9scasVWUK4AktfSUE5NlCcMyvCmGs2o';
 
 const YouTubeAPI = {
-    // استخراج معرف الفيديو من الرابط
     extractVideoId(url) {
         const patterns = [
             /(?:youtube\.com\/watch\?v=)([^&]+)/,
@@ -18,7 +14,6 @@ const YouTubeAPI = {
         return null;
     },
 
-    // جلب معلومات الفيديو (العنوان، المدة، الصورة)
     async getVideoInfo(videoId) {
         try {
             const response = await fetch(
@@ -29,7 +24,6 @@ const YouTubeAPI = {
                 const item = data.items[0];
                 return {
                     title: item.snippet.title,
-                    description: item.snippet.description,
                     thumbnail: item.snippet.thumbnails.medium.url,
                     duration: this.parseDuration(item.contentDetails.duration)
                 };
@@ -41,7 +35,6 @@ const YouTubeAPI = {
         }
     },
 
-    // تحويل مدة الفيديو (ISO 8601) إلى ثواني
     parseDuration(duration) {
         const match = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
         const hours = (match[1] ? parseInt(match[1]) : 0);
@@ -50,7 +43,6 @@ const YouTubeAPI = {
         return hours * 3600 + minutes * 60 + seconds;
     },
 
-    // تنسيق الوقت (ثواني إلى mm:ss)
     formatTime(seconds) {
         const mins = Math.floor(seconds / 60);
         const secs = seconds % 60;
